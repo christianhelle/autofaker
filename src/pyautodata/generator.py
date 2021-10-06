@@ -7,22 +7,24 @@ class TypeDataGenerator:
     def create(t) -> TypeDataGeneratorBase:
         type_name = t.__name__
         if type_name == 'int':
-            return IntegerGeneratorBase()
+            return IntegerGenerator()
         elif type_name == 'str':
-            return StringGeneratorBase()
+            return StringGenerator()
         elif type_name == 'float':
-            return FloatGeneratorBase()
+            return FloatGenerator()
+        elif type_name == 'bool':
+            return BooleanGenerator()
         elif type_name == 'datetime':
-            return DatetimeGeneratorBase()
+            return DatetimeGenerator()
         elif type_name == 'date':
-            return DateGeneratorBase()
+            return DateGenerator()
         elif type_name == 'list':
-            return ListGeneratorBase(t)
+            return ListGenerator(t)
         else:
-            return ClassGeneratorBase(t)
+            return ClassGenerator(t)
 
 
-class ClassGeneratorBase(TypeDataGeneratorBase):
+class ClassGenerator(TypeDataGeneratorBase):
     def __init__(self, cls):
         self.instance = cls()
 
@@ -46,7 +48,7 @@ class ClassGeneratorBase(TypeDataGeneratorBase):
         return self.instance
 
 
-class ListGeneratorBase(TypeDataGeneratorBase):
+class ListGenerator(TypeDataGeneratorBase):
     def __init__(self, t):
         self.instance = t()
 

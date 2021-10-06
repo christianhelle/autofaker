@@ -4,18 +4,18 @@ import uuid
 from pyautodata.base import TypeDataGeneratorBase
 
 
-class IntegerGeneratorBase(TypeDataGeneratorBase):
+class IntegerGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         return random.randint(0, 2147483647)
 
 
-class StringGeneratorBase(TypeDataGeneratorBase):
+class StringGenerator(TypeDataGeneratorBase):
     def generate(self):
         return str(uuid.uuid4())
 
 
-class FloatGeneratorBase(TypeDataGeneratorBase):
+class FloatGenerator(TypeDataGeneratorBase):
     def generate(self):
         return random.uniform(0, 2147483647)
 

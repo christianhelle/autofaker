@@ -4,7 +4,7 @@ import random
 from pyautodata.base import TypeDataGeneratorBase
 
 
-class DatetimeGeneratorBase(TypeDataGeneratorBase):
+class DatetimeGenerator(TypeDataGeneratorBase):
     def generate(self):
         year = datetime.date.today().year
         return datetime.datetime(random.randint(year - 10, year + 10),
@@ -16,7 +16,7 @@ class DatetimeGeneratorBase(TypeDataGeneratorBase):
                                  random.randint(0, 999))
 
 
-class DateGeneratorBase(TypeDataGeneratorBase):
+class DateGenerator(TypeDataGeneratorBase):
     def generate(self):
         year = datetime.date.today().year
         return datetime.datetime(random.randint(year - 10, year + 10),
