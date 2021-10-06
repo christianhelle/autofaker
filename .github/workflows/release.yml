@@ -3,6 +3,9 @@ name: release
 on:
   workflow_dispatch:
 
+env:
+  VERSION: 0.1.${{ github.run_number }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -14,10 +17,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.8"
-      #- name: Manipulate version
-      #  run: |
-      #    pip install packaging
-      #    python ./utilities/manipulate_version.py
+      - name: Update Version
+        shell: pwsh
+        run: |
+          $initFile = 'setup.py'
+          $line = Get-Content $initFile | Select-String 'version=' | Select-Object -ExpandProperty Line
+          if ($line -ne $null) {
+              $content = Get-Content $initFile
+              $content | ForEach-Object {$_ -replace $line, 'version="${{ env.VERSION }}"'} | Set-Content $initFile
+          }
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
