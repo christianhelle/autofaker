@@ -1,3 +1,4 @@
+import datetime
 import random
 import uuid
 from abc import abstractmethod
@@ -22,13 +23,22 @@ class TypeDataGenerator:
 class TypeFactory:
     @staticmethod
     def create(t) -> TypeDataGenerator:
-        instance = t()
-        if instance is 0:
+        print(t.__name__)
+        if t.__name__ == 'int':
             print('Creating IntegerGenerator')
             return IntegerGenerator()
-        elif instance is '':
+        elif t.__name__ == 'str':
             print('Creating StringGenerator')
             return StringGenerator()
+        elif t.__name__ == 'float':
+            print('Creating FloatGenerator')
+            return FloatGenerator()
+        elif t.__name__ == 'datetime':
+            print('Creating DatetimeGenerator')
+            return DatetimeGenerator()
+        elif t.__name__ == 'date':
+            print('Creating DateGenerator')
+            return DateGenerator()
         else:
             print('Creating ClassGenerator')
             return ClassGenerator(t)
@@ -61,3 +71,28 @@ class IntegerGenerator(TypeDataGenerator):
 class StringGenerator(TypeDataGenerator):
     def create(self):
         return str(uuid.uuid4())
+
+
+class FloatGenerator(TypeDataGenerator):
+    def create(self):
+        return random.uniform(0, 2147483647)
+
+
+class DatetimeGenerator(TypeDataGenerator):
+    def create(self):
+        year = datetime.date.today().year
+        return datetime.datetime(random.randint(year - 10, year + 10),
+                                 random.randint(1, 12),
+                                 random.randint(1, 28),
+                                 random.randint(0, 23),
+                                 random.randint(0, 59),
+                                 random.randint(0, 59),
+                                 random.randint(0, 999))
+
+
+class DateGenerator(TypeDataGenerator):
+    def create(self):
+        year = datetime.date.today().year
+        return datetime.datetime(random.randint(year - 10, year + 10),
+                                 random.randint(1, 12),
+                                 random.randint(1, 28))
