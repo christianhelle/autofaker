@@ -21,7 +21,7 @@ class CreateTestCase(unittest.TestCase):
         self.assertNotIsInstance(Fixture.create(self.getType()), type)
 
     def test_create_returns_not_default(self):
-        if self.getType() is None or self.getType() == type(bool):
+        if self.getType() is None or self.getType() is bool:
             return
         self.assertNotEqual(Fixture.create(self.getType()), self.getType()())
 

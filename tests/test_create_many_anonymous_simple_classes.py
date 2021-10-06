@@ -9,7 +9,7 @@ class SimpleClass:
     text = 'test'
 
 
-class CreateManyTestCase(unittest.TestCase):
+class AnonymousSimpleClassTestCase(unittest.TestCase):
     def test_create_many_returns_not_none(self):
         self.assertIsNotNone(Fixture.create_many(SimpleClass))
 
@@ -22,3 +22,18 @@ class CreateManyTestCase(unittest.TestCase):
 
     def test_create_many_returns_non_default(self):
         self.assertNotEqual(Fixture.create_many(SimpleClass), [SimpleClass()])
+
+    def test_create_many_local_class_returns_not_none(self):
+        class X:
+            pass
+        self.assertIsNotNone(Fixture.create_many(X))
+
+    def test_create_many_local_class_returns_instance(self):
+        class X:
+            pass
+        self.assertIsInstance(Fixture.create_many(X), list)
+
+    def test_create_many_local_returns_non_default(self):
+        class X:
+            pass
+        self.assertNotEqual(Fixture.create_many(X), [X()])
