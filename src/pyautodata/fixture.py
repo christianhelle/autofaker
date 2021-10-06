@@ -11,7 +11,8 @@ class Fixture:
     @staticmethod
     def create(t):
         generator = TypeFactory.create(t)
-        return generator.create()
+        value = generator.create()
+        return value
 
 
 class TypeDataGenerator:
@@ -34,6 +35,8 @@ class TypeFactory:
             return DatetimeGenerator()
         elif type_name == 'date':
             return DateGenerator()
+        elif type_name == 'list':
+            return ListGenerator(t)
         else:
             return ClassGenerator(t)
 
@@ -48,10 +51,17 @@ class ClassGenerator(TypeDataGenerator):
             if not callable(getattr(self.instance, attr)) and not attr.startswith("__")
         ]
         for member in members:
-            t = type(getattr(self.instance, member))
-            generator = TypeFactory.create(t)
-            value = generator.create()
-            setattr(self.instance, member, value)
+            attr = getattr(self.instance, member)
+            if type(attr).__name__ == 'list':
+                for i in range(len(attr)):
+                    item = attr[i]
+                    generator = TypeFactory.create(type(item))
+                    value = generator.create()
+                    attr[i] = value
+            else:
+                generator = TypeFactory.create(type(attr))
+                value = generator.create()
+                setattr(self.instance, member, value)
         return self.instance
 
 
@@ -89,3 +99,17 @@ class DateGenerator(TypeDataGenerator):
         return datetime.datetime(random.randint(year - 10, year + 10),
                                  random.randint(1, 12),
                                  random.randint(1, 28))
+
+
+class ListGenerator(TypeDataGenerator):
+    def __init__(self, t):
+        self.instance = t()
+
+    def create(self):
+        items = []
+        for item in self.instance:
+            generator = TypeFactory.create(item)
+            value = generator.create()
+            items.append(value)
+        return items
+
