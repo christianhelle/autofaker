@@ -19,3 +19,7 @@ class FloatGenerator(TypeDataGeneratorBase):
     def generate(self):
         return random.uniform(0, 2147483647)
 
+
+class BooleanGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return bool(random.getrandbits(1))

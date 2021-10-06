@@ -1,39 +1,48 @@
 import unittest
 import uuid
+from abc import abstractmethod
 
 from pyautodata import Fixture
 
 
-class AnonymousIntegerTestCase(unittest.TestCase):
-    def test_create_int_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(int))
+class CreateTestCase(unittest.TestCase):
+    @abstractmethod
+    def getType(self):
+        pass
 
-    def test_create_int_returns_not_type(self):
-        self.assertNotIsInstance(Fixture.create(int), type)
+    def test_create_returns_not_none(self):
+        if self.getType() is None:
+            return
+        self.assertIsNotNone(Fixture.create(self.getType()))
 
-    def test_create_int_returns_not_default(self):
-        self.assertNotEqual(Fixture.create(int), 0)
+    def test_create_returns_not_type(self):
+        if self.getType() is None:
+            return
+        self.assertNotIsInstance(Fixture.create(self.getType()), type)
 
-
-class AnonymousStringTestCase(unittest.TestCase):
-    def test_create_str_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(str))
-
-    def test_create_str_returns_not_type(self):
-        self.assertNotIsInstance(Fixture.create(str), type)
-
-    def test_create_str_returns_uuid_str(self):
-        self.assertIsNotNone(uuid.UUID(Fixture.create(str)))
+    def test_create_returns_not_default(self):
+        if self.getType() is None or self.getType() == type(bool):
+            return
+        self.assertNotEqual(Fixture.create(self.getType()), self.getType()())
 
 
-class AnonymousFloatTestCase(unittest.TestCase):
-    def test_create_float_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(float))
+class AnonymousIntegerTestCase(CreateTestCase):
+    def getType(self):
+        return int
 
-    def test_create_float_returns_not_type(self):
-        self.assertNotIsInstance(Fixture.create(float), type)
 
-    def test_create_float_returns_not_default(self):
-        self.assertNotEqual(Fixture.create(float), float())
+class AnonymousStringTestCase(CreateTestCase):
+    def getType(self):
+        return str
+
+
+class AnonymousFloatTestCase(CreateTestCase):
+    def getType(self):
+        return float
+
+
+class AnonymousBooleanTestCase(CreateTestCase):
+    def getType(self):
+        return bool
 
 

@@ -45,3 +45,8 @@ class AnonymousIntegerListTestCase(CreateManyTestCase):
 class AnonymousFloatListTestCase(CreateManyTestCase):
     def getType(self):
         return float
+
+
+class AnonymousBooleanListTestCase(CreateManyTestCase):
+    def getType(self):
+        return bool
