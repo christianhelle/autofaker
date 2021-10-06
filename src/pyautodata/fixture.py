@@ -23,24 +23,18 @@ class TypeDataGenerator:
 class TypeFactory:
     @staticmethod
     def create(t) -> TypeDataGenerator:
-        print(t.__name__)
-        if t.__name__ == 'int':
-            print('Creating IntegerGenerator')
+        type_name = t.__name__
+        if type_name == 'int':
             return IntegerGenerator()
-        elif t.__name__ == 'str':
-            print('Creating StringGenerator')
+        elif type_name == 'str':
             return StringGenerator()
-        elif t.__name__ == 'float':
-            print('Creating FloatGenerator')
+        elif type_name == 'float':
             return FloatGenerator()
-        elif t.__name__ == 'datetime':
-            print('Creating DatetimeGenerator')
+        elif type_name == 'datetime':
             return DatetimeGenerator()
-        elif t.__name__ == 'date':
-            print('Creating DateGenerator')
+        elif type_name == 'date':
             return DateGenerator()
         else:
-            print('Creating ClassGenerator')
             return ClassGenerator(t)
 
 
@@ -53,7 +47,6 @@ class ClassGenerator(TypeDataGenerator):
             attr for attr in dir(self.instance)
             if not callable(getattr(self.instance, attr)) and not attr.startswith("__")
         ]
-        print(members)
         for member in members:
             t = type(getattr(self.instance, member))
             generator = TypeFactory.create(t)
