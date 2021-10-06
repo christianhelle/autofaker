@@ -10,7 +10,7 @@ on:
       - reopened
 
 jobs:
-  unit_test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
