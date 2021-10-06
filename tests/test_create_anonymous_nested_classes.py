@@ -3,35 +3,27 @@ import unittest
 from pyautodata import Fixture
 
 
-class AnonymousSimpleClassTestCase(unittest.TestCase):
-
-    def test_create_local_class_returns_not_none(self):
-        class X:
-            pass
-
-        self.assertIsNotNone(Fixture.create(X))
-
-    def test_create_local_class_returns_instance(self):
-        class X:
-            pass
-
-        self.assertIsInstance(Fixture.create(X), X)
-
-    def test_create_simple_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(SimpleClass))
-
-    def test_create_simple_class_returns_instance(self):
-        self.assertIsInstance(Fixture.create(SimpleClass), SimpleClass)
-
-    def test_create_simple_class_returns_instance_with_new_values(self):
-        result = Fixture.create(SimpleClass)
-        self.assertNotEqual(result.id, SimpleClass().id)
-        self.assertNotEqual(result.text, SimpleClass().text)
-
-
 class SimpleClass:
     id = 123
     text = 'test'
+
+
+class NestedClass:
+    id = 123
+    text = 'test'
+    inner = SimpleClass()
+
+
+class NestedWithCollectionClass:
+    id = 123
+    text = 'test'
+    inner = [SimpleClass(), SimpleClass()]
+
+
+class NestedWithNestedCollectionClass:
+    id = 123
+    text = 'test'
+    inner = [NestedWithCollectionClass(), NestedWithCollectionClass()]
 
 
 class AnonymousNestedClassTestCase(unittest.TestCase):
@@ -50,12 +42,6 @@ class AnonymousNestedClassTestCase(unittest.TestCase):
         self.assertNotEqual(result.id, NestedClass().id)
         self.assertNotEqual(result.inner.id, SimpleClass().id)
         self.assertNotEqual(result.inner.text, SimpleClass().text)
-
-
-class NestedClass:
-    id = 123
-    text = 'test'
-    inner = SimpleClass()
 
 
 class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
@@ -79,12 +65,6 @@ class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
             self.assertIsNotNone(cls)
             self.assertNotEqual(cls.id, SimpleClass().id)
             self.assertNotEqual(cls.text, SimpleClass().text)
-
-
-class NestedWithCollectionClass:
-    id = 123
-    text = 'test'
-    inner = [SimpleClass(), SimpleClass()]
 
 
 class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
@@ -115,10 +95,3 @@ class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
             for inner in cls.inner:
                 self.assertNotEqual(inner.id, SimpleClass().id)
                 self.assertNotEqual(inner.text, SimpleClass().text)
-        print(result)
-
-
-class NestedWithNestedCollectionClass:
-    id = 123
-    text = 'test'
-    inner = [NestedWithCollectionClass(), NestedWithCollectionClass()]
