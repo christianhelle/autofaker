@@ -1,4 +1,4 @@
-name: Post-Integration
+name: pre-release
 
 on:
   workflow_dispatch:

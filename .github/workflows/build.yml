@@ -1,4 +1,4 @@
-name: Pre-Integration
+name: build
 
 on:
   push:
