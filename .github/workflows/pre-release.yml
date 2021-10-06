@@ -29,6 +29,7 @@ jobs:
               $content = Get-Content $initFile
               $content | ForEach-Object {$_ -replace $line, 'version="${{ env.VERSION }}pre"'} | Set-Content $initFile
           }
+          Get-Content $initFile | Write-Host
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
