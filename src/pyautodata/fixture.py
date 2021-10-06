@@ -1,18 +1,24 @@
 import datetime
 import random
+import typing
 import uuid
 from abc import abstractmethod
+from typing import List
 
 
 class Fixture:
-    def __init__(self):
-        pass
-
     @staticmethod
     def create(t):
         generator = TypeFactory.create(t)
         value = generator.create()
         return value
+
+    @staticmethod
+    def create_many(t, size: int = 3) -> List[typing.Any]:
+        items = []
+        for i in range(size):
+            items.append(Fixture.create(t))
+        return items
 
 
 class TypeDataGenerator:
