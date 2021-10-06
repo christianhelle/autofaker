@@ -24,7 +24,7 @@ jobs:
           $line = Get-Content $initFile | Select-String 'version=' | Select-Object -ExpandProperty Line
           if ($line -ne $null) {
               $content = Get-Content $initFile
-              $content | ForEach-Object {$_ -replace $line, 'version="${{ env.VERSION }}"'} | Set-Content $initFile
+              $content | ForEach-Object {$_ -replace $line, "version='${{ env.VERSION }}pre',"} | Set-Content $initFile
           }
           Get-Content $initFile | Write-Host
       - name: Install dependencies
