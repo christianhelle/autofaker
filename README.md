@@ -10,15 +10,17 @@ import unittest
 from typing import List
 from pyautodata import Fixture
 
+
 class Person:
     age = 10
     name = 'test'
-    
+
     def get_introduction(self):
         return f"Hi! My name is {self.name} and I'm {self.age} years old"
 
     def introduce(self):
         print(self.get_introduction())
+
 
 class Staff:
     def __init__(self):
@@ -34,11 +36,25 @@ class Staff:
     def get_head_count(self):
         return len(self.people)
 
+    def introduce(self):
+        for person in self.people:
+            person.introduce()
+
 
 class StaffTests(unittest.TestCase):
-    def test_get_head_count(self):
+
+    def test_introduce_everyone(self):
         people = Fixture.create_many(Person)
         sut = Fixture.create(Staff)
         sut.add_people(people)
+        sut.introduce()
         self.assertEqual(len(people), sut.get_head_count())
+```
+
+output for `Staff.introduce()` will be something like this:
+
+```
+Hi! My name is a88b64ac-69d8-4aef-8d8f-17fb6354654a and I'm 1090228300 years old
+Hi! My name is bb424fad-14a4-4c79-9b9b-82a57dee59a4 and I'm 2059376420 years old
+Hi! My name is 847ed9be-ab86-4637-b4f6-76a5b0a4e2f8 and I'm 987924894 years old
 ```
