@@ -36,7 +36,7 @@ class Staff:
 
 
 class StaffTests(unittest.TestCase):
-    def test_introduce_everyone(self):
+    def test_get_head_count(self):
         people = Fixture.create_many(Person)
         sut = Fixture.create(Staff)
         sut.add_people(people)
