@@ -1,3 +1,7 @@
+"""
+Provides classes for anonymous object creation to help minimize the setup/arrange phase when writing unit tests
+"""
+
 import typing
 from typing import List
 from pyspark.sql import DataFrame
@@ -6,6 +10,10 @@ from pyautodata.generator import TypeDataGenerator
 
 
 class Autodata:
+    """
+    Provides anonymous object creation functions to help minimize the setup/arrange phase when writing unit tests
+    """
+
     @staticmethod
     def create(t):
         """
