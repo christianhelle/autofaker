@@ -47,10 +47,16 @@ class Autodata:
         :type t: object
         """
         return PandasDataFrameGenerator(t, rows).generate()
+
+
+    @staticmethod
+    def create_spark_dataframe(t, rows: int = 3) -> DataFrame:
         """
         Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
 
         :type rows: int
         :type t: object
         """
-        raise NotImplementedError
+        pandas_df = Autodata.create_pandas_dataframe(t)
+        spark = SparkSession.builder.getOrCreate()
+        return spark.createDataFrame(pandas_df)

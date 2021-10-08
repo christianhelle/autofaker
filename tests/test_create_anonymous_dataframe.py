@@ -10,6 +10,10 @@ class StaffTests(unittest.TestCase):
         print(pdf)
         self.assertIsNotNone(pdf)
 
+    def test_create_spark_dataframe_returns_not_none(self):
+        df = Autodata.create_spark_dataframe(SimpleClass)
+        self.assertIsNotNone(df)
+
 
 class SimpleClass:
     id = 123
