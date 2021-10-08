@@ -5,6 +5,7 @@ setuptools.setup(
     version='0.1.0',
     url='https://github.com/christianhelle/pyautodata',
     license='MIT License',
+    license_files=["LICENSE"],
     author='Christian Helle',
     author_email='christian.helle@outlook.com',
     description='Python library designed to minimize the setup/arrange phase of your unit tests',
