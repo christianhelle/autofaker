@@ -9,7 +9,7 @@ on:
       - '!release'
 
 env:
-  VERSION: 0.1.dev${{ github.run_number }}
+  VERSION: 0.1.${{ github.run_number }}
 
 jobs:
   pre-release:
