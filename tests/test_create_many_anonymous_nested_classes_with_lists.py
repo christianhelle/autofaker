@@ -1,6 +1,6 @@
 import unittest
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class SimpleClass:
@@ -23,23 +23,23 @@ class NestedWithNestedCollectionClass:
 class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 
     def test_create_many_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create_many(NestedWithCollectionClass))
+        self.assertIsNotNone(Autodata.create_many(NestedWithCollectionClass))
 
     def test_create_many_nested_class_returns_list(self):
-        self.assertIsInstance(Fixture.create_many(NestedWithCollectionClass), list)
+        self.assertIsInstance(Autodata.create_many(NestedWithCollectionClass), list)
 
     def test_create_many_nested_class_returns_instances_with_nested_not_none(self):
-        result = Fixture.create_many(NestedWithCollectionClass)
+        result = Autodata.create_many(NestedWithCollectionClass)
         for item in result:
             self.assertIsNotNone(item.inner)
 
     def test_create_many_nested_class_returns_instances_with_nested_not_empty(self):
-        result = Fixture.create_many(NestedWithCollectionClass)
+        result = Autodata.create_many(NestedWithCollectionClass)
         for item in result:
             self.assertNotEqual(0, len(item.inner))
 
     def test_create_many_nested_class_returns_instances_with_new_nested_instance(self):
-        result = Fixture.create_many(NestedWithCollectionClass)
+        result = Autodata.create_many(NestedWithCollectionClass)
         for item in result:
             self.assertNotEqual(item.id, NestedWithCollectionClass().id)
             for cls in item.inner:
@@ -51,29 +51,29 @@ class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
 
     def test_create_many_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create_many(NestedWithCollectionClass))
+        self.assertIsNotNone(Autodata.create_many(NestedWithCollectionClass))
 
     def test_create_many_nested_class_returns_list(self):
-        self.assertIsInstance(Fixture.create_many(NestedWithCollectionClass), list)
+        self.assertIsInstance(Autodata.create_many(NestedWithCollectionClass), list)
 
     def test_create_many_nested_class_returns_instances_with_inner_not_none(self):
-        result = Fixture.create_many(NestedWithNestedCollectionClass)
+        result = Autodata.create_many(NestedWithNestedCollectionClass)
         for item in result:
             self.assertIsNotNone(item.inner)
 
     def test_create_many_nested_class_returns_instances_with_inner_not_empty(self):
-        result = Fixture.create_many(NestedWithNestedCollectionClass)
+        result = Autodata.create_many(NestedWithNestedCollectionClass)
         for item in result:
             self.assertNotEqual(0, len(item.inner))
 
     def test_create_many_nested_class_returns_instances_with_nested_inner_not_empty(self):
-        result = Fixture.create_many(NestedWithNestedCollectionClass)
+        result = Autodata.create_many(NestedWithNestedCollectionClass)
         for item in result:
             for cls in item.inner:
                 self.assertNotEqual(0, len(cls.inner))
 
     def test_create_many_nested_class_returns_instances_with_new_nested_instances(self):
-        result = Fixture.create_many(NestedWithNestedCollectionClass)
+        result = Autodata.create_many(NestedWithNestedCollectionClass)
         for root in result:
             self.assertNotEqual(root.id, NestedWithNestedCollectionClass().id)
             self.assertNotEqual(root.text, NestedWithNestedCollectionClass().text)

@@ -1,3 +1,3 @@
 __version__ = "0.1.0"
 
-from pyautodata.fixture import Fixture
+from pyautodata.autodata import Autodata

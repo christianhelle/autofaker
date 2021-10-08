@@ -4,11 +4,10 @@
 # pyautodata
 Python library designed to minimize the setup/arrange phase of your unit tests
 
-
 ```python
 import unittest
 from typing import List
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class Person:
@@ -44,8 +43,8 @@ class Staff:
 class StaffTests(unittest.TestCase):
 
     def test_introduce_everyone(self):
-        people = Fixture.create_many(Person)
-        sut = Fixture.create(Staff)
+        people = Autodata.create_many(Person)
+        sut = Autodata.create(Staff)
         sut.add_people(people)
         sut.introduce()
         self.assertEqual(len(people), sut.get_head_count())

@@ -1,6 +1,6 @@
 import unittest
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class SimpleClass:
@@ -23,18 +23,18 @@ class DoubleNestedClass:
 class AnonymousNestedClassTestCase(unittest.TestCase):
 
     def test_create_many_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create_many(NestedClass))
+        self.assertIsNotNone(Autodata.create_many(NestedClass))
 
     def test_create_many_nested_class_returns_list(self):
-        self.assertIsInstance(Fixture.create_many(NestedClass), list)
+        self.assertIsInstance(Autodata.create_many(NestedClass), list)
 
     def test_create_many_nested_class_returns_list_with_not_none(self):
-        result = Fixture.create_many(NestedClass)
+        result = Autodata.create_many(NestedClass)
         for item in result:
             self.assertIsNotNone(item.inner)
 
     def test_create_many_nested_class_returns_instance_with_new_nested_instance(self):
-        result = Fixture.create_many(NestedClass)
+        result = Autodata.create_many(NestedClass)
         for item in result:
             self.assertNotEqual(item.id, NestedClass().id)
             self.assertNotEqual(item.inner.id, SimpleClass().id)
@@ -44,25 +44,25 @@ class AnonymousNestedClassTestCase(unittest.TestCase):
 class AnonymousDoubleNestedClassTestCase(unittest.TestCase):
 
     def test_create_many_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create_many(DoubleNestedClass))
+        self.assertIsNotNone(Autodata.create_many(DoubleNestedClass))
 
     def test_create_many_nested_class_returns_instance(self):
-        self.assertIsInstance(Fixture.create_many(DoubleNestedClass), list)
+        self.assertIsInstance(Autodata.create_many(DoubleNestedClass), list)
 
     def test_create_many_nested_class_returns_instance_with_nested_not_none(self):
-        result = Fixture.create_many(DoubleNestedClass)
+        result = Autodata.create_many(DoubleNestedClass)
         for item in result:
             self.assertIsNotNone(item)
             self.assertIsNotNone(item.inner)
 
     def test_create_many_nested_class_returns_instance_with_new_nested_instance(self):
-        result = Fixture.create_many(DoubleNestedClass)
+        result = Autodata.create_many(DoubleNestedClass)
         for item in result:
             self.assertNotEqual(item.id, DoubleNestedClass().id)
             self.assertNotEqual(item.inner, NestedClass())
 
     def test_create_many_nested_class_returns_instance_with_new_double_nested_instance(self):
-        result = Fixture.create_many(DoubleNestedClass)
+        result = Autodata.create_many(DoubleNestedClass)
         for item in result:
             self.assertNotEqual(item.id, DoubleNestedClass().id)
             self.assertNotEqual(item.inner.inner.id, SimpleClass().id)

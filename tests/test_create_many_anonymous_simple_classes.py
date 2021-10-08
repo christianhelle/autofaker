@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class SimpleClass:
@@ -11,29 +11,29 @@ class SimpleClass:
 
 class AnonymousSimpleClassTestCase(unittest.TestCase):
     def test_create_many_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create_many(SimpleClass))
+        self.assertIsNotNone(Autodata.create_many(SimpleClass))
 
     def test_create_many_returns_list(self):
-        self.assertIsInstance(Fixture.create_many(SimpleClass), list)
+        self.assertIsInstance(Autodata.create_many(SimpleClass), list)
 
     def test_create_many_with_size_returns(self):
         size = random.randint(1, 10)
-        self.assertEqual(len(Fixture.create_many(SimpleClass, size)), size)
+        self.assertEqual(len(Autodata.create_many(SimpleClass, size)), size)
 
     def test_create_many_returns_non_default(self):
-        self.assertNotEqual(Fixture.create_many(SimpleClass), [SimpleClass()])
+        self.assertNotEqual(Autodata.create_many(SimpleClass), [SimpleClass()])
 
     def test_create_many_local_class_returns_not_none(self):
         class X:
             pass
-        self.assertIsNotNone(Fixture.create_many(X))
+        self.assertIsNotNone(Autodata.create_many(X))
 
     def test_create_many_local_class_returns_instance(self):
         class X:
             pass
-        self.assertIsInstance(Fixture.create_many(X), list)
+        self.assertIsInstance(Autodata.create_many(X), list)
 
     def test_create_many_local_returns_non_default(self):
         class X:
             pass
-        self.assertNotEqual(Fixture.create_many(X), [X()])
+        self.assertNotEqual(Autodata.create_many(X), [X()])

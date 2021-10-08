@@ -5,7 +5,7 @@ from pyspark.sql import DataFrame
 from pyautodata.generator import TypeDataGenerator
 
 
-class Fixture:
+class Autodata:
     @staticmethod
     def create(t):
         """
@@ -25,5 +25,15 @@ class Fixture:
         """
         items = []
         for i in range(size):
-            items.append(Fixture.create(t))
+            items.append(Autodata.create(t))
         return items
+
+    @staticmethod
+    def create_dataframe(t, rows: int = 3) -> DataFrame:
+        """
+        Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
+
+        :type rows: int
+        :type t: object
+        """
+        raise NotImplementedError

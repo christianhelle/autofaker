@@ -1,6 +1,6 @@
 import unittest
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class SimpleClass:
@@ -23,19 +23,19 @@ class NestedWithNestedCollectionClass:
 class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 
     def test_create_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(NestedWithCollectionClass))
+        self.assertIsNotNone(Autodata.create(NestedWithCollectionClass))
 
     def test_create_nested_class_returns_instance(self):
-        self.assertIsInstance(Fixture.create(NestedWithCollectionClass), NestedWithCollectionClass)
+        self.assertIsInstance(Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass)
 
     def test_create_nested_class_returns_instance_with_nested_not_none(self):
-        self.assertIsNotNone(Fixture.create(NestedWithCollectionClass).inner)
+        self.assertIsNotNone(Autodata.create(NestedWithCollectionClass).inner)
 
     def test_create_nested_class_returns_instance_with_nested_not_empty(self):
-        self.assertNotEqual(0, len(Fixture.create(NestedWithCollectionClass).inner))
+        self.assertNotEqual(0, len(Autodata.create(NestedWithCollectionClass).inner))
 
     def test_create_nested_class_returns_instance_with_new_nested_instance(self):
-        result = Fixture.create(NestedWithCollectionClass)
+        result = Autodata.create(NestedWithCollectionClass)
         self.assertNotEqual(result.id, NestedWithCollectionClass().id)
         for cls in result.inner:
             self.assertIsNotNone(cls)
@@ -46,22 +46,22 @@ class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
 
     def test_create_nested_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(NestedWithCollectionClass))
+        self.assertIsNotNone(Autodata.create(NestedWithCollectionClass))
 
     def test_create_nested_class_returns_instance(self):
-        self.assertIsInstance(Fixture.create(NestedWithCollectionClass), NestedWithCollectionClass)
+        self.assertIsInstance(Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass)
 
     def test_create_nested_class_returns_instance_with_inner_not_none(self):
-        self.assertIsNotNone(Fixture.create(NestedWithNestedCollectionClass).inner)
+        self.assertIsNotNone(Autodata.create(NestedWithNestedCollectionClass).inner)
 
     def test_create_nested_class_returns_instance_with_inner_not_empty(self):
-        self.assertNotEqual(0, len(Fixture.create(NestedWithNestedCollectionClass).inner))
+        self.assertNotEqual(0, len(Autodata.create(NestedWithNestedCollectionClass).inner))
 
     def test_create_nested_class_returns_instance_with_nested_inner_not_empty(self):
-        self.assertNotEqual(0, len(Fixture.create(NestedWithNestedCollectionClass).inner[0].inner))
+        self.assertNotEqual(0, len(Autodata.create(NestedWithNestedCollectionClass).inner[0].inner))
 
     def test_create_nested_class_returns_instance_with_new_nested_instance(self):
-        result = Fixture.create(NestedWithNestedCollectionClass)
+        result = Autodata.create(NestedWithNestedCollectionClass)
         self.assertNotEqual(result.id, NestedWithNestedCollectionClass().id)
         self.assertNotEqual(result.text, NestedWithNestedCollectionClass().text)
         for cls in result.inner:

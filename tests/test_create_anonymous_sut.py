@@ -1,7 +1,7 @@
 import unittest
 from typing import List
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class Person:
@@ -10,9 +10,6 @@ class Person:
 
     def get_introduction(self):
         return f"Hi! My name is {self.name} and I'm {self.age} years old"
-
-    def introduce(self):
-        print(self.get_introduction())
 
 
 class Staff:
@@ -31,14 +28,14 @@ class Staff:
 
     def introduce(self):
         for person in self.people:
-            person.introduce()
+            print(person.get_introduction())
 
 
 class StaffTests(unittest.TestCase):
 
     def test_introduce_everyone(self):
-        people = Fixture.create_many(Person)
-        sut = Fixture.create(Staff)
+        people = Autodata.create_many(Person)
+        sut = Autodata.create(Staff)
         sut.add_people(people)
         sut.introduce()
         self.assertEqual(len(people), sut.get_head_count())

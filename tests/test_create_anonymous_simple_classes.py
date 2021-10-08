@@ -1,6 +1,6 @@
 import unittest
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class AnonymousSimpleClassTestCase(unittest.TestCase):
@@ -9,22 +9,22 @@ class AnonymousSimpleClassTestCase(unittest.TestCase):
         class X:
             pass
 
-        self.assertIsNotNone(Fixture.create(X))
+        self.assertIsNotNone(Autodata.create(X))
 
     def test_create_local_class_returns_instance(self):
         class X:
             pass
 
-        self.assertIsInstance(Fixture.create(X), X)
+        self.assertIsInstance(Autodata.create(X), X)
 
     def test_create_simple_class_returns_not_none(self):
-        self.assertIsNotNone(Fixture.create(SimpleClass))
+        self.assertIsNotNone(Autodata.create(SimpleClass))
 
     def test_create_simple_class_returns_instance(self):
-        self.assertIsInstance(Fixture.create(SimpleClass), SimpleClass)
+        self.assertIsInstance(Autodata.create(SimpleClass), SimpleClass)
 
     def test_create_simple_class_returns_instance_with_new_values(self):
-        result = Fixture.create(SimpleClass)
+        result = Autodata.create(SimpleClass)
         self.assertNotEqual(result.id, SimpleClass().id)
         self.assertNotEqual(result.text, SimpleClass().text)
 

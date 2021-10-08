@@ -2,7 +2,7 @@ import unittest
 import uuid
 from abc import abstractmethod
 
-from pyautodata import Fixture
+from pyautodata import Autodata
 
 
 class CreateTestCase(unittest.TestCase):
@@ -13,17 +13,17 @@ class CreateTestCase(unittest.TestCase):
     def test_create_returns_not_none(self):
         if self.getType() is None:
             return
-        self.assertIsNotNone(Fixture.create(self.getType()))
+        self.assertIsNotNone(Autodata.create(self.getType()))
 
     def test_create_returns_not_type(self):
         if self.getType() is None:
             return
-        self.assertNotIsInstance(Fixture.create(self.getType()), type)
+        self.assertNotIsInstance(Autodata.create(self.getType()), type)
 
     def test_create_returns_not_default(self):
         if self.getType() is None or self.getType() is bool:
             return
-        self.assertNotEqual(Fixture.create(self.getType()), self.getType()())
+        self.assertNotEqual(Autodata.create(self.getType()), self.getType()())
 
 
 class AnonymousIntegerTestCase(CreateTestCase):
