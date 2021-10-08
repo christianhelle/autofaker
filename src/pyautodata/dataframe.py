@@ -50,5 +50,5 @@ class SparkDataFrameGenerator:
 
     def generate(self):
         pdf = PandasDataFrameGenerator(self.t, self.rows).generate()
-        spark = SparkSession.builder.master("local[*]").appName("pyautodata").getOrCreate()
+        spark = SparkSession.builder.getOrCreate()
         return spark.createDataFrame(pdf)
