@@ -7,7 +7,7 @@ from typing import List
 
 from pyspark.sql import DataFrame, SparkSession
 
-from pyautodata.dataframe import PandasDataFrameGenerator
+from pyautodata.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
 from pyautodata.generator import TypeDataGenerator
 
 
@@ -57,6 +57,4 @@ class Autodata:
         :type rows: int
         :type t: object
         """
-        pandas_df = Autodata.create_pandas_dataframe(t)
-        spark = SparkSession.builder.getOrCreate()
-        return spark.createDataFrame(pandas_df)
+        return SparkDataFrameGenerator(t, rows).generate()
