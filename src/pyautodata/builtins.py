@@ -5,7 +5,6 @@ from pyautodata.base import TypeDataGeneratorBase
 
 
 class IntegerGenerator(TypeDataGeneratorBase):
-
     def generate(self):
         return random.randint(0, 2147483647)
 

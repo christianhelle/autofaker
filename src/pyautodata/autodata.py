@@ -48,7 +48,6 @@ class Autodata:
         """
         return PandasDataFrameGenerator(t, rows).generate()
 
-
     @staticmethod
     def create_spark_dataframe(t, rows: int = 3) -> DataFrame:
         """
