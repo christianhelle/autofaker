@@ -10,6 +10,10 @@ setuptools.setup(
     description='Python library designed to minimize the setup/arrange phase of your unit tests',
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where='src')
+    install_requires=[
+        'pandas',
+        'pyspark'
+    ],
     entry_points={
         'console_scripts': [
             'python3=pyautodata.alias:python3',
