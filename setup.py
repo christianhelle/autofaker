@@ -9,7 +9,8 @@ setuptools.setup(
     author_email='christian.helle@outlook.com',
     description='Python library designed to minimize the setup/arrange phase of your unit tests',
     package_dir={'': 'src'},
-    packages=setuptools.find_packages(where='src')
+    packages=setuptools.find_packages(where='src'),
+    python_requires='>=3.7',
     install_requires=[
         'pandas',
         'pyspark'
