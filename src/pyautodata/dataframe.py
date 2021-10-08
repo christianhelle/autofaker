@@ -1,4 +1,9 @@
+import os
+import sys
+
 import pandas as pd
+from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType
 
 from pyautodata.generator import TypeDataGenerator
 
@@ -28,9 +33,6 @@ class PandasDataFrameGenerator:
                 attr = getattr(d, member)
                 row.append(attr)
             rows.append(row)
-
-        print(members)
-        print(rows)
         return pd.DataFrame(rows, columns=members)
 
 
@@ -43,10 +45,10 @@ class SparkDataFrameGenerator:
     """
 
     def __init__(self, t, rows: int = 3):
-        self.__data = []
-        for i in range(rows):
-            self.__data.append(TypeDataGenerator.create(t).generate())
+        self.t = t
+        self.rows = rows
 
     def generate(self):
-        # TODO: Build schema and add data
-        raise NotImplementedError
+        pdf = PandasDataFrameGenerator(self.t, self.rows).generate()
+        spark = SparkSession.builder.master("local[*]").appName("pyautodata").getOrCreate()
+        return spark.createDataFrame(pdf)

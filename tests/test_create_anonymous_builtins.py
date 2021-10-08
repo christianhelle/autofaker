@@ -1,5 +1,4 @@
 import unittest
-import uuid
 from abc import abstractmethod
 
 from pyautodata import Autodata
