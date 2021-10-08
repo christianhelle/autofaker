@@ -4,8 +4,10 @@ Provides classes for anonymous object creation to help minimize the setup/arrang
 
 import typing
 from typing import List
-from pyspark.sql import DataFrame
 
+from pyspark.sql import DataFrame, SparkSession
+
+from pyautodata.dataframe import PandasDataFrameGenerator
 from pyautodata.generator import TypeDataGenerator
 
 
@@ -37,7 +39,14 @@ class Autodata:
         return items
 
     @staticmethod
-    def create_dataframe(t, rows: int = 3) -> DataFrame:
+    def create_pandas_dataframe(t, rows: int = 3):
+        """
+        Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
+
+        :type rows: int
+        :type t: object
+        """
+        return PandasDataFrameGenerator(t, rows).generate()
         """
         Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
 
