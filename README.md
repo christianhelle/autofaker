@@ -9,17 +9,12 @@ import unittest
 from typing import List
 from pyautodata import Autodata
 
-
 class Person:
     age = 10
     name = 'test'
 
     def get_introduction(self):
         return f"Hi! My name is {self.name} and I'm {self.age} years old"
-
-    def introduce(self):
-        print(self.get_introduction())
-
 
 class Staff:
     def __init__(self):
@@ -37,8 +32,7 @@ class Staff:
 
     def introduce(self):
         for person in self.people:
-            person.introduce()
-
+            print(person.get_introduction())
 
 class StaffTests(unittest.TestCase):
 
@@ -48,6 +42,7 @@ class StaffTests(unittest.TestCase):
         sut.add_people(people)
         sut.introduce()
         self.assertEqual(len(people), sut.get_head_count())
+
 ```
 
 output for `Staff.introduce()` will be something like this:
