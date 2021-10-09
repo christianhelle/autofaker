@@ -4,6 +4,20 @@ from typing import List
 from pyautodata import Autodata
 
 
+class Calculator:
+  def add(self, number1: int, number2: int):
+    return number1 + number2
+
+
+class PyAutodataExampleTests(unittest.TestCase):
+
+    def test_introduce_everyone(self):
+        numbers = Autodata.create_many(int, 2)
+        sut = Autodata.create(Calculator)
+        result = sut.add(numbers[0], numbers[1])
+        self.assertEqual(numbers[0] + numbers[1], result)
+
+
 class Person:
     age = 10
     name = 'test'
