@@ -1,5 +1,4 @@
 import pandas as pd
-from pyspark.sql import SparkSession
 
 from pyautodata.generator import TypeDataGenerator
 
@@ -45,6 +44,7 @@ class SparkDataFrameGenerator:
         self.rows = rows
 
     def generate(self):
+        from pyspark.sql import SparkSession
         pdf = PandasDataFrameGenerator(self.t, self.rows).generate()
         spark = SparkSession.builder.getOrCreate()
         return spark.createDataFrame(pdf)
