@@ -1,5 +1,6 @@
 import pandas as pd
 
+from pyautodata.attributes import Attributes
 from pyautodata.generator import TypeDataGenerator
 
 
@@ -17,16 +18,12 @@ class PandasDataFrameGenerator:
             self.__data.append(TypeDataGenerator.create(t).generate())
 
     def generate(self):
-        members = [
-            attr for attr in dir(self.__data[0])
-            if not callable(getattr(self.__data[0], attr)) and not attr.startswith("__")
-        ]
+        members = Attributes(self.__data[0]).get_members()
         rows = []
         for d in self.__data:
             row = []
             for member in members:
-                attr = getattr(d, member)
-                row.append(attr)
+                row.append(Attributes(d).get_attribute(member))
             rows.append(row)
         return pd.DataFrame(rows, columns=members)
 
