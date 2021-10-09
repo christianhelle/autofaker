@@ -1,5 +1,8 @@
+import dataclasses
+
 from pyautodata.builtins import *
 from pyautodata.dates import *
+from pyautodata.attributes import *
 
 
 class TypeDataGenerator:
@@ -21,7 +24,22 @@ class TypeDataGenerator:
         elif type_name == 'list':
             return ListGenerator(t)
         else:
-            return ClassGenerator(t)
+            return DataClassGenerator(t) if dataclasses.is_dataclass(t) else ClassGenerator(t)
+
+
+class DataClassGenerator(TypeDataGeneratorBase):
+    def __init__(self, cls):
+        self.cls = cls
+
+    def generate(self):
+        args = []
+        fields = dataclasses.fields(self.cls)
+        for field in fields:
+            generator = TypeDataGenerator.create(field.type)
+            args.append((field.name, field.type, generator.generate()))
+        name = self.cls.__module__ + '.' + self.cls.__qualname__
+        instance = dataclasses.make_dataclass(name, args)
+        return instance
 
 
 class ClassGenerator(TypeDataGeneratorBase):
@@ -29,22 +47,17 @@ class ClassGenerator(TypeDataGeneratorBase):
         self.instance = cls()
 
     def generate(self):
-        members = [
-            attr for attr in dir(self.instance)
-            if not callable(getattr(self.instance, attr)) and not attr.startswith("__")
-        ]
+        attributes = Attributes(self.instance)
+        members = attributes.get_members()
         for member in members:
-            attr = getattr(self.instance, member)
+            attr = attributes.get_attribute(member)
             if type(attr).__name__ == 'list':
                 for i in range(len(attr)):
-                    item = attr[i]
-                    generator = TypeDataGenerator.create(type(item))
-                    value = generator.generate()
-                    attr[i] = value
+                    generator = TypeDataGenerator.create(type(attr[i]))
+                    attr[i] = generator.generate()
             else:
                 generator = TypeDataGenerator.create(type(attr))
-                value = generator.generate()
-                setattr(self.instance, member, value)
+                attributes.set_value(member, generator.generate())
         return self.instance
 
 
@@ -59,4 +72,3 @@ class ListGenerator(TypeDataGeneratorBase):
             value = generator.generate()
             items.append(value)
         return items
-
