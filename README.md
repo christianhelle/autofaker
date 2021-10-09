@@ -91,7 +91,7 @@ anonymous datetime:  2017-06-19 02:40:41.000084
 anonymous date:      2019-11-10 00:00:00
 ```
 
-Ceate collections containing anonymous variables of built-in types and dates
+Create collections containing anonymous variables of built-in types and dates
 
 ```python
 print(f'anonymous strings:    {Autodata.create_many(str)}')
