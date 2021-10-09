@@ -18,7 +18,8 @@ setuptools.setup(
     packages=setuptools.find_packages(where='src'),
     python_requires='>=3.7',
     install_requires=[
-        'pandas'
+        'pandas',
+        'pyspark>=3.0.1'
     ],
     entry_points={
         'console_scripts': [
