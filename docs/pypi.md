@@ -95,8 +95,8 @@ Ceate collections containing anonymous variables of built-in types and dates
 print(f'anonymous strings:    {Autodata.create_many(str)}')
 print(f'anonymous ints:       {Autodata.create_many(int, 10)}')
 print(f'anonymous floats:     {Autodata.create_many(float, 5)}')
-print(f'anonymous datetime:  {Autodata.create_many(datetime)}')
-print(f'anonymous date:      {Autodata.create_many(datetime.date)}')
+print(f'anonymous datetime:   {Autodata.create_many(datetime)}')
+print(f'anonymous date:       {Autodata.create_many(datetime.date)}')
 ```
 
 The code above might output the following
@@ -159,7 +159,7 @@ text = a3b86f08-c73a-4730-bde7-4bdff5360ef4
 Creates an anonymous dataclass
 
 ```python
-import dataclasses
+from dataclasses import dataclass
 
 @dataclass
 class DataClass:
