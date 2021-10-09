@@ -1,9 +1,5 @@
-import os
-import sys
-
 import pandas as pd
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType
 
 from pyautodata.generator import TypeDataGenerator
 
