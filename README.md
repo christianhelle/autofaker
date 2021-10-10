@@ -1,4 +1,5 @@
 [![build](https://github.com/christianhelle/pyautodata/actions/workflows/build.yml/badge.svg)](https://github.com/christianhelle/pyautodata/actions/workflows/build.yml)
+[![PyPI](https://img.shields.io/pypi/dm/pyautodata)](https://pypi.org/project/pyautodata)
 
 # PyAutodata
 A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
