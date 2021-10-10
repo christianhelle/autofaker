@@ -4,9 +4,7 @@ A Python library designed to minimize the setup/arrange phase of your unit tests
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
 
 This library was initially created for simplifying how to write unit tests for ETL (Extract-Transform-Load) 
-code running from a python library on an Apache Spark cluster in Big Data solutions. 
-This tool is very strongly inspired by [Autofixture](https://github.com/AutoFixture/AutoFixture) - a library for
-writing maintainable unit tests, faster
+code running from a python library on an Apache Spark cluster in Big Data solutions.
 
 When writing unit tests you normally start with creating objects that represent the initial state of the test.
 This phase is called the **arrange** or setup phase of the test.
