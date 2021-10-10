@@ -1,5 +1,3 @@
-# PyAutodata
-
 A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
 
