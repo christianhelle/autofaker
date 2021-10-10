@@ -2,13 +2,19 @@
 [![PyPI](https://img.shields.io/pypi/dm/pyautodata)](https://pypi.org/project/pyautodata)
 
 # PyAutodata
-A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
-write code to create anonymous variables as part of a test cases setup/arrange phase.
 
-When writing unit tests, you normally start with creating objects that represent the initial state of the test.
+A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
+write code to create anonymous variables as part of a test cases setup/arrange phase. 
+
+This library was initially created for simplifying how to write unit tests for ETL (Extract-Transform-Load) 
+code running from a python library on an Apache Spark cluster in Big Data solutions. 
+This tool is very strongly inspired by [Autofixture](https://github.com/AutoFixture/AutoFixture) - a library for
+.NET developers that simplifies unit testing
+
+When writing unit tests you normally start with creating objects that represent the initial state of the test.
 This phase is called the **arrange** or setup phase of the test.
 In most cases, the system you want to test will force you to specify much more information than you really care about, 
-so you frequently end up creating objects with no influence on the test itself, simply to satisfy the compiler/interpreter.
+so you frequently end up creating objects with no influence on the test itself just simply to satisfy the compiler/interpreter
 
 PyAutodata can help by creating such anonymous variables for you. Here's a simple example:
 
