@@ -180,6 +180,82 @@ id = 314075507
 text = 4a3b3cae-f4cf-4502-a7f3-61115a1e0d2a
 ```
 
+Creates an anonymous dataclass using fake data
+
+```python
+@dataclass
+class DataClass:
+    id: int
+
+    name: str
+    address: str
+    job: str
+
+    country: str
+    currency_name: str
+    currency_code: str
+
+    email: str
+    safe_email: str
+    company_email: str
+
+    hostname: str
+    ipv4: str
+    ipv6: str
+
+    text: str
+
+
+data = Autodata.create(DataClass, use_fake_data=True)
+
+print(f'id:               {data.id}')
+print(f'name:             {data.name}')
+print(f'job:              {data.job}\n')
+print(f'address:\n{data.address}\n')
+
+print(f'country:          {data.country}')
+print(f'currency name:    {data.currency_name}')
+print(f'currency code:    {data.currency_code}\n')
+
+print(f'email:            {data.email}')
+print(f'safe email:       {data.safe_email}')
+print(f'work email:       {data.company_email}\n')
+
+print(f'hostname:         {data.hostname}')
+print(f'IPv4:             {data.ipv4}')
+print(f'IPv6:             {data.ipv6}\n')
+
+print(f'text:\n{data.text}')
+```
+
+The code above might output the following
+
+```
+id:               8952
+name:             Justin Wise
+job:              Chief Operating Officer
+
+address:
+65939 Hernandez Parks
+Rochaport, NC 41760
+
+country:          Equatorial Guinea
+currency name:    Burmese kyat
+currency code:    ERN
+
+email:            smithjohn@example.com
+safe email:       kent11@example.com
+work email:       marissagreen@brown-cole.com
+
+hostname:         db-90.hendricks-west.org
+IPv4:             66.139.143.242
+IPv6:             895d:82f7:7c13:e7cb:f35d:c93:aeb2:8eeb
+
+text:
+Movie author culture represent. Enjoy myself over physical green lead but home.
+Share wind factor far minute produce significant. Sense might fact leader.
+```
+
 Create an anonymous class with nested types
 
 ```python
