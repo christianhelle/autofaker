@@ -6,7 +6,7 @@ from pyautodata.base import TypeDataGeneratorBase
 
 class IntegerGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return random.randint(0, 2147483647)
+        return random.randint(0, 10000)
 
 
 class StringGenerator(TypeDataGeneratorBase):
@@ -16,7 +16,7 @@ class StringGenerator(TypeDataGeneratorBase):
 
 class FloatGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return random.uniform(0, 2147483647)
+        return random.uniform(0, 10000)
 
 
 class BooleanGenerator(TypeDataGeneratorBase):
