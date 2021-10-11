@@ -1,8 +1,9 @@
 A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
 
-This library was initially created for simplifying how to write unit tests for ETL (Extract-Transform-Load) 
-code running from a python library on an Apache Spark cluster in Big Data solutions.
+This library is heavily inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture) and was initially created 
+for simplifying how to write unit tests for ETL (Extract-Transform-Load) code running from a python library on an 
+Apache Spark cluster in Big Data solutions.
 
 When writing unit tests you normally start with creating objects that represent the initial state of the test.
 This phase is called the **arrange** or setup phase of the test.
@@ -31,6 +32,26 @@ class CalculatorTests(unittest.TestCase):
         
         # assert
         self.assertEqual(numbers[0] + numbers[1], result)
+```
+
+There are times when completely anonymous variables don't make much sense, especially in data centric scenarios. 
+For these use cases this library uses [Faker](https://github.com/joke2k/faker) for generating fake data. This option 
+is enabled by setting `use_fake_data` is set to `True` when calling the create function
+
+```python
+from dataclasses import dataclass
+from pyautodata import Autodata
+
+@dataclass
+class DataClass:
+    id: int
+    name: str
+    first_name: str
+    last_name: str
+    address: str
+    job: str
+
+data = Autodata.create(DataClass, use_fake_data=True)
 ```
 
 ## Supported data types
