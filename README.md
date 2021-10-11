@@ -41,7 +41,7 @@ class CalculatorTests(unittest.TestCase):
 
 There are times when completely anonymous variables don't make much sense, especially in data centric scenarios. 
 For these use cases this library uses [Faker](https://github.com/joke2k/faker) for generating fake data. This option 
-is enabled by setting `use_fake_data` is set to `True` when calling the create function
+is enabled by setting `use_fake_data` to `True` when calling the `Autodata.create()` function
 
 ```python
 from dataclasses import dataclass
