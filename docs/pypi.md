@@ -367,3 +367,54 @@ root
 |1978525110|dfdc19df-ba47-43d...| 366058214|
 +----------+--------------------+----------+
 ```
+
+Create a Pandas DataFrame using fake data generated from a specified type
+
+```python
+class DataClass:
+    id = 0
+    type = '' 
+    value = 0
+
+pdf = Autodata.create_pandas_dataframe(DataClass, use_fake_data=True)
+print(pdf)
+```
+
+The code above might output the following
+
+```
+  first_name    id last_name          phone_number
+0   Lawrence  7670   Jimenez  001-172-307-0561x471
+1      Bryan  9084    Walker         (697)893-6767
+2       Paul  9824    Thomas    960.555.3577x65487
+```
+
+Create a Spark DataFrame using fake data generated from a specified type
+
+```python
+class DataClass:
+    id = 0
+    type = '' 
+    value = 0
+
+df = Autodata.create_spark_dataframe(DataClass, use_fake_data=True)
+df.printSchema()
+df.show()
+```
+
+The code above might output the following
+
+```
+root
+ |-- id: long (nullable = true)
+ |-- type: string (nullable = true)
+ |-- value: long (nullable = true)
+
++----------+----+--------------------+---------+
+|first_name|  id|                 job|last_name|
++----------+----+--------------------+---------+
+|   Valerie|9010|Operational resea...|    Huber|
+|     Linda|9367|               Actor|    Mills|
+|    Sheena|4773|Civil Service adm...|    Perez|
++----------+----+--------------------+---------+
+```
