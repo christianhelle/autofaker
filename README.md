@@ -56,6 +56,18 @@ class DataClass:
     job: str
 
 data = Autodata.create(DataClass, use_fake_data=True)
+
+print(f'id:     {data.id}')
+print(f'name:   {data.name}')
+print(f'job:    {data.job}\n')
+```
+
+The following code above might output something like:
+
+```
+id:     8952
+name:   Justin Wise
+job:    Chief Operating Officer
 ```
 
 ## Supported data types
