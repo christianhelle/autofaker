@@ -5,6 +5,7 @@ Provides classes for anonymous object creation to help minimize the setup/arrang
 import typing
 from typing import List
 
+from numpy import ufunc
 from pyspark.sql import DataFrame, SparkSession
 
 from pyautodata.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
@@ -17,43 +18,47 @@ class Autodata:
     """
 
     @staticmethod
-    def create(t):
+    def create(t, use_fake_data: bool = False):
         """
         Creates an anonymous variable of the requested type
 
+        :param use_fake_data:
         :type t: object
         """
-        return TypeDataGenerator.create(t).generate()
+        return TypeDataGenerator.create(t, use_fake_data=use_fake_data).generate()
 
     @staticmethod
-    def create_many(t, size: int = 3) -> List[typing.Any]:
+    def create_many(t, size: int = 3, use_fake_data: bool = False) -> List[typing.Any]:
         """
         Creates a list of anonymous variables of the requested type using the specified length (default 3)
 
+        :param use_fake_data:
         :type size: int
         :type t: object
         """
         items = []
         for i in range(size):
-            items.append(Autodata.create(t))
+            items.append(Autodata.create(t, use_fake_data=use_fake_data))
         return items
 
     @staticmethod
-    def create_pandas_dataframe(t, rows: int = 3):
+    def create_pandas_dataframe(t, rows: int = 3, use_fake_data: bool = False):
         """
         Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
 
+        :param use_fake_data:
         :type rows: int
         :type t: object
         """
-        return PandasDataFrameGenerator(t, rows).generate()
+        return PandasDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
 
     @staticmethod
-    def create_spark_dataframe(t, rows: int = 3) -> DataFrame:
+    def create_spark_dataframe(t, rows: int = 3, use_fake_data: bool = False) -> DataFrame:
         """
         Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
 
+        :param use_fake_data:
         :type rows: int
         :type t: object
         """
-        return SparkDataFrameGenerator(t, rows).generate()
+        return SparkDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
