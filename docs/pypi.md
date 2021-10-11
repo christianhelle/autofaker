@@ -45,7 +45,6 @@ from pyautodata import Autodata
 @dataclass
 class DataClass:
     id: int
-    name: str
     first_name: str
     last_name: str
     address: str
