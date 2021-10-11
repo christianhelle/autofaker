@@ -111,26 +111,6 @@ anonymous datetime:  2017-06-19 02:40:41.000084
 anonymous date:      2019-11-10 00:00:00
 ```
 
-Create collections containing anonymous variables of built-in types and dates
-
-```python
-print(f'anonymous strings:    {Autodata.create_many(str)}')
-print(f'anonymous ints:       {Autodata.create_many(int, 10)}')
-print(f'anonymous floats:     {Autodata.create_many(float, 5)}')
-print(f'anonymous datetime:   {Autodata.create_many(datetime)}')
-print(f'anonymous date:       {Autodata.create_many(datetime.date)}')
-```
-
-The code above might output the following
-
-```
-anonymous strings:    ['f7ebaf30-468b-4282-9189-1c9f5a98c6e4', '6736ccdd-fb06-4fd0-89d7-0979a8493d79', 'f15736eb-2860-4f42-91c1-e48c8d25ea24']
-anonymous ints:       [706865421, 1670005830, 1966806327, 434303989, 454137879, 1940686334, 307384148, 1090980019, 936257994, 9154693]
-anonymous floats:     [684196408.4474499, 1188750352.5678303, 963320036.0875875, 1702383000.8534415, 1865911801.1348956]
-anonymous datetime:   [datetime.datetime(2028, 12, 2, 13, 0, 52, 140), datetime.datetime(2021, 9, 7, 22, 39, 58, 919), datetime.datetime(2027, 12, 25, 13, 15, 28, 694)]
-anonymous date:       [datetime.datetime(2019, 3, 3, 0, 0), datetime.datetime(2026, 4, 13, 0, 0), datetime.datetime(2016, 2, 24, 0, 0)]
-```
-
 Creates an anonymous class
 
 ```python
