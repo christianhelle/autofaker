@@ -1,7 +1,7 @@
 [![build](https://github.com/christianhelle/autofaker/actions/workflows/build.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build.yml)
 [![PyPI](https://img.shields.io/pypi/dm/autofaker)](https://pypi.org/project/autofaker)
 
-# autofaker
+# AutoFaker
 
 A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
@@ -15,7 +15,7 @@ This phase is called the **arrange** or setup phase of the test.
 In most cases, the system you want to test will force you to specify much more information than you really care about, 
 so you frequently end up creating objects with no influence on the test itself just simply to satisfy the compiler/interpreter
 
-autofaker can help by creating such anonymous variables for you. Here's a simple example:
+AutoFaker can help by creating such anonymous variables for you. Here's a simple example:
 
 ```python
 import unittest
