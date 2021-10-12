@@ -2,7 +2,7 @@ import random
 import unittest
 from abc import abstractmethod
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class CreateManyTestCase(unittest.TestCase):

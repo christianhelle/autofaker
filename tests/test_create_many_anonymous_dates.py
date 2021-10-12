@@ -3,7 +3,7 @@ from abc import abstractmethod
 from datetime import date, datetime
 import random
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class CreateManyTestCase(unittest.TestCase):

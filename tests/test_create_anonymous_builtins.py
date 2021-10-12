@@ -1,7 +1,7 @@
 import unittest
 from abc import abstractmethod
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class CreateTestCase(unittest.TestCase):

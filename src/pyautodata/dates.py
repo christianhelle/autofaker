@@ -1,7 +1,7 @@
 import datetime
 import random
 
-from pyautodata.base import TypeDataGeneratorBase
+from autofaker.base import TypeDataGeneratorBase
 
 
 class DatetimeGenerator(TypeDataGeneratorBase):

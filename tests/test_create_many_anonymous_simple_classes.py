@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class SimpleClass:

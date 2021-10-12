@@ -4,9 +4,9 @@ with open('docs/pypi.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='pyautodata',
+    name='autofaker',
     version='0.1.0',
-    url='https://github.com/christianhelle/pyautodata',
+    url='https://github.com/christianhelle/autofaker',
     license='MIT License',
     license_files=["LICENSE"],
     author='Christian Helle',
@@ -20,7 +20,7 @@ setuptools.setup(
     install_requires=['pandas', 'pyspark', 'faker'],
     entry_points={
         'console_scripts': [
-            'python3=pyautodata.alias:python3',
+            'python3=autofaker.alias:python3',
         ],
     },
 )

@@ -2,7 +2,7 @@ import sys
 import unittest
 from dataclasses import dataclass
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 @dataclass

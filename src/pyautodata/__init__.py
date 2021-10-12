@@ -4,4 +4,4 @@ Provides modules for creation anonymous variables to help minimize the setup/arr
 
 __version__ = "0.1.0"
 
-from pyautodata.autodata import Autodata
+from autofaker.autodata import Autodata

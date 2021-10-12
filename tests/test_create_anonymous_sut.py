@@ -1,7 +1,7 @@
 import unittest
 from typing import List
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class Calculator:
@@ -9,7 +9,7 @@ class Calculator:
     return number1 + number2
 
 
-class PyAutodataExampleTests(unittest.TestCase):
+class autofakerExampleTests(unittest.TestCase):
 
     def test_introduce_everyone(self):
         numbers = Autodata.create_many(int, 2)

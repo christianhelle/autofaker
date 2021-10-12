@@ -10,11 +10,11 @@ This phase is called the **arrange** or setup phase of the test.
 In most cases, the system you want to test will force you to specify much more information than you really care about, 
 so you frequently end up creating objects with no influence on the test itself just simply to satisfy the compiler/interpreter
 
-PyAutodata can help by creating such anonymous variables for you. Here's a simple example:
+autofaker can help by creating such anonymous variables for you. Here's a simple example:
 
 ```python
 import unittest
-from pyautodata import Autodata
+from autofaker import Autodata
 
 class Calculator:
   def add(self, number1: int, number2: int):
@@ -40,7 +40,7 @@ is enabled by setting `use_fake_data` to `True` when calling the `Autodata.creat
 
 ```python
 from dataclasses import dataclass
-from pyautodata import Autodata
+from autofaker import Autodata
 
 @dataclass
 class DataClass:
@@ -67,7 +67,7 @@ job:    Chief Operating Officer
 
 ## Supported data types
 
-Currently PyAutodata supports creating anonymous variables for the following data types:
+Currently autofaker supports creating anonymous variables for the following data types:
 
 Built-in types:
 - int
@@ -91,16 +91,16 @@ Dataframes:
 
 ## Getting Started
 
-[PyAutodata](https://pypi.org/project/pyautodata/) is available from PyPI and should be installed using `pip`
+[autofaker](https://pypi.org/project/autofaker/) is available from PyPI and should be installed using `pip`
 
 ```
-pip install pyautodata
+pip install autofaker
 ```
 
 Next you need to import the `Autodata` class
 
 ```python
-from pyautodata import Autodata
+from autofaker import Autodata
 ```
 
 Create anonymous built-in types like `int`, `float`, `str` and datetime types like `datetime` and `date`

@@ -1,8 +1,8 @@
 from faker import Faker
 
-from pyautodata.attributes import Attributes
-from pyautodata.base import TypeDataGeneratorBase
-from pyautodata.builtins import StringGenerator
+from autofaker.attributes import Attributes
+from autofaker.base import TypeDataGeneratorBase
+from autofaker.builtins import StringGenerator
 
 faker = Faker()
 

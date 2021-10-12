@@ -1,8 +1,8 @@
 import dataclasses
 
-from pyautodata.builtins import *
-from pyautodata.dates import *
-from pyautodata.fakes import *
+from autofaker.builtins import *
+from autofaker.dates import *
+from autofaker.fakes import *
 
 
 class TypeDataGenerator:

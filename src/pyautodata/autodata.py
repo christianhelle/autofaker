@@ -8,8 +8,8 @@ from typing import List
 from numpy import ufunc
 from pyspark.sql import DataFrame, SparkSession
 
-from pyautodata.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
-from pyautodata.generator import TypeDataGenerator
+from autofaker.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
+from autofaker.generator import TypeDataGenerator
 
 
 class Autodata:

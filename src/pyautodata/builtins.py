@@ -1,7 +1,7 @@
 import random
 import uuid
 
-from pyautodata.base import TypeDataGeneratorBase
+from autofaker.base import TypeDataGeneratorBase
 
 
 class IntegerGenerator(TypeDataGeneratorBase):

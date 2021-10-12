@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, date
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class AnonymousDatetimeTestCase(unittest.TestCase):

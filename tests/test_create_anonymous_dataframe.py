@@ -1,7 +1,7 @@
 import sys
 import unittest
 
-from pyautodata import Autodata
+from autofaker import Autodata
 
 
 class StaffTests(unittest.TestCase):

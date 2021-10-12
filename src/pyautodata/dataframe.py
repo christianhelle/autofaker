@@ -1,7 +1,7 @@
 import pandas as pd
 
-from pyautodata.attributes import Attributes
-from pyautodata.generator import TypeDataGenerator
+from autofaker.attributes import Attributes
+from autofaker.generator import TypeDataGenerator
 
 
 class PandasDataFrameGenerator:
