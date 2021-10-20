@@ -3,10 +3,10 @@ Provides classes for anonymous object creation to help minimize the setup/arrang
 """
 
 import typing
+import unittest
 from typing import List
 
-from numpy import ufunc
-from pyspark.sql import DataFrame, SparkSession
+from pyspark.sql import DataFrame
 
 from autofaker.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
 from autofaker.generator import TypeDataGenerator
@@ -62,3 +62,36 @@ class Autodata:
         :type t: object
         """
         return SparkDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
+
+    @staticmethod
+    def create_argument(t, use_fake_data: bool = False):
+        """
+        Creates an anonymous variable of the requested type and pass it as an argument to a unit test function
+
+        Example:
+
+        import unittest
+
+        from autofaker import Autodata
+
+        class SampleTest(unittest.TestCase):
+            @Autodata.create_argument(str)
+
+            def test_create_str_argument_using_decorator(self, text):
+                self.assertIsNotNone(text)
+
+
+        :param use_fake_data:
+        :type t: object
+        """
+        def decorator(function):
+            def wrapper(*args):
+                if len(args) == 0:
+                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+                test_class = args[0]
+                if issubclass(test_class.__class__, unittest.TestCase) is False:
+                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+                value = Autodata.create(t, use_fake_data)
+                return function(test_class, value)
+            return wrapper
+        return decorator
