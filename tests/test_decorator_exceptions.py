@@ -5,23 +5,6 @@ from autofaker import Autodata
 
 class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
 
-    def test_create_argument_throws_error_when_decorating_non_testmethod(self):
-        with self.assertRaises(NotImplementedError):
-            class X:
-                @Autodata.create_argument(str)
-                def not_test_method(self):
-                    pass
-            X().not_test_method()
-
-    def test_create_argument_throws_error_when_used_without_arguments(self):
-        with self.assertRaises(NotImplementedError):
-            class X:
-                @staticmethod
-                @Autodata.create_argument(str)
-                def not_test_method():
-                    pass
-            X().not_test_method()
-
     def test_create_arguments_throws_error_when_decorating_non_testmethod(self):
         with self.assertRaises(NotImplementedError):
             class X:
@@ -35,14 +18,5 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
             class X:
                 @Autodata.create_arguments()
                 def not_test_method(self):
-                    pass
-            X().not_test_method()
-
-    def test_create_arguments_throws_error_when_used_without_arguments(self):
-        with self.assertRaises(NotImplementedError):
-            class X:
-                @staticmethod
-                @Autodata.create_arguments()
-                def not_test_method():
                     pass
             X().not_test_method()
