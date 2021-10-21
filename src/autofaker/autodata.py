@@ -95,3 +95,39 @@ class Autodata:
                 return function(test_class, value)
             return wrapper
         return decorator
+
+    @staticmethod
+    def create_arguments(*types: object, use_fake_data: bool = False):
+        """
+        Creates anonymous variable of the requested types and pass them as arguments to a unit test function
+
+        Example:
+
+        import unittest
+
+        from autofaker import Autodata
+
+        class SampleTest(unittest.TestCase):
+            @Autodata.create_arguments(str, int, float, bool)
+
+            def test_create_str_argument_using_decorator(self, text, number, decimal, boolean):
+                self.assertIsNotNone(text)
+
+
+        :param use_fake_data:
+        :type types: tuple
+        """
+        def decorator(function):
+            def wrapper(*args):
+                if len(args) == 0:
+                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+                test_class = args[0]
+                if issubclass(test_class.__class__, unittest.TestCase) is False:
+                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+                values = []
+                for t in types:
+                    value = Autodata.create(t, use_fake_data)
+                    values.append(value)
+                return function(test_class, *tuple(values))
+            return wrapper
+        return decorator
