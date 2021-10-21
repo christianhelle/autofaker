@@ -31,13 +31,30 @@ class CalculatorTests(unittest.TestCase):
     def test_can_add_two_numbers(self):      
         # arrange
         numbers = Autodata.create_many(int, 2)
-        sut = Autodata.create(Calculator)
-        
+        sut = Autodata.create(Calculator)        
         # act
-        result = sut.add(numbers[0], numbers[1])
-        
+        result = sut.add(numbers[0], numbers[1])        
         # assert
         self.assertEqual(numbers[0] + numbers[1], result)
+```
+
+Since the point of this library is to simplify the **arrange** step of writing unit tests, we can use the
+`@Autodata.create_arguments` decorator to create anonymous variables and construct our system under test
+
+```python
+import unittest
+from autofaker import Autodata
+
+class Calculator:
+  def add(self, number1: int, number2: int):
+    return number1 + number2
+
+class CalculatorTests(unittest.TestCase):
+
+    @Autodata.create_arguments(Calculator, int, int)
+    def test_can_add_two_numbers_using_test_arguments(self, sut, number1, number2):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)
 ```
 
 There are times when completely anonymous variables don't make much sense, especially in data centric scenarios. 
