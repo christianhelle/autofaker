@@ -37,7 +37,7 @@ class Autodata:
         :type t: object
         """
         items = []
-        for i in range(size):
+        for _ in range(size):
             items.append(Autodata.create(t, use_fake_data=use_fake_data))
         return items
 

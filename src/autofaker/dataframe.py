@@ -18,7 +18,7 @@ class PandasDataFrameGenerator:
         :type use_fake_data: bool
         """
         self.__data = []
-        for i in range(rows):
+        for _ in range(rows):
             self.__data.append(TypeDataGenerator.create(t, use_fake_data=use_fake_data).generate())
 
     def generate(self):
