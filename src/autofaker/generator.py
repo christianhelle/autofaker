@@ -1,8 +1,9 @@
 import dataclasses
 
-from autofaker.builtins import *
-from autofaker.dates import *
-from autofaker.fakes import *
+from autofaker.attributes import Attributes
+from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator
+from autofaker.dates import DatetimeGenerator, DateGenerator
+from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator, TypeDataGeneratorBase
 
 
 class TypeDataGenerator:
