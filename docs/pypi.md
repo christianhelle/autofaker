@@ -44,7 +44,6 @@ class Calculator:
     return number1 + number2
 
 class CalculatorTests(unittest.TestCase):
-
     @Autodata.create_arguments(Calculator, int, int)
     def test_can_add_two_numbers_using_test_arguments(self, sut, number1, number2):
         result = sut.add(number1, number2)
