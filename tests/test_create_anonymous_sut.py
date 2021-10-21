@@ -9,13 +9,18 @@ class Calculator:
     return number1 + number2
 
 
-class autofakerExampleTests(unittest.TestCase):
+class CalculatorTests(unittest.TestCase):
 
-    def test_introduce_everyone(self):
+    def test_can_add_two_numbers(self):
         numbers = Autodata.create_many(int, 2)
         sut = Autodata.create(Calculator)
         result = sut.add(numbers[0], numbers[1])
         self.assertEqual(numbers[0] + numbers[1], result)
+
+    @Autodata.create_arguments(Calculator, int, int)
+    def test_can_add_two_numbers_using_test_arguments(self, sut, number1, number2):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)
 
 
 class Person:
