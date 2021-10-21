@@ -27,7 +27,6 @@ class Calculator:
     return number1 + number2
 
 class CalculatorTests(unittest.TestCase):
-
     def test_can_add_two_numbers(self):      
         # arrange
         numbers = Autodata.create_many(int, 2)
