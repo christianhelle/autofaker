@@ -10,7 +10,7 @@ class StaffTests(unittest.TestCase):
         pdf = Autodata.create_pandas_dataframe(SimpleClass)
         self.assertIsNotNone(pdf)
 
-    @unittest.skipIf(sys.platform.startswith("win"), "requires Windows")
+    @unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
     def test_create_spark_dataframe_returns_not_none(self):
         df = Autodata.create_spark_dataframe(SimpleClass)
         self.assertIsNotNone(df)
