@@ -35,4 +35,4 @@ jobs:
       - name: Install the package
         run: python setup.py develop
       - name: Run Tests
-        run: python -m pytest tests/
+        run: python -m pytest tests/ -v --cov --cov-report=xml --cov-report=term-missing
