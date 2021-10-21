@@ -56,3 +56,18 @@ class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
     @Autodata.create_argument(date, use_fake_data=True)
     def test_create_date_using_decorator(self, d):
         self.assertIsNotNone(d)
+
+
+class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
+
+    @Autodata.create_arguments(str, int, float)
+    def test_create_primitives_using_decorator(self, text, number, decimal):
+        self.assertIsNotNone(text)
+        self.assertNotEqual(number, 0)
+        self.assertNotEqual(decimal, float())
+
+    @Autodata.create_arguments(str, int, float, use_fake_data=True)
+    def test_create_primitives_using_decorator_with_fakes(self, text, number, decimal):
+        self.assertIsNotNone(text)
+        self.assertNotEqual(number, 0)
+        self.assertNotEqual(decimal, float())

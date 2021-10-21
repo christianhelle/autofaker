@@ -31,7 +31,7 @@ class AnonymousSimpleClassViaDecoratorWithFakesTestCase(unittest.TestCase):
         self.assertIsNotNone(instance)
 
     @Autodata.create_argument(SimpleClass, use_fake_data=True)
-    def test_create_simple_class_using_decoratorreturns_instance(self, instance):
+    def test_create_simple_class_using_decorator_returns_instance(self, instance):
         self.assertIsInstance(instance, SimpleClass)
 
     @Autodata.create_argument(SimpleClass, use_fake_data=True)
