@@ -9,7 +9,7 @@ on:
       use-test-pypi:
         required: false
         type: boolean
-        default: 'false'
+        default: false
 
 jobs:
   test:
