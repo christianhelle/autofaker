@@ -11,6 +11,6 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/build.yml@main
+    uses: christianhelle/autofaker/.github/workflows/build.yml@main
     with:
       os: ubuntu-latest
