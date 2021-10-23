@@ -34,7 +34,13 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
 
-      - name: Sleep for 30 seconds
+      - name: Sleep for 30 seconds (Bash)
+        if: ${{ inputs.os != 'windows-latest' }}
+        run: sleep 30s
+        shell: bash
+
+      - name: Sleep for 30 seconds (Powershell)
+        if: ${{ inputs.os == 'windows-latest' }}
         run: Start-Sleep -s 30
         shell: powershell
 
@@ -46,11 +52,11 @@ jobs:
           pip install pyspark
 
       - name: Install Requirements from Test PyPi
-        if: ${{ inputs.use-test-pypi == true }}
+        if: ${{ inputs.use-test-pypi }}
         run: pip install -i https://test.pypi.org/simple/ autofaker
 
       - name: Install Requirements from PyPi
-        if: ${{ inputs.use-test-pypi == false }}
+        if: ${{ !inputs.use-test-pypi }}
         run: pip install autofaker
 
       - name: Run Tests
