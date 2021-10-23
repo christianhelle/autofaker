@@ -1,4 +1,6 @@
-[![build](https://github.com/christianhelle/autofaker/actions/workflows/build.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build.yml)
+[![build](https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml)
+[![build](https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml)
+[![build](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhelle_autofaker&metric=alert_status)](https://sonarcloud.io/dashboard?id=christianhelle_autofaker)
 [![PyPI](https://img.shields.io/pypi/dm/autofaker)](https://pypi.org/project/autofaker)
 
