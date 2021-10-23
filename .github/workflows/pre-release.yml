@@ -12,6 +12,7 @@ env:
   VERSION: 0.2.dev${{ github.run_number }}
 
 jobs:
+
   pre-release:
     runs-on: ubuntu-latest
     steps:
@@ -51,3 +52,21 @@ jobs:
         with:
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
+
+  test-linux:
+    needs: pre-release
+    uses: ./.github/workflows/test.yml@main
+    with:
+      os: ubuntu-latest
+
+  test-mac:
+    needs: pre-release
+    uses: ./.github/workflows/test.yml@main
+    with:
+      os: macos-latest
+
+  test-windows:
+    needs: pre-release
+    uses: ./.github/workflows/test.yml@main
+    with:
+      os: windows-latest
