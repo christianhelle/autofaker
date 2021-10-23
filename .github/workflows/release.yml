@@ -10,6 +10,7 @@ env:
   VERSION: 0.2.${{ github.run_number }}
 
 jobs:
+
   release:
     runs-on: ubuntu-latest
     steps:
@@ -51,3 +52,24 @@ jobs:
               ref: "refs/tags/${{ env.VERSION }}",
               sha: context.sha
             })
+
+  test-linux:
+    needs: release
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: ubuntu-latest
+      use-test-pypi: false
+
+  test-mac:
+    needs: release
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: macos-latest
+      use-test-pypi: false
+
+  test-windows:
+    needs: release
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: windows-latest
+      use-test-pypi: false
