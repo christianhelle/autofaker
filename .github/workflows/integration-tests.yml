@@ -1,0 +1,29 @@
+name: integration-tests
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/integration-tests.yml
+  schedule:
+    - cron:  '0 8 * * *'
+
+jobs:
+
+  test-linux:
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: ubuntu-latest
+      use-test-pypi: false
+
+  test-mac:
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: macos-latest
+      use-test-pypi: false
+
+  test-windows:
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
+    with:
+      os: windows-latest
+      use-test-pypi: false
