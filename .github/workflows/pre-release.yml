@@ -55,18 +55,18 @@ jobs:
 
   test-linux:
     needs: pre-release
-    uses: ./.github/workflows/test.yml@main
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
     with:
       os: ubuntu-latest
 
   test-mac:
     needs: pre-release
-    uses: ./.github/workflows/test.yml@main
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
     with:
       os: macos-latest
 
   test-windows:
     needs: pre-release
-    uses: ./.github/workflows/test.yml@main
+    uses: christianhelle/autofaker/.github/workflows/test.yml@main
     with:
       os: windows-latest
