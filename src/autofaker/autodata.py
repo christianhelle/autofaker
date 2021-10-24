@@ -148,8 +148,11 @@ def get_test_class(*args):
 
 def create_function_args(function, *types, use_fake_data: bool = False) -> List:
     values = []
-    argtpes = inspect.getfullargspec(function).annotations.values() if types is None or len(types) == 0 else types
-    for t in argtpes:
+    argtpes = inspect.getfullargspec(function)
+    args = argtpes.annotations.values() if types is None or len(types) == 0 else types
+    for t in args:
         value = Autodata.create(t, use_fake_data)
         values.append(value)
+    if len(argtpes.args) - 1 != len(values):
+        raise ValueError("Missing argument annotations. Please declare the type of every argument")
     return values
