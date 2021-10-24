@@ -71,3 +71,18 @@ class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
+
+
+class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
+
+    @Autodata.create_anonymous_arguments
+    def test_create_anonymous_arguments_using_decorator(self, text: str, number: int, decimal: float):
+        self.assertIsNotNone(text)
+        self.assertNotEqual(number, 0)
+        self.assertNotEqual(decimal, float())
+
+    @Autodata.create_fake_arguments
+    def test_create_fake_arguments_using_decorator(self, text: str, number: int, decimal: float):
+        self.assertIsNotNone(text)
+        self.assertNotEqual(number, 0)
+        self.assertNotEqual(decimal, float())

@@ -5,6 +5,7 @@ Provides classes for anonymous object creation to help minimize the setup/arrang
 import typing
 import unittest
 from typing import List
+import inspect
 
 from pyspark.sql import DataFrame
 
@@ -98,3 +99,66 @@ class Autodata:
                 return function(test_class, *tuple(values))
             return wrapper
         return decorator
+
+    @staticmethod
+    def create_anonymous_arguments(function):
+        """
+        Creates anonymous variable of the requested types and pass them as arguments to a unit test function
+
+        Example:
+
+        import unittest
+
+        from autofaker import Autodata
+
+        class SampleTest(unittest.TestCase):
+            @Autodata.create_anonymous_arguments
+
+            def test_create_anonymous_arguments(self, text: str, number: int, decimal: float, boolean: bool):
+                self.assertIsNotNone(text)
+        """
+        def wrapper(*args, **kwargs):
+            if len(args) == 0:
+                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+            test_class = args[0]
+            if issubclass(test_class.__class__, unittest.TestCase) is False:
+                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+            argtpes = inspect.getfullargspec(function)
+            values = []
+            for t in argtpes.annotations.values():
+                value = Autodata.create(t)
+                values.append(value)
+            return function(test_class, *tuple(values))
+        return wrapper
+
+    @staticmethod
+    def create_fake_arguments(function):
+        """
+        Creates fake values for the variables of the requested types and pass them as arguments to a unit test function
+
+        Example:
+
+        import unittest
+
+        from autofaker import Autodata
+
+        class SampleTest(unittest.TestCase):
+            @Autodata.create_fake_arguments
+
+            def test_create_fake_arguments(self, text: str, number: int, decimal: float, boolean: bool):
+                self.assertIsNotNone(text)
+        """
+        def wrapper(*args, **kwargs):
+            if len(args) == 0:
+                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+            test_class = args[0]
+            if issubclass(test_class.__class__, unittest.TestCase) is False:
+                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+            argtpes = inspect.getfullargspec(function)
+            values = []
+            for t in argtpes.annotations.values():
+                value = Autodata.create(t, use_fake_data=True)
+                values.append(value)
+            return function(test_class, *tuple(values))
+        return wrapper
+
