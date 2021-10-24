@@ -34,14 +34,14 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
 
-      - name: Sleep for 30 seconds (Bash)
+      - name: Sleep for 60 seconds (Bash)
         if: ${{ inputs.os != 'windows-latest' }}
-        run: sleep 30s
+        run: sleep 60s
         shell: bash
 
-      - name: Sleep for 30 seconds (Powershell)
+      - name: Sleep for 60 seconds (Powershell)
         if: ${{ inputs.os == 'windows-latest' }}
-        run: Start-Sleep -s 30
+        run: Start-Sleep -s 60
         shell: powershell
 
       - name: Install Requirements
