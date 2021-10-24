@@ -93,7 +93,8 @@ class Autodata:
                 if issubclass(test_class.__class__, unittest.TestCase) is False:
                     raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
                 values = []
-                for t in types:
+                argtpes = inspect.getfullargspec(function).annotations.values() if len(types) == 0 else types
+                for t in argtpes:
                     value = Autodata.create(t, use_fake_data)
                     values.append(value)
                 return function(test_class, *tuple(values))
