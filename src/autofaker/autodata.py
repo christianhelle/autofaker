@@ -87,17 +87,8 @@ class Autodata:
         """
         def decorator(function):
             def wrapper(*args):
-                if len(args) == 0:
-                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-                test_class = args[0]
-                if issubclass(test_class.__class__, unittest.TestCase) is False:
-                    raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-                values = []
-                argtpes = inspect.getfullargspec(function).annotations.values() if len(types) == 0 else types
-                for t in argtpes:
-                    value = Autodata.create(t, use_fake_data)
-                    values.append(value)
-                return function(test_class, *tuple(values))
+                return function(get_test_class(*args),
+                                *tuple(create_function_args(function, *tuple(types), use_fake_data=use_fake_data)))
             return wrapper
         return decorator
 
@@ -118,18 +109,9 @@ class Autodata:
             def test_create_anonymous_arguments(self, text: str, number: int, decimal: float, boolean: bool):
                 self.assertIsNotNone(text)
         """
-        def wrapper(*args, **kwargs):
-            if len(args) == 0:
-                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-            test_class = args[0]
-            if issubclass(test_class.__class__, unittest.TestCase) is False:
-                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-            argtpes = inspect.getfullargspec(function)
-            values = []
-            for t in argtpes.annotations.values():
-                value = Autodata.create(t)
-                values.append(value)
-            return function(test_class, *tuple(values))
+        def wrapper(*args):
+            return function(get_test_class(*args),
+                            *tuple(create_function_args(function)))
         return wrapper
 
     @staticmethod
@@ -149,17 +131,25 @@ class Autodata:
             def test_create_fake_arguments(self, text: str, number: int, decimal: float, boolean: bool):
                 self.assertIsNotNone(text)
         """
-        def wrapper(*args, **kwargs):
-            if len(args) == 0:
-                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-            test_class = args[0]
-            if issubclass(test_class.__class__, unittest.TestCase) is False:
-                raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
-            argtpes = inspect.getfullargspec(function)
-            values = []
-            for t in argtpes.annotations.values():
-                value = Autodata.create(t, use_fake_data=True)
-                values.append(value)
-            return function(test_class, *tuple(values))
+        def wrapper(*args):
+            return function(get_test_class(*args),
+                            *tuple(create_function_args(function, use_fake_data=True)))
         return wrapper
 
+
+def get_test_class(*args):
+    if len(args) == 0:
+        raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+    test_class = args[0]
+    if issubclass(test_class.__class__, unittest.TestCase) is False:
+        raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
+    return test_class
+
+
+def create_function_args(function, *types, use_fake_data: bool = False) -> List:
+    values = []
+    argtpes = inspect.getfullargspec(function).annotations.values() if types is None or len(types) == 0 else types
+    for t in argtpes:
+        value = Autodata.create(t, use_fake_data)
+        values.append(value)
+    return values
