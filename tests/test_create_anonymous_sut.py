@@ -22,6 +22,21 @@ class CalculatorTests(unittest.TestCase):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
+    @Autodata.create_arguments()
+    def test_can_add_two_numbers_using_annotated_arguments(self, sut: Calculator, number1: int, number2: int):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)
+
+    @Autodata.create_anonymous_arguments
+    def test_can_add_two_numbers_using_anonymous_arguments(self, sut: Calculator, number1: int, number2: int):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)
+
+    @Autodata.create_fake_arguments
+    def test_can_add_two_numbers_using_fake_arguments(self, sut: Calculator, number1: int, number2: int):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)
+
 
 class Person:
     age = 10
