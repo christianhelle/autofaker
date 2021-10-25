@@ -62,7 +62,7 @@ class DataClassGenerator(TypeDataGeneratorBase):
 class ClassGenerator(TypeDataGeneratorBase):
     def __init__(self, cls, use_fake_data: bool = False):
         self.use_fake_data = use_fake_data
-        self._try_create_instance(cls, use_fake_data)
+        self._try_create_instance(cls)
 
     def generate(self):
         attributes = Attributes(self.instance)
@@ -78,13 +78,13 @@ class ClassGenerator(TypeDataGeneratorBase):
                 attributes.set_value(member, generator.generate())
         return self.instance
 
-    def _try_create_instance(self, cls, use_fake_data):
+    def _try_create_instance(self, cls):
         try:
             self.instance = cls()
         except TypeError:
-            self._create_with_init_args(cls, use_fake_data)
+            self._create_with_init_args(cls)
 
-    def _create_with_init_args(self, cls, use_fake_data):
+    def _create_with_init_args(self, cls):
         init_args = inspect.getfullargspec(cls.__init__)
         values = []
         for t in init_args.annotations.values():
@@ -94,10 +94,10 @@ class ClassGenerator(TypeDataGeneratorBase):
                 items = []
                 for _ in range(3):
                     generator = TypeDataGenerator.create(list_arg[0], use_fake_data=self.use_fake_data)
-                    items.append(generator)
+                    items.append(generator.generate())
                 values.append(items)
             else:
-                generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
+                generator = TypeDataGenerator.create(t, use_fake_data=self.use_fake_data)
                 value = generator.generate()
                 values.append(value)
         self.instance = cls(*tuple(values))

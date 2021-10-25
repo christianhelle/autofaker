@@ -193,3 +193,13 @@ class ConstructorWithListArguments:
 class ConstructorWithListArgumentsTests(unittest.TestCase):
     def test_can_construct_sut(self):
         self.assertIsNotNone(Autodata.create(ConstructorWithListArguments))
+
+
+class ConstructorWithClassListArguments:
+    def __init__(self, items: List[ConstructorWithPrimitiveArguments]):
+        self.items = items
+
+
+class ConstructorWithClassListArgumentsTests(unittest.TestCase):
+    def test_can_construct_sut(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithClassListArguments))
