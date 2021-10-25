@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import dataclass
 from typing import List
 
 from autofaker import Autodata
@@ -151,3 +152,33 @@ class ConstructorWithDoubleNestedClassArgumentsTests(unittest.TestCase):
 
     def test_constructed_sut_inner_inner_inner_has_correct_type(self):
         self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner.inner, ConstructorWithPrimitiveArguments)
+
+
+@dataclass
+class DataClass:
+    id: int
+    name: str
+    age: int
+    email: str
+
+
+class ConstructorWithDataClassArguments:
+    def __init__(self, data: DataClass):
+        self.data = data
+
+
+class ConstructorWithDataClassArgumentsTests(unittest.TestCase):
+    def test_can_construct_sut(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments))
+
+    def test_constructed_sut_id_not_none(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.id)
+
+    def test_constructed_sut_age_not_none(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.age)
+
+    def test_constructed_sut_name_not_none(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.name)
+
+    def test_constructed_sut_email_not_none(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.email)
