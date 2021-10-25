@@ -73,14 +73,17 @@ class ClassGenerator(TypeDataGeneratorBase):
     def _try_create_instance(self, cls, use_fake_data):
         try:
             self.instance = cls()
-        except TypeError as e:
-            init_args = inspect.getfullargspec(cls.__init__)
-            values = []
-            for t in init_args.annotations.values():
-                generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
-                value = generator.generate()
-                values.append(value)
-            self.instance = cls(*tuple(values))
+        except TypeError:
+            self._create_with_init_args(cls, use_fake_data)
+
+    def _create_with_init_args(self, cls, use_fake_data):
+        init_args = inspect.getfullargspec(cls.__init__)
+        values = []
+        for t in init_args.annotations.values():
+            generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
+            value = generator.generate()
+            values.append(value)
+        self.instance = cls(*tuple(values))
 
 
 class ListGenerator(TypeDataGeneratorBase):
