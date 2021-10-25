@@ -1,5 +1,6 @@
 import dataclasses
 import inspect
+import typing
 
 from autofaker.attributes import Attributes
 from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator
@@ -10,7 +11,7 @@ from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGen
 class TypeDataGenerator:
     @staticmethod
     def create(t, field_name: str = None, use_fake_data: bool = False) -> TypeDataGeneratorBase:
-        type_name = t.__name__
+        type_name = TypeDataGenerator._get_type_name(t)
         if type_name == 'int':
             return FakeIntegerGenerator() \
                 if field_name is not None and use_fake_data is True \
@@ -33,6 +34,13 @@ class TypeDataGenerator:
             return DataClassGenerator(t, use_fake_data=use_fake_data) \
                 if dataclasses.is_dataclass(t) \
                 else ClassGenerator(t, use_fake_data=use_fake_data)
+
+    @staticmethod
+    def _get_type_name(t) -> str:
+        try:
+            return t.__name__
+        except TypeError:
+            return type(t).__name__
 
 
 class DataClassGenerator(TypeDataGeneratorBase):
@@ -80,9 +88,18 @@ class ClassGenerator(TypeDataGeneratorBase):
         init_args = inspect.getfullargspec(cls.__init__)
         values = []
         for t in init_args.annotations.values():
-            generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
-            value = generator.generate()
-            values.append(value)
+            origin = typing.get_origin(t)
+            if origin == list:
+                list_arg = typing.get_args(t)
+                items = []
+                for _ in range(3):
+                    generator = TypeDataGenerator.create(list_arg[0], use_fake_data=self.use_fake_data)
+                    items.append(generator)
+                values.append(items)
+            else:
+                generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
+                value = generator.generate()
+                values.append(value)
         self.instance = cls(*tuple(values))
 
 

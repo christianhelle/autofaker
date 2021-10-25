@@ -182,3 +182,14 @@ class ConstructorWithDataClassArgumentsTests(unittest.TestCase):
 
     def test_constructed_sut_email_not_none(self):
         self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.email)
+
+
+class ConstructorWithListArguments:
+    def __init__(self, texts: List[str], numbers: List[int]):
+        self.numbers = numbers
+        self.texts = texts
+
+
+class ConstructorWithListArgumentsTests(unittest.TestCase):
+    def test_can_construct_sut(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithListArguments))
