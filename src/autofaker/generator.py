@@ -1,4 +1,5 @@
 import dataclasses
+import inspect
 
 from autofaker.attributes import Attributes
 from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator
@@ -53,7 +54,7 @@ class DataClassGenerator(TypeDataGeneratorBase):
 class ClassGenerator(TypeDataGeneratorBase):
     def __init__(self, cls, use_fake_data: bool = False):
         self.use_fake_data = use_fake_data
-        self.instance = cls()
+        self._try_create_instance(cls, use_fake_data)
 
     def generate(self):
         attributes = Attributes(self.instance)
@@ -68,6 +69,18 @@ class ClassGenerator(TypeDataGeneratorBase):
                 generator = TypeDataGenerator.create(type(attr), member, use_fake_data=self.use_fake_data)
                 attributes.set_value(member, generator.generate())
         return self.instance
+
+    def _try_create_instance(self, cls, use_fake_data):
+        try:
+            self.instance = cls()
+        except TypeError as e:
+            init_args = inspect.getfullargspec(cls.__init__)
+            values = []
+            for t in init_args.annotations.values():
+                generator = TypeDataGenerator.create(t, use_fake_data=use_fake_data)
+                value = generator.generate()
+                values.append(value)
+            self.instance = cls(*tuple(values))
 
 
 class ListGenerator(TypeDataGeneratorBase):
