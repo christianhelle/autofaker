@@ -50,6 +50,7 @@ jobs:
           pip install faker
           pip install pandas
           pip install pyspark
+          pip install typing_inspect
 
       - name: Install Requirements from Test PyPi
         if: ${{ inputs.use-test-pypi }}
