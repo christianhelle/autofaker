@@ -1,7 +1,5 @@
 import dataclasses
 import inspect
-import typing
-
 import typing_inspect
 
 from autofaker.attributes import Attributes
@@ -73,12 +71,17 @@ class ClassGenerator(TypeDataGeneratorBase):
             attr = attributes.get_attribute(member)
             if type(attr).__name__ == 'list':
                 for i in range(len(attr)):
-                    generator = TypeDataGenerator.create(type(attr[i]), use_fake_data=self.use_fake_data)
-                    attr[i] = generator.generate()
+                    attr[i] = self._try_generate(attr[i])
             else:
-                generator = TypeDataGenerator.create(type(attr), member, use_fake_data=self.use_fake_data)
-                attributes.set_value(member, generator.generate())
+                attributes.set_value(member, self._try_generate(attr))
         return self.instance
+
+    def _try_generate(self, attr):
+        try:
+            generator = TypeDataGenerator.create(type(attr), use_fake_data=self.use_fake_data)
+            return generator.generate()
+        except TypeError as e:
+            print(e)
 
     def _try_create_instance(self, cls):
         try:
