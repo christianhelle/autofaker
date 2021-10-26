@@ -203,3 +203,13 @@ class ConstructorWithClassListArguments:
 class ConstructorWithClassListArgumentsTests(unittest.TestCase):
     def test_can_construct_sut(self):
         self.assertIsNotNone(Autodata.create(ConstructorWithClassListArguments))
+
+
+class ConstructorWithDataClassListArguments:
+    def __init__(self, items: List[DataClass]):
+        self.items = items
+
+
+class ConstructorWithDataClassListArgumentsTests(unittest.TestCase):
+    def test_can_construct_sut(self):
+        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassListArguments))
