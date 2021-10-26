@@ -2,6 +2,8 @@ import dataclasses
 import inspect
 import typing
 
+import typing_inspect
+
 from autofaker.attributes import Attributes
 from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator
 from autofaker.dates import DatetimeGenerator, DateGenerator
@@ -88,9 +90,9 @@ class ClassGenerator(TypeDataGeneratorBase):
         init_args = inspect.getfullargspec(cls.__init__)
         values = []
         for t in init_args.annotations.values():
-            origin = typing.get_origin(t)
+            origin = typing_inspect.get_origin(t)
             if origin == list:
-                list_arg = typing.get_args(t)
+                list_arg = typing_inspect.get_args(t)
                 items = []
                 for _ in range(3):
                     generator = TypeDataGenerator.create(list_arg[0], use_fake_data=self.use_fake_data)
