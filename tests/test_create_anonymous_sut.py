@@ -2,7 +2,7 @@ import unittest
 from dataclasses import dataclass
 from typing import List
 
-from autofaker import Autodata
+from autofaker import Autodata, autodata, fakedata
 
 
 class Calculator:
@@ -18,22 +18,22 @@ class CalculatorTests(unittest.TestCase):
         result = sut.add(numbers[0], numbers[1])
         self.assertEqual(numbers[0] + numbers[1], result)
 
-    @Autodata.create_arguments(Calculator, int, int)
+    @autodata(Calculator, int, int)
     def test_can_add_two_numbers_using_test_arguments(self, sut, number1, number2):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
-    @Autodata.create_arguments()
+    @autodata
     def test_can_add_two_numbers_using_annotated_arguments(self, sut: Calculator, number1: int, number2: int):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
-    @Autodata.create_anonymous_arguments
+    @autodata
     def test_can_add_two_numbers_using_anonymous_arguments(self, sut: Calculator, number1: int, number2: int):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
-    @Autodata.create_fake_arguments
+    @fakedata
     def test_can_add_two_numbers_using_fake_arguments(self, sut: Calculator, number1: int, number2: int):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)

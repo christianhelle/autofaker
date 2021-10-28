@@ -1,72 +1,72 @@
 import unittest
 from datetime import datetime, date
 
-from autofaker import Autodata
+from autofaker import autodata, fakedata
 
 
 class AnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
-    @Autodata.create_arguments(str)
+    @autodata(str)
     def test_create_str_using_decorator(self, text):
         self.assertIsNotNone(text)
 
-    @Autodata.create_arguments(int)
+    @autodata(int)
     def test_create_int_using_decorator(self, number):
         self.assertIsNotNone(number)
 
-    @Autodata.create_arguments(float)
+    @autodata(float)
     def test_create_float_using_decorator(self, number):
         self.assertIsNotNone(number)
 
-    @Autodata.create_arguments(bool)
+    @autodata(bool)
     def test_create_boolean_using_decorator(self, boolean):
         self.assertIsNotNone(boolean)
 
-    @Autodata.create_arguments(datetime)
+    @autodata(datetime)
     def test_create_datetime_using_decorator(self, dt):
         self.assertIsNotNone(dt)
 
-    @Autodata.create_arguments(date)
+    @autodata(date)
     def test_create_date_using_decorator(self, d):
         self.assertIsNotNone(d)
 
 
 class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
 
-    @Autodata.create_arguments(str, use_fake_data=True)
+    @autodata(str, use_fake_data=True)
     def test_create_str_using_decorator(self, text):
         self.assertIsNotNone(text)
 
-    @Autodata.create_arguments(int, use_fake_data=True)
+    @autodata(int, use_fake_data=True)
     def test_create_int_using_decorator(self, number):
         self.assertIsNotNone(number)
 
-    @Autodata.create_arguments(float, use_fake_data=True)
+    @autodata(float, use_fake_data=True)
     def test_create_float_using_decorator(self, number):
         self.assertIsNotNone(number)
 
-    @Autodata.create_arguments(bool, use_fake_data=True)
+    @autodata(bool, use_fake_data=True)
     def test_create_boolean_using_decorator(self, boolean):
         self.assertIsNotNone(boolean)
 
-    @Autodata.create_arguments(datetime, use_fake_data=True)
+    @autodata(datetime, use_fake_data=True)
     def test_create_datetime_using_decorator(self, dt):
         self.assertIsNotNone(dt)
 
-    @Autodata.create_arguments(date, use_fake_data=True)
+    @autodata(date, use_fake_data=True)
     def test_create_date_using_decorator(self, d):
         self.assertIsNotNone(d)
 
 
 class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
-    @Autodata.create_arguments(str, int, float)
+    @autodata(str, int, float)
     def test_create_primitives_using_decorator(self, text, number, decimal):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
 
-    @Autodata.create_arguments(str, int, float, use_fake_data=True)
+    @autodata(str, int, float, use_fake_data=True)
     def test_create_primitives_using_decorator_with_fakes(self, text, number, decimal):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
@@ -75,7 +75,7 @@ class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
 class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
 
-    @Autodata.create_anonymous_arguments
+    @fakedata
     def test_create_anonymous_arguments_using_decorator(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
@@ -84,7 +84,7 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
 
-    @Autodata.create_fake_arguments
+    @fakedata
     def test_create_fake_arguments_using_decorator(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
@@ -93,7 +93,7 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
 
-    @Autodata.create_arguments()
+    @autodata()
     def test_create_arguments_using_decorator(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
@@ -102,7 +102,7 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
 
-    @Autodata.create_arguments(use_fake_data=True)
+    @autodata(use_fake_data=True)
     def test_create_arguments_using_decorator_with_fakes(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
