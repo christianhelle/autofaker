@@ -1,6 +1,6 @@
 import unittest
 
-from autofaker import Autodata, autodata, fakedata
+from autofaker import autodata, fakedata
 
 
 class SimpleClass:
@@ -39,20 +39,21 @@ class AnonymousNestedClassViaDecoratorTestCase(unittest.TestCase):
         self.assertNotEqual(instance.inner.id, SimpleClass().id)
         self.assertNotEqual(instance.inner.text, SimpleClass().text)
 
-    @autodata
+    @autodata()
     def test_create_nested_class_argument_returns_instance_with_new_values(self, instance: NestedClass):
         self.assertNotEqual(instance.id, NestedClass().id)
         self.assertNotEqual(instance.name, SimpleClass().name)
         self.assertNotEqual(instance.text, SimpleClass().text)
 
-    @autodata
+    @autodata()
     def test_create_anonymous_nested_class_returns_instance_with_new_values(self, instance: NestedClass):
         self.assertNotEqual(instance.id, SimpleClass().id)
         self.assertNotEqual(instance.name, SimpleClass().name)
         self.assertNotEqual(instance.text, SimpleClass().text)
 
-    @fakedata
+    @fakedata()
     def test_create_fake_nested_class_returns_instance_with_new_values(self, instance: NestedClass):
+        print(instance)
         self.assertNotEqual(instance.id, NestedClass().id)
         self.assertNotEqual(instance.name, SimpleClass().name)
         self.assertNotEqual(instance.text, SimpleClass().text)
@@ -83,7 +84,7 @@ class AnonymousDoubleNestedClassViaDecoratorWithFakesTestCase(unittest.TestCase)
     def test_create_double_nested_class_argument_using_decorator_returns_instance(self, instance: DoubleNestedClass):
         self.assertIsInstance(instance, DoubleNestedClass)
 
-    @fakedata
+    @fakedata()
     def test_create_double_nested_class_argument_returns_instance_with_new_values(self, instance: DoubleNestedClass):
         self.assertNotEqual(instance.id, DoubleNestedClass().id)
         self.assertNotEqual(instance.inner, DoubleNestedClass().inner)

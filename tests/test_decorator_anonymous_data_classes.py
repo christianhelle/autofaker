@@ -35,13 +35,13 @@ class AnonymousDataClassViaDecoratorTestCase(unittest.TestCase):
         self.assertNotEqual(instance.name, str())
         self.assertNotEqual(instance.text, str())
 
-    @autodata
+    @autodata()
     def test_create_anonymous_data_class_returns_instance_with_new_values(self, instance: DataClass):
         self.assertNotEqual(instance.id, int())
         self.assertNotEqual(instance.name, str())
         self.assertNotEqual(instance.text, str())
 
-    @fakedata
+    @fakedata()
     def test_create_fake_data_class_returns_instance_with_new_values(self, instance: DataClass):
         self.assertNotEqual(instance.id, int())
         self.assertNotEqual(instance.name, str())
@@ -69,7 +69,7 @@ class AnonymousDataClassViaDecoratorWithFakesTestCase(unittest.TestCase):
         self.assertNotEqual(instance.name, str())
         self.assertNotEqual(instance.text, str())
 
-    @fakedata
+    @fakedata()
     def test_create_fake_data_class_returns_instance_with_new_values(self, instance: DataClass):
         self.assertNotEqual(instance.id, int())
         self.assertNotEqual(instance.name, str())

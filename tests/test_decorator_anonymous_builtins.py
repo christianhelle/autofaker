@@ -75,7 +75,7 @@ class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
 class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
 
-    @fakedata
+    @fakedata()
     def test_create_anonymous_arguments_using_decorator(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
@@ -84,7 +84,7 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
 
-    @fakedata
+    @fakedata()
     def test_create_fake_arguments_using_decorator(self, text: str, number: int, decimal: float):
         print(text)
         print(number)
