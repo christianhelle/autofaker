@@ -1,6 +1,6 @@
 import unittest
 
-from autofaker import autodata, fakedata
+from autofaker import autodata, fakedata, autopandas, autospark, fakepandas, fakespark
 
 
 class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
@@ -50,5 +50,53 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
             class X(unittest.TestCase):
                 @fakedata()
                 def not_test_method(self, text, number, decimal):
+                    pass
+            X().not_test_method()
+
+    def test_autopandas_throws_error_when_decorating_non_testmethod(self):
+        class SimpleClass:
+            id = -1
+            name = 'name'
+            text = 'test'
+        with self.assertRaises(NotImplementedError):
+            class X:
+                @autopandas(SimpleClass)
+                def not_test_method(self, df):
+                    pass
+            X().not_test_method()
+
+    def test_autospark_throws_error_when_decorating_non_testmethod(self):
+        class SimpleClass:
+            id = -1
+            name = 'name'
+            text = 'test'
+        with self.assertRaises(NotImplementedError):
+            class X:
+                @autospark(SimpleClass)
+                def not_test_method(self, df):
+                    pass
+            X().not_test_method()
+
+    def test_fakepandas_throws_error_when_decorating_non_testmethod(self):
+        class SimpleClass:
+            id = -1
+            name = 'name'
+            text = 'test'
+        with self.assertRaises(NotImplementedError):
+            class X:
+                @fakepandas(SimpleClass)
+                def not_test_method(self, df):
+                    pass
+            X().not_test_method()
+
+    def test_fakespark_throws_error_when_decorating_non_testmethod(self):
+        class SimpleClass:
+            id = -1
+            name = 'name'
+            text = 'test'
+        with self.assertRaises(NotImplementedError):
+            class X:
+                @fakespark(SimpleClass)
+                def not_test_method(self, df):
                     pass
             X().not_test_method()
