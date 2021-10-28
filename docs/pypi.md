@@ -53,7 +53,7 @@ class CalculatorTests(unittest.TestCase):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
-    @autodata
+    @autodata()
     def test_can_add_two_numbers_using_annotated_arguments(self, 
                                                            sut: Calculator, 
                                                            number1: int, 
@@ -119,7 +119,7 @@ Dataframes:
 
 ## Getting Started
 
-[autofaker](https://pypi.org/project/autofaker/) is available from PyPI and should be installed using `pip`
+[AutoFaker](https://pypi.org/project/autofaker/) is available from PyPI and should be installed using `pip`
 
 ```
 pip install autofaker
