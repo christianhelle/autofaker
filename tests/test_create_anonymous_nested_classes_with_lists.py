@@ -4,18 +4,18 @@ from autofaker import Autodata
 
 
 class SimpleClass:
-    id = 0
+    id = -1
     text = 'test'
 
 
 class NestedWithCollectionClass:
-    id = 0
+    id = -1
     text = 'test'
     inner = [SimpleClass(), SimpleClass()]
 
 
 class NestedWithNestedCollectionClass:
-    id = 0
+    id = -1
     text = 'test'
     inner = [NestedWithCollectionClass(), NestedWithCollectionClass()]
 

@@ -7,7 +7,7 @@ from autofaker import autopandas, fakepandas
 
 
 class SimpleClass:
-    id = 0
+    id = -1
     name: 'test'
     text = 'test'
 

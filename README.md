@@ -164,7 +164,7 @@ Creates an anonymous class
 ```python
 
 class SimpleClass:
-    id = 0
+    id = -1
     text = 'test'
 
 cls = Autodata.create(SimpleClass)
@@ -183,7 +183,7 @@ Create a collection of an anonymous class
 
 ```python
 class SimpleClass:
-    id = 0
+    id = -1
     text = 'test'
 
 classes = Autodata.create_many(SimpleClass)
@@ -309,7 +309,7 @@ Create an anonymous class with nested types
 ```python
 
 class NestedClass:
-    id = 0
+    id = -1
     text = 'test'
     inner = SimpleClass()
 
@@ -333,7 +333,7 @@ Create a collection of an anonymous class with nested types
 
 ```python
 class NestedClass:
-    id = 0
+    id = -1
     text = 'test'
     inner = SimpleClass()
 
@@ -369,7 +369,7 @@ Create a Pandas DataFrame using anonymous data generated from a specified type
 
 ```python
 class DataClass:
-    id = 0
+    id = -1
     type = '' 
     value = 0
 
@@ -390,7 +390,7 @@ Create a Spark DataFrame using anonymous data generated from a specified type
 
 ```python
 class DataClass:
-    id = 0
+    id = -1
     type = '' 
     value = 0
 
@@ -420,7 +420,7 @@ Create a Pandas DataFrame using fake data generated from a specified type
 
 ```python
 class DataClass:
-    id = 0
+    id = -1
     type = '' 
     value = 0
 
@@ -441,7 +441,7 @@ Create a Spark DataFrame using fake data generated from a specified type
 
 ```python
 class DataClass:
-    id = 0
+    id = -1
     type = '' 
     value = 0
 

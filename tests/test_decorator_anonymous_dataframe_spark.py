@@ -8,7 +8,7 @@ from autofaker import autospark, fakespark
 
 
 class SimpleClass:
-    id = 0
+    id = -1
     name = 'test'
     text = 'test'
 
