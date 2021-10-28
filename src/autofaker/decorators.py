@@ -2,7 +2,7 @@ import inspect
 import unittest
 from typing import List
 
-from autofaker import Autodata
+from autofaker import Autodata, PandasDataFrameGenerator
 
 
 def autodata(*types: object, use_fake_data: bool = False):
@@ -55,6 +55,33 @@ def fakedata(*types: object):
                             *tuple(__create_function_args(function, *tuple(types), use_fake_data=True)))
         return wrapper
     return decorator
+
+
+def autopandas(t, rows: int = 3, use_fake_data: bool = False):
+    """
+    Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
+
+    :param use_fake_data:
+    :type rows: int
+    :type t: object
+    """
+    def decorator(function):
+        def wrapper(*args):
+            pdf = PandasDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
+            return function(__get_test_class(*args), pdf)
+        return wrapper
+    return decorator
+
+
+def fakepandas(t, rows: int = 3):
+    """
+    Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
+
+    :param use_fake_data:
+    :type rows: int
+    :type t: object
+    """
+    return autopandas(t, rows, use_fake_data=True)
 
 
 def __get_test_class(*args):
