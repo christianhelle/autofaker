@@ -53,4 +53,5 @@ class SparkDataFrameGenerator:
         from pyspark.sql import SparkSession
         pdf = PandasDataFrameGenerator(self.t, self.rows, use_fake_data=self.use_fake_data).generate()
         spark = SparkSession.builder.getOrCreate()
-        return spark.createDataFrame(pdf)
+        df = spark.createDataFrame(pdf)
+        return df.cache()
