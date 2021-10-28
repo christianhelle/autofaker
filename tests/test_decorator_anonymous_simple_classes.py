@@ -4,7 +4,7 @@ from autofaker import autodata, fakedata
 
 
 class SimpleClass:
-    id = 123
+    id = 0
     name = 'name'
     text = 'test'
 

@@ -4,20 +4,20 @@ from autofaker import Autodata, autodata, fakedata
 
 
 class SimpleClass:
-    id = 123
+    id = 0
     name = 'name'
     text = 'test'
 
 
 class NestedClass:
-    id = 123
+    id = 0
     name = 'name'
     text = 'test'
     inner = SimpleClass()
 
 
 class DoubleNestedClass:
-    id = 123
+    id = 0
     name = 'name'
     text = 'test'
     inner = NestedClass()

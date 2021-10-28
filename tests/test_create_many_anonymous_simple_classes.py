@@ -5,7 +5,7 @@ from autofaker import Autodata
 
 
 class SimpleClass:
-    id = 123
+    id = 0
     text = 'test'
 
 

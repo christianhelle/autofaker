@@ -17,5 +17,5 @@ class StaffTests(unittest.TestCase):
 
 
 class SimpleClass:
-    id = 123
+    id = 0
     text = 'test'

@@ -156,7 +156,7 @@ Creates an anonymous class
 ```python
 
 class SimpleClass:
-    id = 123
+    id = 0
     text = 'test'
 
 cls = Autodata.create(SimpleClass)
@@ -175,7 +175,7 @@ Create a collection of an anonymous class
 
 ```python
 class SimpleClass:
-    id = 123
+    id = 0
     text = 'test'
 
 classes = Autodata.create_many(SimpleClass)
@@ -301,7 +301,7 @@ Create an anonymous class with nested types
 ```python
 
 class NestedClass:
-    id = 123
+    id = 0
     text = 'test'
     inner = SimpleClass()
 
@@ -325,7 +325,7 @@ Create a collection of an anonymous class with nested types
 
 ```python
 class NestedClass:
-    id = 123
+    id = 0
     text = 'test'
     inner = SimpleClass()
 
