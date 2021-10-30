@@ -40,12 +40,10 @@ class CalculatorTests(unittest.TestCase):
 ```
 
 Since the point of this library is to simplify the **arrange** step of writing unit tests, we can use the
-`@Autodata.create_arguments()` decorator to create anonymous variables and construct our system under test.
+`@autodata` and `@fakedata` are available to explicitly state 
+whether to use anonymous variables or fake data and construct our system under test.
 To use this you can either define the types or the arguments as function arguments to the decorator, or specify 
 argument annotations
-
-Alternative decorators like `@autodata` and `@fakedata` are available to explicitly state 
-whether to use anonymous variables or fake data
 
 ```python
 import unittest
