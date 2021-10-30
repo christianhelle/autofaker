@@ -1,3 +1,7 @@
+"""
+Provides anonymous object creation functions to help minimize the setup/arrange phase when writing unit tests
+"""
+
 import inspect
 import unittest
 from typing import List
