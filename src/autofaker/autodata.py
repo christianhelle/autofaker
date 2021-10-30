@@ -23,8 +23,8 @@ class Autodata:
         """
         Creates an anonymous variable of the requested type
 
-        :param use_fake_data:
-        :type t: object
+        :param type t: type - The type to generate data for
+        :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
         """
         return TypeDataGenerator.create(t, use_fake_data=use_fake_data).generate()
 
@@ -33,9 +33,9 @@ class Autodata:
         """
         Creates a list of anonymous variables of the requested type using the specified length (default 3)
 
-        :param use_fake_data:
-        :type size: int
-        :type t: object
+        :param type t: type - The type to generate data for
+        :type size: int - The number of items to generate (default 3)
+        :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
         """
         items = []
         for _ in range(size):
@@ -47,9 +47,9 @@ class Autodata:
         """
         Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
 
-        :param use_fake_data:
-        :type rows: int
-        :type t: object
+        :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
+        :param type rows: int - The number of rows to generate for the DataFrame (default 3)
+        :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
         """
         return PandasDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
 
@@ -58,8 +58,8 @@ class Autodata:
         """
         Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
 
-        :param use_fake_data:
-        :type rows: int
-        :type t: object
+        :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
+        :param type rows: int - The number of rows to generate for the DataFrame (default 3)
+        :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
         """
         return SparkDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
