@@ -52,7 +52,7 @@ class TypeDataGenerator:
     def _get_type_name(t) -> str:
         try:
             return t.__name__
-        except:
+        except Exception:
             attributes = dir(t)
             if '_name' in attributes:
                 return t._name
