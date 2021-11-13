@@ -45,3 +45,8 @@ class AnonymousBooleanTestCase(CreateTestCase):
         return bool
 
 
+class AnonymousComplexTestCase(CreateTestCase):
+    def getType(self):
+        return complex
+
+
