@@ -3,7 +3,7 @@ import inspect
 import typing_inspect
 
 from autofaker.attributes import Attributes
-from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator
+from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator, ComplexGenerator
 from autofaker.dates import DatetimeGenerator, DateGenerator
 from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator, TypeDataGeneratorBase
 
@@ -22,6 +22,8 @@ class TypeDataGenerator:
                 else StringGenerator()
         elif type_name == 'float':
             return FloatGenerator()
+        elif type_name == 'complex':
+            return ComplexGenerator()
         elif type_name == 'bool':
             return BooleanGenerator()
         elif type_name == 'datetime':

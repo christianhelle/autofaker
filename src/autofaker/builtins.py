@@ -22,3 +22,8 @@ class FloatGenerator(TypeDataGeneratorBase):
 class BooleanGenerator(TypeDataGeneratorBase):
     def generate(self):
         return bool(random.getrandbits(1))
+
+
+class ComplexGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return complex(random.randint(0, 10000))
