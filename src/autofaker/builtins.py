@@ -4,6 +4,16 @@ import uuid
 from autofaker.base import TypeDataGeneratorBase
 
 
+def is_builtin_type(type_name) -> bool:
+    return type_name in [
+        'int',
+        'str',
+        'float',
+        'complex',
+        'bool',
+    ]
+
+
 class IntegerGenerator(TypeDataGeneratorBase):
     def generate(self):
         return random.randint(0, 10000)

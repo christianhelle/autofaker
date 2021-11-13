@@ -3,8 +3,8 @@ import inspect
 import typing_inspect
 
 from autofaker.attributes import Attributes
-from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator, ComplexGenerator
-from autofaker.dates import DatetimeGenerator, DateGenerator
+from autofaker.builtins import IntegerGenerator, FloatGenerator, BooleanGenerator, ComplexGenerator, is_builtin_type
+from autofaker.dates import DatetimeGenerator, DateGenerator, is_date_type
 from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator, TypeDataGeneratorBase
 
 
@@ -12,6 +12,19 @@ class TypeDataGenerator:
     @staticmethod
     def create(t, field_name: str = None, use_fake_data: bool = False) -> TypeDataGeneratorBase:
         type_name = TypeDataGenerator._get_type_name(t)
+        if is_builtin_type(type_name):
+            return TypeDataGenerator.create_builtin(type_name, field_name, use_fake_data)
+        elif is_date_type(type_name):
+            return TypeDataGenerator.create_datetime(type_name, field_name, use_fake_data)
+        elif type_name == 'list':
+            return ListGenerator(t)
+        else:
+            return DataClassGenerator(t, use_fake_data=use_fake_data) \
+                if dataclasses.is_dataclass(t) \
+                else ClassGenerator(t, use_fake_data=use_fake_data)
+
+    @staticmethod
+    def create_builtin(type_name, field_name: str = None, use_fake_data: bool = False):
         if type_name == 'int':
             return FakeIntegerGenerator() \
                 if field_name is not None and use_fake_data is True \
@@ -26,16 +39,14 @@ class TypeDataGenerator:
             return ComplexGenerator()
         elif type_name == 'bool':
             return BooleanGenerator()
-        elif type_name == 'datetime':
+
+
+    @staticmethod
+    def create_datetime(type_name, field_name: str = None, use_fake_data: bool = False):
+        if type_name == 'datetime':
             return DatetimeGenerator()
         elif type_name == 'date':
             return DateGenerator()
-        elif type_name == 'list':
-            return ListGenerator(t)
-        else:
-            return DataClassGenerator(t, use_fake_data=use_fake_data) \
-                if dataclasses.is_dataclass(t) \
-                else ClassGenerator(t, use_fake_data=use_fake_data)
 
     @staticmethod
     def _get_type_name(t) -> str:
