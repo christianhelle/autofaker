@@ -36,4 +36,4 @@ class BooleanGenerator(TypeDataGeneratorBase):
 
 class ComplexGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return complex(random.randint(0, 10000))
+        return complex(IntegerGenerator().generate())
