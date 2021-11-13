@@ -11,7 +11,7 @@ from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGen
 class TypeDataGenerator:
     @staticmethod
     def create(t, field_name: str = None, use_fake_data: bool = False) -> TypeDataGeneratorBase:
-        type_name = TypeDataGenerator._get_type_name(t)
+        type_name = TypeDataGenerator._get_type_name(t).lower()
         if is_builtin_type(type_name):
             return TypeDataGenerator.create_builtin(type_name, field_name, use_fake_data)
         elif is_date_type(type_name):
@@ -52,8 +52,12 @@ class TypeDataGenerator:
     def _get_type_name(t) -> str:
         try:
             return t.__name__
-        except TypeError:
-            return type(t).__name__
+        except:
+            attributes = dir(t)
+            if '_name' in attributes:
+                return t._name
+            else:
+                return type(t).__name__
 
 
 class DataClassGenerator(TypeDataGeneratorBase):
@@ -124,12 +128,11 @@ class ClassGenerator(TypeDataGeneratorBase):
 class ListGenerator(TypeDataGeneratorBase):
     def __init__(self, t, use_fake_data: bool = False):
         self.use_fake_data = use_fake_data
-        self.instance = t()
+        self.list_arg = typing_inspect.get_args(t)
 
     def generate(self):
         items = []
-        for item in self.instance:
-            generator = TypeDataGenerator.create(item, use_fake_data=self.use_fake_data)
-            value = generator.generate()
-            items.append(value)
+        for _ in range(3):
+            generator = TypeDataGenerator.create(self.list_arg[0], use_fake_data=self.use_fake_data)
+            items.append(generator.generate())
         return items
