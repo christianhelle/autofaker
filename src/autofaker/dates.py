@@ -4,6 +4,13 @@ import random
 from autofaker.base import TypeDataGeneratorBase
 
 
+def is_date_type(type_name) -> bool:
+    return type_name in [
+        'datetime',
+        'date'
+    ]
+
+
 class DatetimeGenerator(TypeDataGeneratorBase):
     def generate(self):
         year = datetime.date.today().year

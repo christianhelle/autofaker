@@ -50,3 +50,8 @@ class AnonymousFloatListTestCase(CreateManyTestCase):
 class AnonymousBooleanListTestCase(CreateManyTestCase):
     def getType(self):
         return bool
+
+
+class AnonymousComplexListTestCase(CreateManyTestCase):
+    def getType(self):
+        return complex

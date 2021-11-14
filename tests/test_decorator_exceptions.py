@@ -1,3 +1,4 @@
+import sys
 import unittest
 
 from autofaker import autodata, fakedata, autopandas, autospark, fakepandas, fakespark
@@ -65,6 +66,7 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
                     pass
             X().not_test_method()
 
+    @unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
     def test_autospark_throws_error_when_decorating_non_testmethod(self):
         class SimpleClass:
             id = -1
@@ -89,6 +91,7 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
                     pass
             X().not_test_method()
 
+    @unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
     def test_fakespark_throws_error_when_decorating_non_testmethod(self):
         class SimpleClass:
             id = -1
