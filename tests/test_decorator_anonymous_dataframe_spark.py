@@ -46,19 +46,20 @@ class AnonymousSparkDataFrameViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(df.count(), 0)
 
     @autospark(SimpleClassA)
-    def test_can_create_anonymous_pandas_dataframes(self, cls):
+    def test_can_create_anonymous_spark_dataframes(self, cls):
         print(cls)
         self.assertIsNotNone(cls)
 
     @autospark(SimpleClassB)
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_arguments(self, cls):
+    def test_can_create_anonymous_spark_dataframes_from_class_with_constructor_arguments(self, cls):
         print(cls)
         self.assertIsNotNone(cls)
 
     @autospark(SimpleClassC)
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(self, cls):
-        print(cls)
-        self.assertIsNotNone(cls)
+    def test_can_create_anonymous_spark_dataframes_from_class_with_constructor_class_arguments(self, cls):
+        cls.show()
+        self.assertIsNotNone(cls.a)
+        self.assertIsNotNone(cls.b)
 
 
 @dataclass
