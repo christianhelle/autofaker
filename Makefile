@@ -1,11 +1,11 @@
 .PHONY: prepare debug release test
 
 all: debug release package test
-	
+
 prepare:
 	pip install -r requirements.txt
 
-debug: 
+debug: prepare
 	python setup.py develop
 
 release: prepare
