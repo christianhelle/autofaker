@@ -76,3 +76,79 @@ class CreateFakeSparkDataFrameTests(unittest.TestCase):
         df = Autodata.create_spark_dataframe(SimpleClassC, use_fake_data=True)
         self.assertTrue('a' in df.schema.fieldNames())
         self.assertTrue('b' in df.schema.fieldNames())
+
+
+@dataclass
+class DataClass:
+    id: int
+    name: str
+    text: str
+
+
+class HybridClassA:
+    def __init__(self, a: DataClass, b: SimpleClassA):
+        self.b = b
+        self.a = a
+
+
+class HybridClassB:
+    def __init__(self, a: DataClass, b: SimpleClassA, c: HybridClassA):
+        self.c = c
+        self.b = b
+        self.a = a
+
+
+@unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
+class CreateAnonymousSparkDataFrameFromDataClassTests(unittest.TestCase):
+
+    def test_create_anonymous_spark_dataframe_returns_not_none(self):
+        df = Autodata.create_spark_dataframe(DataClass)
+        self.assertIsNotNone(df)
+
+    def test_create_anonymous_spark_dataframe_returns_not_empty(self):
+        df = Autodata.create_spark_dataframe(DataClass)
+        self.assertNotEqual(df.count(), 0)
+
+    def test_create_anonymous_spark_dataframe_with_rowcount_returns_not_empty(self):
+        df = Autodata.create_spark_dataframe(DataClass, 10)
+        self.assertEqual(df.count(), 10)
+
+    def test_can_create_anonymous_spark_dataframes_from_class_with_constructor_class_arguments(self):
+        df = Autodata.create_spark_dataframe(HybridClassA)
+        df.show()
+        self.assertTrue('a' in df.schema.fieldNames())
+        self.assertTrue('b' in df.schema.fieldNames())
+
+    def test_can_create_anonymous_spark_dataframes_from_class_with_constructor_hybrid_class_arguments(self):
+        df = Autodata.create_spark_dataframe(HybridClassB)
+        df.show()
+        self.assertTrue('a' in df.schema.fieldNames())
+        self.assertTrue('b' in df.schema.fieldNames())
+        self.assertTrue('c' in df.schema.fieldNames())
+
+
+@unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
+class CreateFakeSparkDataFrameFromDataClassTests(unittest.TestCase):
+
+    def test_create_fake_spark_dataframe_returns_not_none(self):
+        df = Autodata.create_spark_dataframe(DataClass, use_fake_data=True)
+        self.assertIsNotNone(df)
+
+    def test_create_fake_spark_dataframe_returns_not_empty(self):
+        df = Autodata.create_spark_dataframe(DataClass, use_fake_data=True)
+        self.assertNotEqual(df.count(), 0)
+
+    def test_create_fake_spark_dataframe_with_rowcount_returns_not_empty(self):
+        df = Autodata.create_spark_dataframe(DataClass, 10, use_fake_data=True)
+        self.assertEqual(df.count(), 10)
+
+    def test_can_create_fake_spark_dataframes_from_class_with_constructor_class_arguments(self):
+        df = Autodata.create_spark_dataframe(HybridClassA, use_fake_data=True)
+        self.assertTrue('a' in df.schema.fieldNames())
+        self.assertTrue('b' in df.schema.fieldNames())
+
+    def test_can_create_anonymous_spark_dataframes_from_class_with_constructor_hybrid_class_arguments(self):
+        df = Autodata.create_spark_dataframe(HybridClassB, use_fake_data=True)
+        self.assertTrue('a' in df.schema.fieldNames())
+        self.assertTrue('b' in df.schema.fieldNames())
+        self.assertTrue('c' in df.schema.fieldNames())
