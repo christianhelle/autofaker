@@ -1,7 +1,6 @@
-import sys
 import unittest
 
-from autofaker import autodata, fakedata, autopandas, autospark, fakepandas, fakespark
+from autofaker import autodata, fakedata, autopandas, fakepandas
 
 
 class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
@@ -66,19 +65,6 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
                     pass
             X().not_test_method()
 
-    @unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
-    def test_autospark_throws_error_when_decorating_non_testmethod(self):
-        class SimpleClass:
-            id = -1
-            name = 'name'
-            text = 'test'
-        with self.assertRaises(NotImplementedError):
-            class X:
-                @autospark(SimpleClass)
-                def not_test_method(self, df):
-                    pass
-            X().not_test_method()
-
     def test_fakepandas_throws_error_when_decorating_non_testmethod(self):
         class SimpleClass:
             id = -1
@@ -87,19 +73,6 @@ class AnonymousPrimitivesViaDecoratorThrowsExceptionsTests(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             class X:
                 @fakepandas(SimpleClass)
-                def not_test_method(self, df):
-                    pass
-            X().not_test_method()
-
-    @unittest.skipIf(sys.platform.startswith("win") or sys.platform == "darwin", "tests are very slow")
-    def test_fakespark_throws_error_when_decorating_non_testmethod(self):
-        class SimpleClass:
-            id = -1
-            name = 'name'
-            text = 'test'
-        with self.assertRaises(NotImplementedError):
-            class X:
-                @fakespark(SimpleClass)
                 def not_test_method(self, df):
                     pass
             X().not_test_method()

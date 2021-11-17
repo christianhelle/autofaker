@@ -25,17 +25,3 @@ class PandasDataFrameGenerator:
                 row.append(Attributes(d).get_attribute(member))
             rows.append(row)
         return pd.DataFrame(rows, columns=members)
-
-
-class SparkDataFrameGenerator:
-    def __init__(self, t, rows: int = 3, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
-        self.t = t
-        self.rows = rows
-
-    def generate(self):
-        from pyspark.sql import SparkSession
-        pdf = PandasDataFrameGenerator(self.t, self.rows, use_fake_data=self.use_fake_data).generate()
-        spark = SparkSession.builder.getOrCreate()
-        df = spark.createDataFrame(pdf)
-        return df.cache()
