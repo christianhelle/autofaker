@@ -17,10 +17,5 @@ setuptools.setup(
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where='src'),
     python_requires='>=3.7',
-    install_requires=['pandas', 'pyspark', 'faker', 'typing_inspect'],
-    entry_points={
-        'console_scripts': [
-            'python3=autofaker.alias:python3',
-        ],
-    },
+    install_requires=['pandas', 'faker', 'typing_inspect'],
 )

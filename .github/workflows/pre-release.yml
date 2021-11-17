@@ -31,16 +31,6 @@ jobs:
               $content | ForEach-Object {$_ -replace $line, "    version='${{ env.VERSION }}',"} | Set-Content $initFile
           }
           Get-Content $initFile | Write-Host
-      - name: Remove PySpark dependency
-        shell: pwsh
-        run: |
-          $initFile = 'setup.py'
-          $line = Get-Content $initFile | Select-String 'install_requires=' | Select-Object -ExpandProperty Line
-          if ($line -ne $null) {
-              $content = Get-Content $initFile
-              $content | ForEach-Object {$_ -replace $line, "    install_requires=['pandas'],"} | Set-Content $initFile
-          }
-          Get-Content $initFile | Write-Host
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

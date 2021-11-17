@@ -120,7 +120,6 @@ Classes:
 
 Dataframes:
 - Pandas dataframe
-- Spark dataframe
 
 
 ## Getting Started
@@ -384,36 +383,6 @@ The code above might output the following
 2  387753717  986b3b1c-abf4-4bc1-95cf-0e979390e4f3   766159839
 ```
 
-Create a Spark DataFrame using anonymous data generated from a specified type
-
-```python
-class DataClass:
-    id = -1
-    type = '' 
-    value = 0
-
-df = Autodata.create_spark_dataframe(DataClass)
-df.printSchema()
-df.show()
-```
-
-The code above might output the following
-
-```
-root
- |-- id: long (nullable = true)
- |-- type: string (nullable = true)
- |-- value: long (nullable = true)
-
-+----------+--------------------+----------+
-|        id|                type|     value|
-+----------+--------------------+----------+
-| 938634666|630040b1-0703-437...|1417827879|
-| 239684437|69ca65d5-81a6-418...|1932787106|
-|1978525110|dfdc19df-ba47-43d...| 366058214|
-+----------+--------------------+----------+
-```
-
 Create a Pandas DataFrame using fake data generated from a specified type
 
 ```python
@@ -433,34 +402,4 @@ The code above might output the following
 0   Lawrence  7670   Jimenez  001-172-307-0561x471
 1      Bryan  9084    Walker         (697)893-6767
 2       Paul  9824    Thomas    960.555.3577x65487
-```
-
-Create a Spark DataFrame using fake data generated from a specified type
-
-```python
-class DataClass:
-    id = -1
-    type = '' 
-    value = 0
-
-df = Autodata.create_spark_dataframe(DataClass, use_fake_data=True)
-df.printSchema()
-df.show()
-```
-
-The code above might output the following
-
-```
-root
- |-- id: long (nullable = true)
- |-- type: string (nullable = true)
- |-- value: long (nullable = true)
-
-+----------+----+--------------------+---------+
-|first_name|  id|                 job|last_name|
-+----------+----+--------------------+---------+
-|   Valerie|9010|Operational resea...|    Huber|
-|     Linda|9367|               Actor|    Mills|
-|    Sheena|4773|Civil Service adm...|    Perez|
-+----------+----+--------------------+---------+
 ```

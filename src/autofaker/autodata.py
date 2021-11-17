@@ -5,9 +5,7 @@ Provides classes for anonymous object creation to help minimize the setup/arrang
 import typing
 from typing import List
 
-from pyspark.sql import DataFrame
-
-from autofaker.dataframe import PandasDataFrameGenerator, SparkDataFrameGenerator
+from autofaker.dataframe import PandasDataFrameGenerator
 from autofaker.generator import TypeDataGenerator
 
 
@@ -50,14 +48,3 @@ class Autodata:
         :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
         """
         return PandasDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
-
-    @staticmethod
-    def create_spark_dataframe(t, rows: int = 3, use_fake_data: bool = False) -> DataFrame:
-        """
-        Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
-
-        :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
-        :param type rows: int - The number of rows to generate for the DataFrame (default 3)
-        :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
-        """
-        return SparkDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
