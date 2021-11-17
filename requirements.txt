@@ -1,6 +1,5 @@
 pytest
 pytest-cov
-pyspark
 pandas
 faker
 typing_inspect

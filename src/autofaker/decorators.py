@@ -6,7 +6,7 @@ import inspect
 import unittest
 from typing import List
 
-from autofaker import Autodata, PandasDataFrameGenerator, SparkDataFrameGenerator
+from autofaker import Autodata, PandasDataFrameGenerator
 
 
 def autodata(*types: object, use_fake_data: bool = False):
@@ -88,32 +88,6 @@ def fakepandas(t, rows: int = 3):
     :param type rows: int - The number of rows to generate for the DataFrame (default 3)
     """
     return autopandas(t, rows, use_fake_data=True)
-
-
-def autospark(t, rows: int = 3, use_fake_data: bool = False):
-    """
-    Create a Spark DataFrame containing anonymous data with the specified number of rows (default 3)
-
-    :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
-    :param type rows: int - The number of rows to generate for the DataFrame (default 3)
-    :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
-    """
-    def decorator(function):
-        def wrapper(*args):
-            df = SparkDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
-            return function(__get_test_class(*args), df)
-        return wrapper
-    return decorator
-
-
-def fakespark(t, rows: int = 3):
-    """
-    Create a Spark DataFrame containing fake data with the specified number of rows (default 3)
-
-    :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
-    :param type rows: int - The number of rows to generate for the DataFrame (default 3)
-    """
-    return autospark(t, rows, use_fake_data=True)
 
 
 def __get_test_class(*args):

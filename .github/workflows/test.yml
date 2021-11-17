@@ -23,11 +23,6 @@ jobs:
           - "3.10"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        # this workflow needs java so that it can run a local instance of spark
-        with:
-          java-version: '8'
-          distribution: 'temurin'
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -49,7 +44,6 @@ jobs:
           pip install pytest
           pip install faker
           pip install pandas
-          pip install pyspark
           pip install typing_inspect
 
       - name: Install Requirements from Test PyPi
