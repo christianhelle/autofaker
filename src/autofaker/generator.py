@@ -82,6 +82,9 @@ class ClassGenerator(TypeDataGeneratorBase):
         self._try_create_instance(cls)
 
     def generate(self):
+        if not self._is_supported():
+            return None
+
         attributes = Attributes(self.instance)
         members = attributes.get_members()
         for member in members:
@@ -92,6 +95,16 @@ class ClassGenerator(TypeDataGeneratorBase):
             else:
                 attributes.set_value(member, self._try_generate(attr))
         return self.instance
+
+    def _is_supported(self):
+        import pandas
+        unsupported_types = [
+            pandas.core.frame.DataFrame
+        ]
+        for t in unsupported_types:
+            if isinstance(self.instance, t):
+                return False
+        return True
 
     def _try_generate(self, attr):
         try:
