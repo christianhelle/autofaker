@@ -5,25 +5,14 @@ import typing_inspect
 from autofaker.attributes import Attributes
 from autofaker.dates import DatetimeGenerator, DateGenerator, is_date_type
 from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator, TypeDataGeneratorBase
-
-from autofaker.builtins import (
-    is_builtin_type,
-    IntegerGenerator,
-    FloatGenerator,
-    BooleanGenerator,
-    ComplexGenerator,
-    RangeGenerator,
-    BytesGenerator,
-    ByteArrayGenerator
-)
-
+from autofaker.factory import BuiltinTypeDataGeneratorFactory
 
 class TypeDataGenerator:
     @staticmethod
     def create(t, field_name: str = None, use_fake_data: bool = False) -> TypeDataGeneratorBase:
         type_name = TypeDataGenerator._get_type_name(t).lower()
-        if is_builtin_type(type_name):
-            return TypeDataGenerator.create_builtin(type_name, field_name, use_fake_data)
+        if BuiltinTypeDataGeneratorFactory.is_supported(type_name):
+            return BuiltinTypeDataGeneratorFactory.create(type_name, field_name, use_fake_data)
         elif is_date_type(type_name):
             return TypeDataGenerator.create_datetime(type_name, field_name, use_fake_data)
         elif type_name == 'list':
@@ -32,29 +21,6 @@ class TypeDataGenerator:
             return DataClassGenerator(t, use_fake_data=use_fake_data) \
                 if dataclasses.is_dataclass(t) \
                 else ClassGenerator(t, use_fake_data=use_fake_data)
-
-    @staticmethod
-    def create_builtin(type_name, field_name: str = None, use_fake_data: bool = False):
-        if type_name == 'int':
-            return FakeIntegerGenerator() \
-                if field_name is not None and use_fake_data is True \
-                else IntegerGenerator()
-        elif type_name == 'str':
-            return FakeStringGenerator(field_name) \
-                if field_name is not None and use_fake_data is True \
-                else StringGenerator()
-        elif type_name == 'float':
-            return FloatGenerator()
-        elif type_name == 'complex':
-            return ComplexGenerator()
-        elif type_name == 'bool':
-            return BooleanGenerator()
-        elif type_name == 'range':
-            return RangeGenerator()
-        elif type_name == 'bytes':
-            return BytesGenerator()
-        elif type_name == 'bytearray':
-            return ByteArrayGenerator()
 
 
     @staticmethod
