@@ -115,6 +115,7 @@ Built-in types:
 - str
 - complex
 - range
+- bytes
 
 Datetime types:
 - datetime
