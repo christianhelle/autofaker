@@ -27,7 +27,7 @@ class CreateManyTestCase(unittest.TestCase):
         self.assertEqual(len(Autodata.create_many(self.getType(), size)), size)
 
     def test_create_many_returns_non_default(self):
-        if self.getType() is None:
+        if self.getType() is None or range:
             return
         self.assertNotEqual(Autodata.create_many(self.getType()), [self.getType()()])
 
@@ -55,3 +55,8 @@ class AnonymousBooleanListTestCase(CreateManyTestCase):
 class AnonymousComplexListTestCase(CreateManyTestCase):
     def getType(self):
         return complex
+
+
+class AnonymousRangeListTestCase(CreateManyTestCase):
+    def getType(self):
+        return range
