@@ -43,3 +43,9 @@ class ComplexGenerator(TypeDataGeneratorBase):
 class RangeGenerator(TypeDataGeneratorBase):
     def generate(self):
         return range(IntegerGenerator().generate())
+
+
+class BytesGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return bytes(range(random.randint(0, 256)))
+
