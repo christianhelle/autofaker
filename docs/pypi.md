@@ -105,6 +105,7 @@ Built-in types:
 - int
 - float
 - str
+- complex
 
 Datetime types:
 - datetime
