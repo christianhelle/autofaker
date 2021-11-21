@@ -13,7 +13,8 @@ from autofaker.builtins import (
     BooleanGenerator,
     ComplexGenerator,
     RangeGenerator,
-    BytesGenerator
+    BytesGenerator,
+    ByteArrayGenerator
 )
 
 
@@ -52,6 +53,8 @@ class TypeDataGenerator:
             return RangeGenerator()
         elif type_name == 'bytes':
             return BytesGenerator()
+        elif type_name == 'bytearray':
+            return ByteArrayGenerator()
 
 
     @staticmethod

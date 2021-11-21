@@ -12,7 +12,8 @@ def is_builtin_type(type_name) -> bool:
         'complex',
         'bool',
         'range',
-        'bytes'
+        'bytes',
+        'bytearray'
     ]
 
 
@@ -50,3 +51,7 @@ class BytesGenerator(TypeDataGeneratorBase):
     def generate(self):
         return bytes(range(random.randint(0, 256)))
 
+
+class ByteArrayGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return bytearray(range(random.randint(0, 256)))

@@ -60,3 +60,8 @@ class AnonymousBytesTestCase(CreateTestCase):
         return bytes
 
 
+class AnonymousByteArrayTestCase(CreateTestCase):
+    def getType(self):
+        return bytearray
+
+

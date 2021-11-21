@@ -65,3 +65,8 @@ class AnonymousRangeListTestCase(CreateManyTestCase):
 class AnonymousBytesListTestCase(CreateManyTestCase):
     def getType(self):
         return bytes
+
+
+class AnonymousByteArrayListTestCase(CreateManyTestCase):
+    def getType(self):
+        return bytearray
