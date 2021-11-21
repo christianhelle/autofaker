@@ -12,7 +12,8 @@ from autofaker.builtins import (
     FloatGenerator,
     BooleanGenerator,
     ComplexGenerator,
-    RangeGenerator
+    RangeGenerator,
+    BytesGenerator
 )
 
 
@@ -49,6 +50,8 @@ class TypeDataGenerator:
             return BooleanGenerator()
         elif type_name == 'range':
             return RangeGenerator()
+        elif type_name == 'bytes':
+            return BytesGenerator()
 
 
     @staticmethod

@@ -11,7 +11,8 @@ def is_builtin_type(type_name) -> bool:
         'float',
         'complex',
         'bool',
-        'range'
+        'range',
+        'bytes'
     ]
 
 
