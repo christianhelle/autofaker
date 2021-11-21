@@ -11,6 +11,7 @@ def is_builtin_type(type_name) -> bool:
         'float',
         'complex',
         'bool',
+        'range'
     ]
 
 
@@ -37,3 +38,8 @@ class BooleanGenerator(TypeDataGeneratorBase):
 class ComplexGenerator(TypeDataGeneratorBase):
     def generate(self):
         return complex(IntegerGenerator().generate())
+
+
+class RangeGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return range(IntegerGenerator().generate())

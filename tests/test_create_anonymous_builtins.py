@@ -20,7 +20,7 @@ class CreateTestCase(unittest.TestCase):
         self.assertNotIsInstance(Autodata.create(self.getType()), type)
 
     def test_create_returns_not_default(self):
-        if self.getType() is None or self.getType() is bool:
+        if self.getType() is None or self.getType() is bool or range:
             return
         self.assertNotEqual(Autodata.create(self.getType()), self.getType()())
 
@@ -48,5 +48,10 @@ class AnonymousBooleanTestCase(CreateTestCase):
 class AnonymousComplexTestCase(CreateTestCase):
     def getType(self):
         return complex
+
+
+class AnonymousRangeTestCase(CreateTestCase):
+    def getType(self):
+        return range
 
 
