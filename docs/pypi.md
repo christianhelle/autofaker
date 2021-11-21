@@ -131,6 +131,9 @@ Create anonymous built-in types like `int`, `float`, `str` and datetime types li
 print(f'anonymous string:    {Autodata.create(str)}')
 print(f'anonymous int:       {Autodata.create(int)}')
 print(f'anonymous float:     {Autodata.create(float)}')
+print(f'anonymous complex:   {Autodata.create(complex)}')
+print(f'anonymous range:     {Autodata.create(range)}')
+print(f'anonymous bytes:     {Autodata.create(bytes)}')
 print(f'anonymous datetime:  {Autodata.create(datetime)}')
 print(f'anonymous date:      {Autodata.create(datetime.date)}')
 ```
