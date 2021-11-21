@@ -60,3 +60,8 @@ class AnonymousComplexListTestCase(CreateManyTestCase):
 class AnonymousRangeListTestCase(CreateManyTestCase):
     def getType(self):
         return range
+
+
+class AnonymousBytesListTestCase(CreateManyTestCase):
+    def getType(self):
+        return bytes

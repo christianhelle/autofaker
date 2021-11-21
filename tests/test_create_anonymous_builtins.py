@@ -55,3 +55,8 @@ class AnonymousRangeTestCase(CreateTestCase):
         return range
 
 
+class AnonymousBytesTestCase(CreateTestCase):
+    def getType(self):
+        return bytes
+
+

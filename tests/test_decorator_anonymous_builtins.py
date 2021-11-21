@@ -26,6 +26,14 @@ class AnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
     def test_create_complex_using_decorator(self, complex_type):
         self.assertIsNotNone(complex_type)
 
+    @autodata(range)
+    def test_create_range_using_decorator(self, r):
+        self.assertIsNotNone(r)
+
+    @autodata(bytes)
+    def test_create_bytes_using_decorator(self, b):
+        self.assertIsNotNone(b)
+
     @autodata(datetime)
     def test_create_datetime_using_decorator(self, dt):
         self.assertIsNotNone(dt)
@@ -61,6 +69,10 @@ class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
     def test_create_range_using_decorator(self, r):
         self.assertIsNotNone(r)
 
+    @autodata(bytes, use_fake_data=True)
+    def test_create_bytes_using_decorator(self, b):
+        self.assertIsNotNone(b)
+
     @autodata(datetime, use_fake_data=True)
     def test_create_datetime_using_decorator(self, dt):
         self.assertIsNotNone(dt)
@@ -72,27 +84,29 @@ class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
 
 class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
-    @autodata(str, int, float, complex, range)
-    def test_create_primitives_using_decorator(self, text, number, decimal, complex_type, range_type):
+    @autodata(str, int, float, complex, range, bytes)
+    def test_create_primitives_using_decorator(self, text, number, decimal, complex_type, range_type, buffer):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
 
-    @autodata(str, int, float, complex, range, use_fake_data=True)
-    def test_create_primitives_using_decorator_with_fakes(self, text, number, decimal, complex_type, range_type):
+    @autodata(str, int, float, complex, range, bytes, use_fake_data=True)
+    def test_create_primitives_using_decorator_with_fakes(self, text, number, decimal, complex_type, range_type, buffer):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
 
 
 class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
 
     @fakedata()
-    def test_create_anonymous_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range):
+    def test_create_anonymous_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range, buffer: bytes):
         print(text)
         print(number)
         print(decimal)
@@ -102,9 +116,10 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
 
     @fakedata()
-    def test_create_fake_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range):
+    def test_create_fake_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range, buffer: bytes):
         print(text)
         print(number)
         print(decimal)
@@ -114,9 +129,10 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
 
     @autodata()
-    def test_create_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range):
+    def test_create_arguments_using_decorator(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range, buffer: bytes):
         print(text)
         print(number)
         print(decimal)
@@ -126,9 +142,10 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
 
     @autodata(use_fake_data=True)
-    def test_create_arguments_using_decorator_with_fakes(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range):
+    def test_create_arguments_using_decorator_with_fakes(self, text: str, number: int, decimal: float, complex_type: complex, range_type: range, buffer: bytes):
         print(text)
         print(number)
         print(decimal)
@@ -138,3 +155,4 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(decimal, float())
         self.assertNotEqual(complex_type, complex())
         self.assertNotEqual(range_type, range(0))
+        self.assertNotEqual(buffer, bytes(range(0)))
