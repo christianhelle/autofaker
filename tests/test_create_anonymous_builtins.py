@@ -1,5 +1,7 @@
+import typing
 import unittest
 from abc import abstractmethod
+from typing import List
 
 from autofaker import Autodata
 
@@ -65,3 +67,16 @@ class AnonymousByteArrayTestCase(CreateTestCase):
         return bytearray
 
 
+class AnonymousMemoryViewTestCase(CreateTestCase):
+    def getType(self):
+        return memoryview
+
+
+class AnonymousSetTestCase(CreateTestCase):
+    def getType(self):
+        return set
+
+
+class AnonymousFrozensetTestCase(CreateTestCase):
+    def getType(self):
+        return frozenset

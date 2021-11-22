@@ -5,7 +5,8 @@ from autofaker.builtins import (
     ComplexGenerator,
     RangeGenerator,
     BytesGenerator,
-    ByteArrayGenerator
+    ByteArrayGenerator,
+    MemoryViewGenerator
 )
 from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator
 
@@ -21,7 +22,8 @@ class BuiltinTypeDataGeneratorFactory:
             'bool',
             'range',
             'bytes',
-            'bytearray'
+            'bytearray',
+            'memoryview'
         ]
 
     @staticmethod
@@ -46,3 +48,5 @@ class BuiltinTypeDataGeneratorFactory:
             return BytesGenerator()
         elif type_name == 'bytearray':
             return ByteArrayGenerator()
+        elif type_name == 'memoryview':
+            return MemoryViewGenerator()

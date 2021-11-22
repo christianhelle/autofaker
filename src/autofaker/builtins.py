@@ -43,3 +43,8 @@ class ByteArrayGenerator(TypeDataGeneratorBase):
     def generate(self):
         return bytearray(range(random.randint(0, 256)))
 
+
+class MemoryViewGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return memoryview(BytesGenerator().generate())
+

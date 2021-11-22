@@ -70,3 +70,8 @@ class AnonymousBytesListTestCase(CreateManyTestCase):
 class AnonymousByteArrayListTestCase(CreateManyTestCase):
     def getType(self):
         return bytearray
+
+
+class AnonymousMemoryViewListTestCase(CreateManyTestCase):
+    def getType(self):
+        return memoryview
