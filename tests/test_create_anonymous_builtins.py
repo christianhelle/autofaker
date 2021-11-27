@@ -1,5 +1,7 @@
+import typing
 import unittest
 from abc import abstractmethod
+from typing import List
 
 from autofaker import Autodata
 
@@ -20,7 +22,7 @@ class CreateTestCase(unittest.TestCase):
         self.assertNotIsInstance(Autodata.create(self.getType()), type)
 
     def test_create_returns_not_default(self):
-        if self.getType() is None or self.getType() is bool:
+        if self.getType() is None or self.getType() is bool or range:
             return
         self.assertNotEqual(Autodata.create(self.getType()), self.getType()())
 
@@ -50,3 +52,31 @@ class AnonymousComplexTestCase(CreateTestCase):
         return complex
 
 
+class AnonymousRangeTestCase(CreateTestCase):
+    def getType(self):
+        return range
+
+
+class AnonymousBytesTestCase(CreateTestCase):
+    def getType(self):
+        return bytes
+
+
+class AnonymousByteArrayTestCase(CreateTestCase):
+    def getType(self):
+        return bytearray
+
+
+class AnonymousMemoryViewTestCase(CreateTestCase):
+    def getType(self):
+        return memoryview
+
+
+class AnonymousSetTestCase(CreateTestCase):
+    def getType(self):
+        return set
+
+
+class AnonymousFrozensetTestCase(CreateTestCase):
+    def getType(self):
+        return frozenset

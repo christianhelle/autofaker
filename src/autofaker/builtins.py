@@ -4,16 +4,6 @@ import uuid
 from autofaker.base import TypeDataGeneratorBase
 
 
-def is_builtin_type(type_name) -> bool:
-    return type_name in [
-        'int',
-        'str',
-        'float',
-        'complex',
-        'bool',
-    ]
-
-
 class IntegerGenerator(TypeDataGeneratorBase):
     def generate(self):
         return random.randint(0, 10000)
@@ -37,3 +27,24 @@ class BooleanGenerator(TypeDataGeneratorBase):
 class ComplexGenerator(TypeDataGeneratorBase):
     def generate(self):
         return complex(IntegerGenerator().generate())
+
+
+class RangeGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return range(IntegerGenerator().generate())
+
+
+class BytesGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return bytes(range(random.randint(0, 256)))
+
+
+class ByteArrayGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return bytearray(range(random.randint(0, 256)))
+
+
+class MemoryViewGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return memoryview(BytesGenerator().generate())
+

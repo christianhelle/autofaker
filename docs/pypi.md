@@ -10,6 +10,12 @@ This phase is called the **arrange** or setup phase of the test.
 In most cases, the system you want to test will force you to specify much more information than you really care about, 
 so you frequently end up creating objects with no influence on the test itself just simply to satisfy the compiler/interpreter
 
+[AutoFaker](https://pypi.org/project/autofaker/) is available from PyPI and should be installed using `pip`
+
+```
+pip install autofaker
+```
+
 AutoFaker can help by creating such anonymous variables for you. Here's a simple example:
 
 ```python
@@ -99,6 +105,10 @@ Built-in types:
 - int
 - float
 - str
+- complex
+- range
+- bytes
+- bytearray
 
 Datetime types:
 - datetime
@@ -114,19 +124,7 @@ Dataframes:
 - Pandas dataframe
 
 
-## Getting Started
-
-[AutoFaker](https://pypi.org/project/autofaker/) is available from PyPI and should be installed using `pip`
-
-```
-pip install autofaker
-```
-
-Next you need to import the `Autodata` class
-
-```python
-from autofaker import Autodata
-```
+## Example usages
 
 Create anonymous built-in types like `int`, `float`, `str` and datetime types like `datetime` and `date`
 
@@ -134,6 +132,10 @@ Create anonymous built-in types like `int`, `float`, `str` and datetime types li
 print(f'anonymous string:    {Autodata.create(str)}')
 print(f'anonymous int:       {Autodata.create(int)}')
 print(f'anonymous float:     {Autodata.create(float)}')
+print(f'anonymous complex:   {Autodata.create(complex)}')
+print(f'anonymous range:     {Autodata.create(range)}')
+print(f'anonymous bytes:     {Autodata.create(bytes)}')
+print(f'anonymous bytearray: {Autodata.create(bytearray)}')
 print(f'anonymous datetime:  {Autodata.create(datetime)}')
 print(f'anonymous date:      {Autodata.create(datetime.date)}')
 ```
