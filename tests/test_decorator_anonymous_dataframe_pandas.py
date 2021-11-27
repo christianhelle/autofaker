@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import pandas
 
-from autofaker import autopandas, fakepandas
+from autofaker import autopandas, fakepandas, autodata
 
 
 class SimpleClassA:
@@ -83,3 +83,15 @@ class AnonymousPandasDataFrameViaDecoratorFromDataClassTests(unittest.TestCase):
     @fakepandas(DataClass)
     def test_create_fake_pandas_dataframe_returns_not_none(self, df: pandas.DataFrame):
         self.assertIsNotNone(df)
+
+
+class AutodataDecoratorIgnoresPandas(unittest.TestCase):
+
+    @autodata()
+    def test_autodata_decorator_ignores_pandas_dataframe(self, df: pandas.DataFrame):
+        self.assertIsNone(df)
+
+    @autodata()
+    def test_autodata_decorator_ignores_only_pandas_dataframe(self, text: str, df: pandas.DataFrame):
+        self.assertIsNotNone(text)
+        self.assertIsNone(df)
