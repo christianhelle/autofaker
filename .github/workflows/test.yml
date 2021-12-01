@@ -16,6 +16,7 @@ jobs:
     runs-on: ${{ inputs.os }}
     strategy:
       matrix:
+        fail-fast: false
         python_version:
           - "3.7"
           - "3.8"
