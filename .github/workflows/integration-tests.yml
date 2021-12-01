@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - .github/workflows/integration-tests.yml
+      - .github/workflows/test.yml
   schedule:
     - cron:  '0 8 * * *'
 
