@@ -15,8 +15,8 @@ jobs:
   test:
     runs-on: ${{ inputs.os }}
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         python_version:
           - "3.7"
           - "3.8"
