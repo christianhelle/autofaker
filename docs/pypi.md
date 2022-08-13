@@ -1,4 +1,4 @@
-A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
+AutoFaker is a Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
 
 This library is heavily inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture) and was initially created 
