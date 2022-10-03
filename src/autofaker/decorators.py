@@ -34,7 +34,6 @@ def autodata(*types: object, use_fake_data: bool = False):
         def wrapper(*args):
             if __get_class_that_defined_method(function) is None:
                 return function(*tuple(__create_function_args(function, *tuple(types), use_fake_data=use_fake_data)))
-
             return function(__get_test_class(*args),
                             *tuple(__create_function_args(function, *tuple(types), use_fake_data=use_fake_data)))
         return wrapper
@@ -64,8 +63,6 @@ def fakedata(*types: object):
         def wrapper(*args):
             if __get_class_that_defined_method(function) is None:
                 return function(*tuple(__create_function_args(function, *tuple(types), use_fake_data=True)))
-
-
             return function(__get_test_class(*args),
                             *tuple(__create_function_args(function, *tuple(types), use_fake_data=True)))
         return wrapper
@@ -83,6 +80,8 @@ def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
     def decorator(function):
         def wrapper(*args):
             pdf = PandasDataFrameGenerator(t, rows, use_fake_data=use_fake_data).generate()
+            if __get_class_that_defined_method(function) is None:
+                return function(pdf)
             return function(__get_test_class(*args), pdf)
         return wrapper
     return decorator
