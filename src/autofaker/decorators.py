@@ -3,6 +3,7 @@ Provides anonymous object creation functions to help minimize the setup/arrange 
 """
 
 import inspect
+import functools
 import unittest
 from typing import List
 
@@ -31,6 +32,9 @@ def autodata(*types: object, use_fake_data: bool = False):
     """
     def decorator(function):
         def wrapper(*args):
+            if __get_class_that_defined_method(function) is None:
+                return function(*tuple(__create_function_args(function, *tuple(types), use_fake_data=use_fake_data)))
+
             return function(__get_test_class(*args),
                             *tuple(__create_function_args(function, *tuple(types), use_fake_data=use_fake_data)))
         return wrapper
@@ -58,6 +62,10 @@ def fakedata(*types: object):
     """
     def decorator(function):
         def wrapper(*args):
+            if __get_class_that_defined_method(function) is None:
+                return function(*tuple(__create_function_args(function, *tuple(types), use_fake_data=True)))
+
+
             return function(__get_test_class(*args),
                             *tuple(__create_function_args(function, *tuple(types), use_fake_data=True)))
         return wrapper
@@ -99,6 +107,23 @@ def __get_test_class(*args):
     return test_class
 
 
+def __get_class_that_defined_method(meth):
+    if isinstance(meth, functools.partial):
+        return get_class_that_defined_method(meth.func)
+    if inspect.ismethod(meth) or (inspect.isbuiltin(meth) and getattr(meth, '__self__', None) is not None and getattr(meth.__self__, '__class__', None)):
+        for cls in inspect.getmro(meth.__self__.__class__):
+            if meth.__name__ in cls.__dict__:
+                return cls
+        meth = getattr(meth, '__func__', meth)  # fallback to __qualname__ parsing
+    if inspect.isfunction(meth):
+        cls = getattr(inspect.getmodule(meth),
+                      meth.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0],
+                      None)
+        if isinstance(cls, type):
+            return cls
+    return getattr(meth, '__objclass__', None)  # handle special descriptor objects
+
+
 def __create_function_args(function, *types, use_fake_data: bool = False) -> List:
     values = []
     argtpes = inspect.getfullargspec(function)
@@ -106,6 +131,9 @@ def __create_function_args(function, *types, use_fake_data: bool = False) -> Lis
     for t in args:
         value = Autodata.create(t, use_fake_data)
         values.append(value)
-    if len(argtpes.args) - 1 != len(values):
+    pos = 1
+    if __get_class_that_defined_method(function) is None:
+        pos = 0
+    if len(argtpes.args) - pos != len(values):
         raise ValueError("Missing argument annotations. Please declare the type of every argument")
     return values
