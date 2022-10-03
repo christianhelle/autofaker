@@ -59,3 +59,41 @@ def test_create_fake_nested_class_returns_instance_with_new_values(instance: Nes
     assert instance.id != NestedClass().id
     assert instance.name != SimpleClass().name
     assert instance.text != SimpleClass().text
+
+
+# Anonymous Double Nested Class Via Decorator With Fakes
+
+@autodata(DoubleNestedClass, use_fake_data=True)
+def test_create_double_nested_class_using_decorator_returns_not_none_with_fake_data(instance):
+    assert instance is not None
+
+
+@autodata(DoubleNestedClass, use_fake_data=True)
+def test_create_double_nested_class_using_decorator_returns_instance_with_fake_data(instance):
+    assert isinstance(instance, DoubleNestedClass)
+
+
+@autodata(DoubleNestedClass, use_fake_data=True)
+def test_create_double_nested_class_returns_instance_with_new_values_with_fake_data(instance):
+    assert instance.id != DoubleNestedClass().id
+    assert instance.inner != DoubleNestedClass().inner
+    assert instance.inner.id != DoubleNestedClass().id
+    assert instance.inner.text != DoubleNestedClass().text
+
+
+@autodata(use_fake_data=True)
+def test_create_double_nested_class_argument_using_decorator_returns_not_none_with_fake_data(instance: DoubleNestedClass):
+    assert instance is not None
+
+
+@autodata(use_fake_data=True)
+def test_create_double_nested_class_argument_using_decorator_returns_instance_with_fake_data(instance: DoubleNestedClass):
+    assert isinstance(instance, DoubleNestedClass)
+
+
+@fakedata()
+def test_create_double_nested_class_argument_returns_instance_with_new_values_with_fake_data(instance: DoubleNestedClass):
+    assert instance.id != DoubleNestedClass().id
+    assert instance.inner != DoubleNestedClass().inner
+    assert instance.inner.id != SimpleClass().id
+    assert instance.inner.text != SimpleClass().text
