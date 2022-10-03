@@ -53,47 +53,47 @@ def test_create_date_using_decorator(d):
 # Anonymous Primitives Via Decorator With Fakes
 
 @autodata(str, use_fake_data=True)
-def test_create_str_using_decorator(text):
+def test_create_str_using_decorator_with_fake_data(text):
     assert text is not None
 
 @autodata(int, use_fake_data=True)
-def test_create_int_using_decorator(number):
+def test_create_int_using_decorator_with_fake_data(number):
     assert None != (number)
 
 @autodata(float, use_fake_data=True)
-def test_create_float_using_decorator(number):
+def test_create_float_using_decorator_with_fake_data(number):
     assert None != (number)
 
 @autodata(bool, use_fake_data=True)
-def test_create_boolean_using_decorator(boolean):
+def test_create_boolean_using_decorator_with_fake_data(boolean):
     assert None != (boolean)
 
 @autodata(complex, use_fake_data=True)
-def test_create_complex_using_decorator(complex_type):
+def test_create_complex_using_decorator_with_fake_data(complex_type):
     assert None != (complex_type)
 
 @autodata(range, use_fake_data=True)
-def test_create_range_using_decorator(r):
+def test_create_range_using_decorator_with_fake_data(r):
     assert None != (r)
 
 @autodata(bytes, use_fake_data=True)
-def test_create_bytes_using_decorator(b):
+def test_create_bytes_using_decorator_with_fake_data(b):
     assert None != (b)
 
 @autodata(bytearray, use_fake_data=True)
-def test_create_bytearray_using_decorator(b):
+def test_create_bytearray_using_decorator_with_fake_data(b):
     assert None != (b)
 
 @autodata(memoryview, use_fake_data=True)
-def test_create_memoryview_using_decorator(b):
+def test_create_memoryview_using_decorator_with_fake_data(b):
     assert None != (b)
 
 @autodata(datetime, use_fake_data=True)
-def test_create_datetime_using_decorator(dt):
+def test_create_datetime_using_decorator_with_fake_data(dt):
     assert None != (dt)
 
 @autodata(date, use_fake_data=True)
-def test_create_date_using_decorator(d):
+def test_create_date_using_decorator_with_fake_data(d):
     assert None != (d)
 
 
