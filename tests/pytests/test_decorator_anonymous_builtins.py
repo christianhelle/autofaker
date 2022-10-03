@@ -169,8 +169,7 @@ def test_create_fake_arguments_using_decorator(text: str,
     assert memview != memoryview(bytes())
 
 @autodata()
-def test_create_arguments_using_decorator(
-                                          text: str,
+def test_create_arguments_using_decorator(text: str,
                                           number: int,
                                           decimal: float,
                                           complex_type: complex,
@@ -192,8 +191,7 @@ def test_create_arguments_using_decorator(
     assert memview != memoryview(bytes())
 
 @autodata(use_fake_data=True)
-def test_create_arguments_using_decorator_with_fakes(
-                                                     text: str,
+def test_create_arguments_using_decorator_with_fakes(text: str,
                                                      number: int,
                                                      decimal: float,
                                                      complex_type: complex,
