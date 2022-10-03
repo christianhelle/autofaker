@@ -120,3 +120,96 @@ def test_create_primitives_using_decorator_with_fakes(text, number, decimal, com
     assert buffer != bytes()
     assert buffer2 != bytearray()
     assert memview != memoryview(bytes())
+
+
+# Multiple Arguments Via Decorator Tests
+
+@fakedata()
+def test_create_anonymous_arguments_using_decorator(text: str,
+                                                    number: int,
+                                                    decimal: float,
+                                                    complex_type: complex,
+                                                    range_type: range,
+                                                    buffer: bytes,
+                                                    buffer2: bytearray,
+                                                    memview: memoryview):
+    print(text)
+    print(number)
+    print(decimal)
+    print(complex_type)
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
+
+@fakedata()
+def test_create_fake_arguments_using_decorator(text: str,
+                                               number: int,
+                                               decimal: float,
+                                               complex_type: complex,
+                                               range_type: range,
+                                               buffer: bytes,
+                                               buffer2: bytearray,
+                                               memview: memoryview):
+    print(text)
+    print(number)
+    print(decimal)
+    print(complex_type)
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
+
+@autodata()
+def test_create_arguments_using_decorator(
+                                          text: str,
+                                          number: int,
+                                          decimal: float,
+                                          complex_type: complex,
+                                          range_type: range,
+                                          buffer: bytes,
+                                          buffer2: bytearray,
+                                          memview: memoryview):
+    print(text)
+    print(number)
+    print(decimal)
+    print(complex_type)
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
+
+@autodata(use_fake_data=True)
+def test_create_arguments_using_decorator_with_fakes(
+                                                     text: str,
+                                                     number: int,
+                                                     decimal: float,
+                                                     complex_type: complex,
+                                                     range_type: range,
+                                                     buffer: bytes,
+                                                     buffer2: bytearray,
+                                                     memview: memoryview):
+    print(text)
+    print(number)
+    print(decimal)
+    print(complex_type)
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
