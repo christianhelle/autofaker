@@ -98,8 +98,6 @@ def fakepandas(t, rows: int = 3):
 
 
 def __get_test_class(*args):
-    if len(args) == 0:
-        raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
     test_class = args[0]
     if issubclass(test_class.__class__, unittest.TestCase) is False:
         raise NotImplementedError("This way of creating anonymous objects are only supported from unit tests")
@@ -107,13 +105,6 @@ def __get_test_class(*args):
 
 
 def __get_class_that_defined_method(meth):
-    if isinstance(meth, functools.partial):
-        return get_class_that_defined_method(meth.func)
-    if inspect.ismethod(meth) or (inspect.isbuiltin(meth) and getattr(meth, '__self__', None) is not None and getattr(meth.__self__, '__class__', None)):
-        for cls in inspect.getmro(meth.__self__.__class__):
-            if meth.__name__ in cls.__dict__:
-                return cls
-        meth = getattr(meth, '__func__', meth)  # fallback to __qualname__ parsing
     if inspect.isfunction(meth):
         cls = getattr(inspect.getmodule(meth),
                       meth.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0],
