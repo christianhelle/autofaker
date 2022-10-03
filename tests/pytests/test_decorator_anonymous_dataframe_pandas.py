@@ -81,3 +81,15 @@ def test_create_fake_pandas_dataframe_with_rowcount_returns_not_empty(df: pandas
 @fakepandas(DataClass)
 def test_create_fake_pandas_dataframe_returns_not_none(df: pandas.DataFrame):
     assert df is not None
+
+
+# Autodata Decorator Ignores Pandas
+
+@autodata()
+def test_autodata_decorator_ignores_pandas_dataframe(df: pandas.DataFrame):
+    assert df is None
+
+@autodata()
+def test_autodata_decorator_ignores_only_pandas_dataframe(text: str, df: pandas.DataFrame):
+    assert None != (text)
+    assert df is None
