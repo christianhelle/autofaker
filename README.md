@@ -3,10 +3,11 @@
 [![build](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhelle_autofaker&metric=alert_status)](https://sonarcloud.io/dashboard?id=christianhelle_autofaker)
 [![PyPI](https://img.shields.io/pypi/dm/autofaker)](https://pypi.org/project/autofaker)
+[![buymeacoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/christianhelle)
 
 # AutoFaker
 
-A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
+AutoFaker is a Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually 
 write code to create anonymous variables as part of a test cases setup/arrange phase. 
 
 This library is heavily inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture) and was initially created 
@@ -405,3 +406,9 @@ The code above might output the following
 1      Bryan  9084    Walker         (697)893-6767
 2       Paul  9824    Thomas    960.555.3577x65487
 ```
+
+#
+
+For tips and tricks on software development, check out [my blog](https://christianhelle.com)
+
+If you find this useful and feel a bit generous then feel free to [buy me a coffee ☕](https://www.buymeacoffee.com/christianhelle)
