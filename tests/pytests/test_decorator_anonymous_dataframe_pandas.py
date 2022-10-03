@@ -55,3 +55,29 @@ def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_argu
 def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(cls):
     print(cls)
     assert not cls.empty
+
+
+@dataclass
+class DataClass:
+    id: int
+    name: str
+    text: str
+
+
+# Anonymous Pandas DataFrame Via Decorator From DataClass
+
+@autopandas(DataClass)
+def test_create_anonymous_pandas_dataframe_returns_not_none(df: pandas.DataFrame):
+    assert df is not None
+
+@autopandas(DataClass, 10)
+def test_create_anonymous_pandas_dataframe_with_rowcount_returns_not_empty(df: pandas.DataFrame):
+    assert len(df.index) != 0
+
+@fakepandas(DataClass, 10)
+def test_create_fake_pandas_dataframe_with_rowcount_returns_not_empty(df: pandas.DataFrame):
+    assert len(df.index) != 0
+
+@fakepandas(DataClass)
+def test_create_fake_pandas_dataframe_returns_not_none(df: pandas.DataFrame):
+    assert df is not None
