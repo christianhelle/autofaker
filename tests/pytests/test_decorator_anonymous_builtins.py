@@ -94,3 +94,29 @@ def test_create_datetime_using_decorator(dt):
 
 @autodata(date, use_fake_data=True)
 def test_create_date_using_decorator(d):
+    assert None != (d)
+
+
+# Multiple Anonymous Primitives Via Decorator Tests
+
+@autodata(str, int, float, complex, range, bytes, bytearray, memoryview)
+def test_create_primitives_using_decorator(text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
+
+@autodata(str, int, float, complex, range, bytes, bytearray, memoryview, use_fake_data=True)
+def test_create_primitives_using_decorator_with_fakes(text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+    assert text is not None
+    assert number != 0
+    assert decimal != float()
+    assert complex_type != complex()
+    assert range_type != range(0)
+    assert buffer != bytes()
+    assert buffer2 != bytearray()
+    assert memview != memoryview(bytes())
