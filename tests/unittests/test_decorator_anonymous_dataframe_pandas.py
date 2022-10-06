@@ -45,17 +45,14 @@ class AnonymousPandasDataFrameViaDecoratorTests(unittest.TestCase):
 
     @autopandas(SimpleClassA)
     def test_can_create_anonymous_pandas_dataframes(self, cls):
-        print(cls)
         self.assertIsNotNone(cls)
 
     @autopandas(SimpleClassB)
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_arguments(self, cls):
-        print(cls)
         self.assertIsNotNone(cls)
 
     @autopandas(SimpleClassC)
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(self, cls):
-        print(cls)
         self.assertIsNotNone(cls)
 
 
