@@ -1,5 +1,4 @@
 import dataclasses
-import unittest
 from dataclasses import dataclass
 
 from autofaker import autodata, fakedata
