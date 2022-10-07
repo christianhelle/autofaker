@@ -6,8 +6,8 @@ from autofaker import Autodata, autodata, fakedata
 
 
 class Calculator:
-  def add(self, number1: int, number2: int):
-    return number1 + number2
+    def add(self, number1: int, number2: int):
+        return number1 + number2
 
 
 class CalculatorTests(unittest.TestCase):

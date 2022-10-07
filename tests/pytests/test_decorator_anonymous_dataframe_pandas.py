@@ -91,5 +91,5 @@ def test_autodata_decorator_ignores_pandas_dataframe(df: pandas.DataFrame):
 
 @autodata()
 def test_autodata_decorator_ignores_only_pandas_dataframe(text: str, df: pandas.DataFrame):
-    assert None != (text)
+    assert None is not text
     assert df is None

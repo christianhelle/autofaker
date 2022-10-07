@@ -47,4 +47,3 @@ class ByteArrayGenerator(TypeDataGeneratorBase):
 class MemoryViewGenerator(TypeDataGeneratorBase):
     def generate(self):
         return memoryview(BytesGenerator().generate())
-
