@@ -25,7 +25,7 @@ class DoubleNestedClass:
     id: int
     name: str
     text: str
-    inner:  NestedClass
+    inner: NestedClass
 
 
 class AnonymousNestedClassViaDecoratorTestCase(unittest.TestCase):

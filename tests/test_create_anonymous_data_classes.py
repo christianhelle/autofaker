@@ -90,6 +90,7 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
         class InlineDataClass:
             id: int
             text: str
+
         self.assertIsNotNone(Autodata.create(InlineDataClass))
 
     def test_create_data_class_returns_dataclass(self):
@@ -97,6 +98,7 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
         class InlineDataClass:
             id: int
             text: str
+
         self.assertTrue(dataclasses.is_dataclass(Autodata.create(InlineDataClass)))
 
     def test_create_many_data_class_returns_not_none(self):
@@ -104,6 +106,7 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
         class InlineDataClass:
             id: int
             text: str
+
         self.assertIsNotNone(Autodata.create_many(InlineDataClass))
 
     def test_create_many_data_class_returns_list(self):
@@ -111,6 +114,7 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
         class InlineDataClass:
             id: int
             text: str
+
         self.assertIsInstance(Autodata.create_many(InlineDataClass), list)
 
     def test_create_many_data_class_returns_dataclass(self):
@@ -118,6 +122,7 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
         class InlineDataClass:
             id: int
             text: str
+
         data = Autodata.create(InlineDataClass)
         self.assertNotEqual(0, data.id)
         self.assertNotEqual('', data.text)

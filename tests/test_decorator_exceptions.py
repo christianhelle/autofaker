@@ -2,6 +2,7 @@ import unittest
 from dataclasses import dataclass
 
 import pandas
+
 from autofaker import autodata, fakedata, autopandas, fakepandas
 
 

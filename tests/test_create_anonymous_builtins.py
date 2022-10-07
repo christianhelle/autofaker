@@ -1,7 +1,5 @@
-import typing
 import unittest
 from abc import abstractmethod
-from typing import List
 
 from autofaker import Autodata
 
