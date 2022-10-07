@@ -1,11 +1,13 @@
 import dataclasses
 import inspect
+
 import typing_inspect
 
 from autofaker.attributes import Attributes
 from autofaker.dates import DatetimeGenerator, DateGenerator, is_date_type
-from autofaker.fakes import FakeStringGenerator, StringGenerator, FakeIntegerGenerator, TypeDataGeneratorBase
 from autofaker.factory import BuiltinTypeDataGeneratorFactory
+from autofaker.fakes import TypeDataGeneratorBase
+
 
 class TypeDataGenerator:
     @staticmethod
@@ -20,7 +22,6 @@ class TypeDataGenerator:
         return DataClassGenerator(t, use_fake_data=use_fake_data) \
             if dataclasses.is_dataclass(t) \
             else ClassGenerator(t, use_fake_data=use_fake_data)
-
 
     @staticmethod
     def create_datetime(type_name, field_name: str = None, use_fake_data: bool = False):

@@ -2,7 +2,6 @@ import unittest
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime, date
-
 from typing import List
 
 from autofaker import Autodata
