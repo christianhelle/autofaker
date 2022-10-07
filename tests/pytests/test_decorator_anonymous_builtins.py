@@ -11,43 +11,43 @@ def test_create_str_using_decorator(text):
 
 @autodata(int)
 def test_create_int_using_decorator(number):
-    assert None != (number)
+    assert None is not number
 
 @autodata(float)
 def test_create_float_using_decorator(number):
-    assert None != (number)
+    assert None is not number
 
 @autodata(bool)
 def test_create_boolean_using_decorator(boolean):
-    assert None != (boolean)
+    assert None is not boolean
 
 @autodata(complex)
 def test_create_complex_using_decorator(complex_type):
-    assert None != (complex_type)
+    assert None is not complex_type
 
 @autodata(range)
 def test_create_range_using_decorator(r):
-    assert None != (r)
+    assert None is not r
 
 @autodata(bytes)
 def test_create_bytes_using_decorator(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(bytearray)
 def test_create_bytearray_using_decorator(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(memoryview)
 def test_create_memoryview_using_decorator(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(datetime)
 def test_create_datetime_using_decorator(dt):
-    assert None != (dt)
+    assert None is not dt
 
 @autodata(date)
 def test_create_date_using_decorator(d):
-    assert None != (d)
+    assert None is not d
 
 
 # Anonymous Primitives Via Decorator With Fakes
@@ -58,43 +58,43 @@ def test_create_str_using_decorator_with_fake_data(text):
 
 @autodata(int, use_fake_data=True)
 def test_create_int_using_decorator_with_fake_data(number):
-    assert None != (number)
+    assert None is not number
 
 @autodata(float, use_fake_data=True)
 def test_create_float_using_decorator_with_fake_data(number):
-    assert None != (number)
+    assert None is not number
 
 @autodata(bool, use_fake_data=True)
 def test_create_boolean_using_decorator_with_fake_data(boolean):
-    assert None != (boolean)
+    assert None is not boolean
 
 @autodata(complex, use_fake_data=True)
 def test_create_complex_using_decorator_with_fake_data(complex_type):
-    assert None != (complex_type)
+    assert None is not complex_type
 
 @autodata(range, use_fake_data=True)
 def test_create_range_using_decorator_with_fake_data(r):
-    assert None != (r)
+    assert None is not r
 
 @autodata(bytes, use_fake_data=True)
 def test_create_bytes_using_decorator_with_fake_data(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(bytearray, use_fake_data=True)
 def test_create_bytearray_using_decorator_with_fake_data(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(memoryview, use_fake_data=True)
 def test_create_memoryview_using_decorator_with_fake_data(b):
-    assert None != (b)
+    assert None is not b
 
 @autodata(datetime, use_fake_data=True)
 def test_create_datetime_using_decorator_with_fake_data(dt):
-    assert None != (dt)
+    assert None is not dt
 
 @autodata(date, use_fake_data=True)
 def test_create_date_using_decorator_with_fake_data(d):
-    assert None != (d)
+    assert None is not d
 
 
 # Multiple Anonymous Primitives Via Decorator Tests

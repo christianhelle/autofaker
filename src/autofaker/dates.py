@@ -29,4 +29,3 @@ class DateGenerator(TypeDataGeneratorBase):
         return datetime.datetime(random.randint(year - 10, year + 10),
                                  random.randint(1, 12),
                                  random.randint(1, 28))
-
