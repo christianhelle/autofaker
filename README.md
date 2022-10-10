@@ -88,13 +88,12 @@ class DataClass:
     id: int
     first_name: str
     last_name: str
-    address: str
     job: str
 
 data = Autodata.create(DataClass, use_fake_data=True)
 
 print(f'id:     {data.id}')
-print(f'name:   {data.name}')
+print(f'name:   {data.first_name} {data.last_name}')
 print(f'job:    {data.job}\n')
 ```
 
@@ -391,8 +390,9 @@ Create a Pandas DataFrame using fake data generated from a specified type
 ```python
 class DataClass:
     id = -1
-    type = '' 
-    value = 0
+    first_name = '' 
+    last_name = 0
+    phone_number = ''
 
 pdf = Autodata.create_pandas_dataframe(DataClass, use_fake_data=True)
 print(pdf)
