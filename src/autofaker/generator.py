@@ -21,7 +21,7 @@ class TypeDataGenerator:
         if type_name == 'list':
             return ListGenerator(t)
         if is_enum(t):
-            return EnumGenerator(t, use_fake_data)
+            return EnumGenerator(t)
         return DataClassGenerator(t, use_fake_data=use_fake_data) \
             if dataclasses.is_dataclass(t) \
             else ClassGenerator(t, use_fake_data=use_fake_data)

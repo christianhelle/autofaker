@@ -8,8 +8,7 @@ def is_enum(t) -> bool:
 
 
 class EnumGenerator(TypeDataGeneratorBase):
-    def __init__(self, enum, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
+    def __init__(self, enum):
         self.enum = enum
 
     def generate(self):
