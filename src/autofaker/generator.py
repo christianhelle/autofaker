@@ -7,6 +7,7 @@ from autofaker.attributes import Attributes
 from autofaker.dates import DatetimeGenerator, DateGenerator, is_date_type
 from autofaker.factory import BuiltinTypeDataGeneratorFactory
 from autofaker.fakes import TypeDataGeneratorBase
+from autofaker.enums import EnumGenerator, is_enum
 
 
 class TypeDataGenerator:
@@ -19,6 +20,8 @@ class TypeDataGenerator:
             return TypeDataGenerator.create_datetime(type_name, field_name, use_fake_data)
         if type_name == 'list':
             return ListGenerator(t)
+        if is_enum(t):
+            return EnumGenerator(t, use_fake_data)
         return DataClassGenerator(t, use_fake_data=use_fake_data) \
             if dataclasses.is_dataclass(t) \
             else ClassGenerator(t, use_fake_data=use_fake_data)
