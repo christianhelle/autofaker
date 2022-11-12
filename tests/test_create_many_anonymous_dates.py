@@ -1,7 +1,7 @@
+import random
 import unittest
 from abc import abstractmethod
 from datetime import date, datetime
-import random
 
 from autofaker import Autodata
 

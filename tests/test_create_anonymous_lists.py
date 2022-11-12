@@ -2,7 +2,6 @@ import unittest
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime, date
-
 from typing import List
 
 from autofaker import Autodata
@@ -30,7 +29,7 @@ class CreateTestCase(unittest.TestCase):
         if self.getType() is None or self.getType() is bool:
             return
         collection = self.create()
-        self.assertNotEqual(collection, list())
+        self.assertNotEqual(collection, [])
 
     def test_create_returns_not_empty(self):
         if self.getType() is None or self.getType() is bool:
@@ -143,6 +142,3 @@ class AnonymousDoubleNestedDataClassListTestCase(CreateTestCase):
     def test_inner_not_empty(self):
         for data in self.create():
             self.assertNotEqual(len(data.inner), 0)
-
-
-

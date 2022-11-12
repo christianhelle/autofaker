@@ -26,14 +26,17 @@ class AnonymousSimpleClassTestCase(unittest.TestCase):
     def test_create_many_local_class_returns_not_none(self):
         class X:
             pass
+
         self.assertIsNotNone(Autodata.create_many(X))
 
     def test_create_many_local_class_returns_instance(self):
         class X:
             pass
+
         self.assertIsInstance(Autodata.create_many(X), list)
 
     def test_create_many_local_returns_non_default(self):
         class X:
             pass
+
         self.assertNotEqual(Autodata.create_many(X), [X()])

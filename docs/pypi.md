@@ -119,6 +119,7 @@ Classes:
 - @dataclass
 - Nested classes (and recursion)
 - Classes containing lists of other types
+- Enum classes
 
 Dataframes:
 - Pandas dataframe

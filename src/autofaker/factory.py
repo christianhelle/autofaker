@@ -32,21 +32,21 @@ class BuiltinTypeDataGeneratorFactory:
             return FakeIntegerGenerator() \
                 if field_name is not None and use_fake_data is True \
                 else IntegerGenerator()
-        elif type_name == 'str':
+        if type_name == 'str':
             return FakeStringGenerator(field_name) \
                 if field_name is not None and use_fake_data is True \
                 else StringGenerator()
-        elif type_name == 'float':
+        if type_name == 'float':
             return FloatGenerator()
-        elif type_name == 'complex':
+        if type_name == 'complex':
             return ComplexGenerator()
-        elif type_name == 'bool':
+        if type_name == 'bool':
             return BooleanGenerator()
-        elif type_name == 'range':
+        if type_name == 'range':
             return RangeGenerator()
-        elif type_name == 'bytes':
+        if type_name == 'bytes':
             return BytesGenerator()
-        elif type_name == 'bytearray':
+        if type_name == 'bytearray':
             return ByteArrayGenerator()
-        elif type_name == 'memoryview':
+        if type_name == 'memoryview':
             return MemoryViewGenerator()

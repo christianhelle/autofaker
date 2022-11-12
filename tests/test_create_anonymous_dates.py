@@ -24,5 +24,3 @@ class AnonymousDateTestCase(unittest.TestCase):
 
     def test_create_date_returns_date(self):
         self.assertIsInstance(Autodata.create(date), date)
-
-
