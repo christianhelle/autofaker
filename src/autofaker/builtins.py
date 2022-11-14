@@ -36,12 +36,12 @@ class RangeGenerator(TypeDataGeneratorBase):
 
 class BytesGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return bytes(range(random.randint(0, 256)))
+        return bytes(range(random.randint(1, 256)))
 
 
 class ByteArrayGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return bytearray(range(random.randint(0, 256)))
+        return bytearray(range(random.randint(1, 256)))
 
 
 class MemoryViewGenerator(TypeDataGeneratorBase):
