@@ -1,11 +1,10 @@
 import unittest
-from datetime import datetime, date
+from datetime import date, datetime
 
 from autofaker import autodata, fakedata
 
 
 class AnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
-
     @autodata(str)
     def test_create_str_using_decorator(self, text):
         self.assertIsNotNone(text)
@@ -52,7 +51,6 @@ class AnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
 
 class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
-
     @autodata(str, use_fake_data=True)
     def test_create_str_using_decorator(self, text):
         self.assertIsNotNone(text)
@@ -99,9 +97,10 @@ class AnonymousPrimitivesViaDecoratorWithFakesTests(unittest.TestCase):
 
 
 class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
-
     @autodata(str, int, float, complex, range, bytes, bytearray, memoryview)
-    def test_create_primitives_using_decorator(self, text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+    def test_create_primitives_using_decorator(
+        self, text, number, decimal, complex_type, range_type, buffer, buffer2, memview
+    ):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
@@ -111,8 +110,20 @@ class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(buffer2, bytearray())
         self.assertNotEqual(memview, memoryview(bytes()))
 
-    @autodata(str, int, float, complex, range, bytes, bytearray, memoryview, use_fake_data=True)
-    def test_create_primitives_using_decorator_with_fakes(self, text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+    @autodata(
+        str,
+        int,
+        float,
+        complex,
+        range,
+        bytes,
+        bytearray,
+        memoryview,
+        use_fake_data=True,
+    )
+    def test_create_primitives_using_decorator_with_fakes(
+        self, text, number, decimal, complex_type, range_type, buffer, buffer2, memview
+    ):
         self.assertIsNotNone(text)
         self.assertNotEqual(number, 0)
         self.assertNotEqual(decimal, float())
@@ -124,17 +135,18 @@ class MultipleAnonymousPrimitivesViaDecoratorTests(unittest.TestCase):
 
 
 class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
-
     @fakedata()
-    def test_create_anonymous_arguments_using_decorator(self,
-                                                        text: str,
-                                                        number: int,
-                                                        decimal: float,
-                                                        complex_type: complex,
-                                                        range_type: range,
-                                                        buffer: bytes,
-                                                        buffer2: bytearray,
-                                                        memview: memoryview):
+    def test_create_anonymous_arguments_using_decorator(
+        self,
+        text: str,
+        number: int,
+        decimal: float,
+        complex_type: complex,
+        range_type: range,
+        buffer: bytes,
+        buffer2: bytearray,
+        memview: memoryview,
+    ):
         print(text)
         print(number)
         print(decimal)
@@ -149,15 +161,17 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(memview, memoryview(bytes()))
 
     @fakedata()
-    def test_create_fake_arguments_using_decorator(self,
-                                                   text: str,
-                                                   number: int,
-                                                   decimal: float,
-                                                   complex_type: complex,
-                                                   range_type: range,
-                                                   buffer: bytes,
-                                                   buffer2: bytearray,
-                                                   memview: memoryview):
+    def test_create_fake_arguments_using_decorator(
+        self,
+        text: str,
+        number: int,
+        decimal: float,
+        complex_type: complex,
+        range_type: range,
+        buffer: bytes,
+        buffer2: bytearray,
+        memview: memoryview,
+    ):
         print(text)
         print(number)
         print(decimal)
@@ -172,15 +186,17 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(memview, memoryview(bytes()))
 
     @autodata()
-    def test_create_arguments_using_decorator(self,
-                                              text: str,
-                                              number: int,
-                                              decimal: float,
-                                              complex_type: complex,
-                                              range_type: range,
-                                              buffer: bytes,
-                                              buffer2: bytearray,
-                                              memview: memoryview):
+    def test_create_arguments_using_decorator(
+        self,
+        text: str,
+        number: int,
+        decimal: float,
+        complex_type: complex,
+        range_type: range,
+        buffer: bytes,
+        buffer2: bytearray,
+        memview: memoryview,
+    ):
         print(text)
         print(number)
         print(decimal)
@@ -195,15 +211,17 @@ class MultipleArgumentsViaDecoratorTests(unittest.TestCase):
         self.assertNotEqual(memview, memoryview(bytes()))
 
     @autodata(use_fake_data=True)
-    def test_create_arguments_using_decorator_with_fakes(self,
-                                                         text: str,
-                                                         number: int,
-                                                         decimal: float,
-                                                         complex_type: complex,
-                                                         range_type: range,
-                                                         buffer: bytes,
-                                                         buffer2: bytearray,
-                                                         memview: memoryview):
+    def test_create_arguments_using_decorator_with_fakes(
+        self,
+        text: str,
+        number: int,
+        decimal: float,
+        complex_type: complex,
+        range_type: range,
+        buffer: bytes,
+        buffer2: bytearray,
+        memview: memoryview,
+    ):
         print(text)
         print(number)
         print(decimal)

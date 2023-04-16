@@ -30,7 +30,9 @@ class CreateManyTestCase(unittest.TestCase):
     def test_create_many_returns_list_with_non_defaults(self):
         if self.getType() is None:
             return
-        self.assertNotEqual(Autodata.create_many(self.getType()), [self.getType()(1970, 1, 1)])
+        self.assertNotEqual(
+            Autodata.create_many(self.getType()), [self.getType()(1970, 1, 1)]
+        )
 
 
 class AnonymousDatetimeListTestCase(CreateManyTestCase):

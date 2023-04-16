@@ -5,23 +5,22 @@ from autofaker import Autodata
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
 
 
 class NestedWithCollectionClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = [SimpleClass(), SimpleClass()]
 
 
 class NestedWithNestedCollectionClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = [NestedWithCollectionClass(), NestedWithCollectionClass()]
 
 
 class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
-
     def test_create_many_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create_many(NestedWithCollectionClass))
 
@@ -49,7 +48,6 @@ class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 
 
 class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
-
     def test_create_many_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create_many(NestedWithCollectionClass))
 
@@ -66,7 +64,9 @@ class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
         for item in result:
             self.assertNotEqual(0, len(item.inner))
 
-    def test_create_many_nested_class_returns_instances_with_nested_inner_not_empty(self):
+    def test_create_many_nested_class_returns_instances_with_nested_inner_not_empty(
+        self,
+    ):
         result = Autodata.create_many(NestedWithNestedCollectionClass)
         for item in result:
             for cls in item.inner:

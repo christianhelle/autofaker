@@ -6,7 +6,7 @@ from autofaker import Autodata
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
 
 
 class AnonymousSimpleClassTestCase(unittest.TestCase):

@@ -6,8 +6,8 @@ from autofaker import Autodata
 
 class SimpleClassA:
     id = -1
-    name = 'test'
-    text = 'test'
+    name = "test"
+    text = "test"
 
 
 class SimpleClassB:
@@ -24,7 +24,6 @@ class SimpleClassC:
 
 
 class CreateAnonymousPandasDataFrameTests(unittest.TestCase):
-
     def test_create_anonymous_pandas_dataframe_returns_not_none(self):
         df = Autodata.create_pandas_dataframe(SimpleClassA)
         self.assertIsNotNone(df)
@@ -37,20 +36,23 @@ class CreateAnonymousPandasDataFrameTests(unittest.TestCase):
         df = Autodata.create_pandas_dataframe(SimpleClassA, 10)
         self.assertEqual(len(df.index), 10)
 
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_arguments(self):
+    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(SimpleClassB)
-        self.assertTrue('id' in df.columns)
-        self.assertTrue('name' in df.columns)
-        self.assertTrue('text' in df.columns)
+        self.assertTrue("id" in df.columns)
+        self.assertTrue("name" in df.columns)
+        self.assertTrue("text" in df.columns)
 
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(self):
+    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(SimpleClassC)
-        self.assertTrue('a' in df.columns)
-        self.assertTrue('b' in df.columns)
+        self.assertTrue("a" in df.columns)
+        self.assertTrue("b" in df.columns)
 
 
 class CreateFakePandasDataFrameTests(unittest.TestCase):
-
     def test_create_fake_pandas_dataframe_returns_not_none(self):
         df = Autodata.create_pandas_dataframe(SimpleClassA, use_fake_data=True)
         self.assertIsNotNone(df)
@@ -63,16 +65,20 @@ class CreateFakePandasDataFrameTests(unittest.TestCase):
         df = Autodata.create_pandas_dataframe(SimpleClassA, 10, use_fake_data=True)
         self.assertEqual(len(df.index), 10)
 
-    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_arguments(self):
+    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(SimpleClassB, use_fake_data=True)
-        self.assertTrue('id' in df.columns)
-        self.assertTrue('name' in df.columns)
-        self.assertTrue('text' in df.columns)
+        self.assertTrue("id" in df.columns)
+        self.assertTrue("name" in df.columns)
+        self.assertTrue("text" in df.columns)
 
-    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_class_arguments(self):
+    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(SimpleClassC, use_fake_data=True)
-        self.assertTrue('a' in df.columns)
-        self.assertTrue('b' in df.columns)
+        self.assertTrue("a" in df.columns)
+        self.assertTrue("b" in df.columns)
 
 
 @dataclass
@@ -96,7 +102,6 @@ class HybridClassB:
 
 
 class CreateAnonymousPandasDataFrameFromDataClassTests(unittest.TestCase):
-
     def test_create_anonymous_pandas_dataframe_returns_not_none(self):
         df = Autodata.create_pandas_dataframe(DataClass)
         self.assertIsNotNone(df)
@@ -109,20 +114,23 @@ class CreateAnonymousPandasDataFrameFromDataClassTests(unittest.TestCase):
         df = Autodata.create_pandas_dataframe(DataClass, 10)
         self.assertEqual(len(df.index), 10)
 
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(self):
+    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(HybridClassA)
-        self.assertTrue('b' in df.columns)
-        self.assertTrue('a' in df.columns)
+        self.assertTrue("b" in df.columns)
+        self.assertTrue("a" in df.columns)
 
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(self):
+    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(HybridClassB)
-        self.assertTrue('c' in df.columns)
-        self.assertTrue('b' in df.columns)
-        self.assertTrue('a' in df.columns)
+        self.assertTrue("c" in df.columns)
+        self.assertTrue("b" in df.columns)
+        self.assertTrue("a" in df.columns)
 
 
 class CreateFakePandasDataFrameFromDataClassTests(unittest.TestCase):
-
     def test_create_fake_pandas_dataframe_returns_not_none(self):
         df = Autodata.create_pandas_dataframe(DataClass, use_fake_data=True)
         self.assertIsNotNone(df)
@@ -135,13 +143,17 @@ class CreateFakePandasDataFrameFromDataClassTests(unittest.TestCase):
         df = Autodata.create_pandas_dataframe(DataClass, 10, use_fake_data=True)
         self.assertEqual(len(df.index), 10)
 
-    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_class_arguments(self):
+    def test_can_create_fake_pandas_dataframes_from_class_with_constructor_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(HybridClassA, use_fake_data=True)
-        self.assertTrue('b' in df.columns)
-        self.assertTrue('a' in df.columns)
+        self.assertTrue("b" in df.columns)
+        self.assertTrue("a" in df.columns)
 
-    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(self):
+    def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(
+        self,
+    ):
         df = Autodata.create_pandas_dataframe(HybridClassB, use_fake_data=True)
-        self.assertTrue('c' in df.columns)
-        self.assertTrue('b' in df.columns)
-        self.assertTrue('a' in df.columns)
+        self.assertTrue("c" in df.columns)
+        self.assertTrue("b" in df.columns)
+        self.assertTrue("a" in df.columns)

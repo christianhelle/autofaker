@@ -5,23 +5,22 @@ from autofaker import Autodata
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
 
 
 class NestedClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = SimpleClass()
 
 
 class DoubleNestedClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = NestedClass()
 
 
 class AnonymousNestedClassTestCase(unittest.TestCase):
-
     def test_create_many_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create_many(NestedClass))
 
@@ -42,7 +41,6 @@ class AnonymousNestedClassTestCase(unittest.TestCase):
 
 
 class AnonymousDoubleNestedClassTestCase(unittest.TestCase):
-
     def test_create_many_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create_many(DoubleNestedClass))
 
@@ -61,7 +59,9 @@ class AnonymousDoubleNestedClassTestCase(unittest.TestCase):
             self.assertNotEqual(item.id, DoubleNestedClass().id)
             self.assertNotEqual(item.inner, NestedClass())
 
-    def test_create_many_nested_class_returns_instance_with_new_double_nested_instance(self):
+    def test_create_many_nested_class_returns_instance_with_new_double_nested_instance(
+        self,
+    ):
         result = Autodata.create_many(DoubleNestedClass)
         for item in result:
             self.assertNotEqual(item.id, DoubleNestedClass().id)

@@ -4,7 +4,8 @@ class Attributes:
 
     def get_members(self):
         return [
-            attr for attr in dir(self.instance)
+            attr
+            for attr in dir(self.instance)
             if not callable(getattr(self.instance, attr)) and not attr.startswith("__")
         ]
 

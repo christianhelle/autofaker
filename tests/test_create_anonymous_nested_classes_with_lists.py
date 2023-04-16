@@ -5,28 +5,29 @@ from autofaker import Autodata
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
 
 
 class NestedWithCollectionClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = [SimpleClass(), SimpleClass()]
 
 
 class NestedWithNestedCollectionClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = [NestedWithCollectionClass(), NestedWithCollectionClass()]
 
 
 class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedWithCollectionClass))
 
     def test_create_nested_class_returns_instance(self):
-        self.assertIsInstance(Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass)
+        self.assertIsInstance(
+            Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass
+        )
 
     def test_create_nested_class_returns_instance_with_nested_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedWithCollectionClass).inner)
@@ -44,21 +45,26 @@ class AnonymousNestedClassWithCollectionTestCase(unittest.TestCase):
 
 
 class AnonymousNestedClassWithNestedCollectionTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedWithCollectionClass))
 
     def test_create_nested_class_returns_instance(self):
-        self.assertIsInstance(Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass)
+        self.assertIsInstance(
+            Autodata.create(NestedWithCollectionClass), NestedWithCollectionClass
+        )
 
     def test_create_nested_class_returns_instance_with_inner_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedWithNestedCollectionClass).inner)
 
     def test_create_nested_class_returns_instance_with_inner_not_empty(self):
-        self.assertNotEqual(0, len(Autodata.create(NestedWithNestedCollectionClass).inner))
+        self.assertNotEqual(
+            0, len(Autodata.create(NestedWithNestedCollectionClass).inner)
+        )
 
     def test_create_nested_class_returns_instance_with_nested_inner_not_empty(self):
-        self.assertNotEqual(0, len(Autodata.create(NestedWithNestedCollectionClass).inner[0].inner))
+        self.assertNotEqual(
+            0, len(Autodata.create(NestedWithNestedCollectionClass).inner[0].inner)
+        )
 
     def test_create_nested_class_returns_instance_with_new_nested_instance(self):
         result = Autodata.create(NestedWithNestedCollectionClass)

@@ -12,7 +12,6 @@ class DataClass:
 
 
 class AnonymousDataClassTestCase(unittest.TestCase):
-
     def test_create_data_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(DataClass))
 
@@ -28,7 +27,7 @@ class AnonymousDataClassTestCase(unittest.TestCase):
     def test_create_many_data_class_returns_dataclass(self):
         data = Autodata.create(DataClass)
         self.assertNotEqual(0, data.id)
-        self.assertNotEqual('', data.text)
+        self.assertNotEqual("", data.text)
 
 
 @dataclass
@@ -39,7 +38,6 @@ class NestedDataClass:
 
 
 class AnonymousNestedClassTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedDataClass))
 
@@ -53,7 +51,7 @@ class AnonymousNestedClassTestCase(unittest.TestCase):
         result = Autodata.create(NestedDataClass)
         self.assertNotEqual(result.id, 0)
         self.assertNotEqual(result.inner.id, 0)
-        self.assertNotEqual(result.inner.text, '')
+        self.assertNotEqual(result.inner.text, "")
 
 
 @dataclass
@@ -64,12 +62,13 @@ class DoubleNestedDataClass:
 
 
 class AnonymousDoubleNestedDataClassTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(DoubleNestedDataClass))
 
     def test_create_data_class_returns_dataclass(self):
-        self.assertTrue(dataclasses.is_dataclass(Autodata.create(DoubleNestedDataClass)))
+        self.assertTrue(
+            dataclasses.is_dataclass(Autodata.create(DoubleNestedDataClass))
+        )
 
     def test_create_nested_class_returns_instance_with_nested_not_none(self):
         self.assertIsNotNone(Autodata.create(DoubleNestedDataClass).inner)
@@ -78,13 +77,12 @@ class AnonymousDoubleNestedDataClassTestCase(unittest.TestCase):
         result = Autodata.create(DoubleNestedDataClass)
         self.assertNotEqual(result.id, 0)
         self.assertNotEqual(result.inner.id, 0)
-        self.assertNotEqual(result.inner.text, '')
+        self.assertNotEqual(result.inner.text, "")
         self.assertNotEqual(result.inner.inner.id, 0)
-        self.assertNotEqual(result.inner.inner.text, '')
+        self.assertNotEqual(result.inner.inner.text, "")
 
 
 class AnonymousInlineDataClassTestCase(unittest.TestCase):
-
     def test_create_data_class_returns_not_none(self):
         @dataclass
         class InlineDataClass:
@@ -125,4 +123,4 @@ class AnonymousInlineDataClassTestCase(unittest.TestCase):
 
         data = Autodata.create(InlineDataClass)
         self.assertNotEqual(0, data.id)
-        self.assertNotEqual('', data.text)
+        self.assertNotEqual("", data.text)

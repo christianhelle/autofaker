@@ -1,9 +1,9 @@
-from datetime import datetime, date
+from datetime import date, datetime
 
 from autofaker import autodata, fakedata
 
-
 # Anonymous Primitives Via Decorator Tests
+
 
 @autodata(str)
 def test_create_str_using_decorator(text):
@@ -62,6 +62,7 @@ def test_create_date_using_decorator(d):
 
 # Anonymous Primitives Via Decorator With Fakes
 
+
 @autodata(str, use_fake_data=True)
 def test_create_str_using_decorator_with_fake_data(text):
     assert text is not None
@@ -119,8 +120,11 @@ def test_create_date_using_decorator_with_fake_data(d):
 
 # Multiple Anonymous Primitives Via Decorator Tests
 
+
 @autodata(str, int, float, complex, range, bytes, bytearray, memoryview)
-def test_create_primitives_using_decorator(text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+def test_create_primitives_using_decorator(
+    text, number, decimal, complex_type, range_type, buffer, buffer2, memview
+):
     assert text is not None
     assert number != 0
     assert decimal != float()
@@ -131,8 +135,12 @@ def test_create_primitives_using_decorator(text, number, decimal, complex_type, 
     assert memview != memoryview(bytes())
 
 
-@autodata(str, int, float, complex, range, bytes, bytearray, memoryview, use_fake_data=True)
-def test_create_primitives_using_decorator_with_fakes(text, number, decimal, complex_type, range_type, buffer, buffer2, memview):
+@autodata(
+    str, int, float, complex, range, bytes, bytearray, memoryview, use_fake_data=True
+)
+def test_create_primitives_using_decorator_with_fakes(
+    text, number, decimal, complex_type, range_type, buffer, buffer2, memview
+):
     assert text is not None
     assert number != 0
     assert decimal != float()
@@ -145,15 +153,18 @@ def test_create_primitives_using_decorator_with_fakes(text, number, decimal, com
 
 # Multiple Arguments Via Decorator Tests
 
+
 @fakedata()
-def test_create_anonymous_arguments_using_decorator(text: str,
-                                                    number: int,
-                                                    decimal: float,
-                                                    complex_type: complex,
-                                                    range_type: range,
-                                                    buffer: bytes,
-                                                    buffer2: bytearray,
-                                                    memview: memoryview):
+def test_create_anonymous_arguments_using_decorator(
+    text: str,
+    number: int,
+    decimal: float,
+    complex_type: complex,
+    range_type: range,
+    buffer: bytes,
+    buffer2: bytearray,
+    memview: memoryview,
+):
     print(text)
     print(number)
     print(decimal)
@@ -169,14 +180,16 @@ def test_create_anonymous_arguments_using_decorator(text: str,
 
 
 @fakedata()
-def test_create_fake_arguments_using_decorator(text: str,
-                                               number: int,
-                                               decimal: float,
-                                               complex_type: complex,
-                                               range_type: range,
-                                               buffer: bytes,
-                                               buffer2: bytearray,
-                                               memview: memoryview):
+def test_create_fake_arguments_using_decorator(
+    text: str,
+    number: int,
+    decimal: float,
+    complex_type: complex,
+    range_type: range,
+    buffer: bytes,
+    buffer2: bytearray,
+    memview: memoryview,
+):
     print(text)
     print(number)
     print(decimal)
@@ -192,14 +205,16 @@ def test_create_fake_arguments_using_decorator(text: str,
 
 
 @autodata()
-def test_create_arguments_using_decorator(text: str,
-                                          number: int,
-                                          decimal: float,
-                                          complex_type: complex,
-                                          range_type: range,
-                                          buffer: bytes,
-                                          buffer2: bytearray,
-                                          memview: memoryview):
+def test_create_arguments_using_decorator(
+    text: str,
+    number: int,
+    decimal: float,
+    complex_type: complex,
+    range_type: range,
+    buffer: bytes,
+    buffer2: bytearray,
+    memview: memoryview,
+):
     print(text)
     print(number)
     print(decimal)
@@ -215,14 +230,16 @@ def test_create_arguments_using_decorator(text: str,
 
 
 @autodata(use_fake_data=True)
-def test_create_arguments_using_decorator_with_fakes(text: str,
-                                                     number: int,
-                                                     decimal: float,
-                                                     complex_type: complex,
-                                                     range_type: range,
-                                                     buffer: bytes,
-                                                     buffer2: bytearray,
-                                                     memview: memoryview):
+def test_create_arguments_using_decorator_with_fakes(
+    text: str,
+    number: int,
+    decimal: float,
+    complex_type: complex,
+    range_type: range,
+    buffer: bytes,
+    buffer2: bytearray,
+    memview: memoryview,
+):
     print(text)
     print(number)
     print(decimal)

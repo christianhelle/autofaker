@@ -4,7 +4,6 @@ from autofaker import Autodata
 
 
 class AnonymousSimpleClassTestCase(unittest.TestCase):
-
     def test_create_local_class_returns_not_none(self):
         class X:
             pass
@@ -31,4 +30,4 @@ class AnonymousSimpleClassTestCase(unittest.TestCase):
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
