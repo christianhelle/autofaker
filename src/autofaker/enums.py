@@ -4,7 +4,7 @@ from autofaker.base import TypeDataGeneratorBase
 
 
 def is_enum(t) -> bool:
-    return t.__base__.__name__ == 'Enum'
+    return t.__base__.__name__ == "Enum"
 
 
 class EnumGenerator(TypeDataGeneratorBase):

@@ -15,8 +15,11 @@ class PandasDataFrameGenerator:
 
     def generate(self):
         members = [
-            attr for attr in dir(self.data[0])
-            if dataclasses.is_dataclass(getattr(self.data[0], attr)) or not callable(getattr(self.data[0], attr)) and not attr.startswith("__")
+            attr
+            for attr in dir(self.data[0])
+            if dataclasses.is_dataclass(getattr(self.data[0], attr))
+            or not callable(getattr(self.data[0], attr))
+            and not attr.startswith("__")
         ]
         rows = []
         for d in self.data:

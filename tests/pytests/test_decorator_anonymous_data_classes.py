@@ -13,6 +13,7 @@ class DataClass:
 
 # Anonymous DataClass Via Decorator Test Cases
 
+
 @autodata(DataClass)
 def test_create_data_class_using_decorator_returns_not_none(instance):
     assert instance is not None
@@ -31,14 +32,18 @@ def test_create_data_class_returns_instance_with_new_values(instance):
 
 
 @autodata()
-def test_create_data_class_argument_returns_instance_with_new_values(instance: DataClass):
+def test_create_data_class_argument_returns_instance_with_new_values(
+    instance: DataClass,
+):
     assert instance.id != int()
     assert instance.name != str()
     assert instance.text != str()
 
 
 @autodata()
-def test_create_anonymous_data_class_returns_instance_with_new_values(instance: DataClass):
+def test_create_anonymous_data_class_returns_instance_with_new_values(
+    instance: DataClass,
+):
     assert instance.id != int()
     assert instance.name != str()
     assert instance.text != str()
@@ -52,6 +57,7 @@ def test_create_fake_data_class_returns_instance_with_new_values(instance: DataC
 
 
 # Anonymous DataClass Via Decorator With Fakes Test Cases
+
 
 @autodata(DataClass, use_fake_data=True)
 def test_create_data_class_using_decorator_returns_not_none_with_fake_data(instance):
@@ -70,14 +76,18 @@ def test_create_data_class_returns_instance_with_new_values_with_fake_data(insta
 
 
 @autodata(use_fake_data=True)
-def test_create_data_class_argument_returns_instance_with_new_values_with_fake_data(instance: DataClass):
+def test_create_data_class_argument_returns_instance_with_new_values_with_fake_data(
+    instance: DataClass,
+):
     assert instance.id != int()
     assert instance.name != str()
     assert instance.text != str()
 
 
 @fakedata()
-def test_create_fake_data_class_returns_instance_with_new_values_with_fake_data(instance: DataClass):
+def test_create_fake_data_class_returns_instance_with_new_values_with_fake_data(
+    instance: DataClass,
+):
     assert instance.id != int()
     assert instance.name != str()
     assert instance.text != str()

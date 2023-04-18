@@ -15,7 +15,6 @@ class Weekday(Enum):
 
 
 class AnonymousWeekdayTestCase(unittest.TestCase):
-
     @autodata(Weekday)
     def test_create_enum_class_returns_not_none(self, sut):
         self.assertIsNotNone(sut)

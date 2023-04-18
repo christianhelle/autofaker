@@ -33,6 +33,7 @@ class DataClass:
 def is_uuid(s: str):
     try:
         from uuid import UUID
+
         UUID(s)
         return True
     except ValueError:
@@ -40,42 +41,59 @@ def is_uuid(s: str):
 
 
 class AnonymousDataClassWithFakesTestCase(unittest.TestCase):
-
     def test_create_dataclass_name_returns_not_uuid(self):
         self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).name))
 
     def test_create_dataclass_first_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).first_name))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).first_name)
+        )
 
     def test_create_dataclass_last_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).last_name))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).last_name)
+        )
 
     def test_create_dataclass_address_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).address))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).address)
+        )
 
     def test_create_dataclass_job_returns_not_uuid(self):
         self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).job))
 
     def test_create_dataclass_country_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).country))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).country)
+        )
 
     def test_create_dataclass_currency_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).currency_name))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).currency_name)
+        )
 
     def test_create_dataclass_currency_code_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).currency_code))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).currency_code)
+        )
 
     def test_create_dataclass_email_returns_not_uuid(self):
         self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).email))
 
     def test_create_dataclass_safe_email_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).safe_email))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).safe_email)
+        )
 
     def test_create_dataclass_company_email_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).company_email))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).company_email)
+        )
 
     def test_create_dataclass_hostname_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).hostname))
+        self.assertFalse(
+            is_uuid(Autodata.create(DataClass, use_fake_data=True).hostname)
+        )
 
     def test_create_dataclass_ipv4_returns_not_uuid(self):
         self.assertFalse(is_uuid(Autodata.create(DataClass, use_fake_data=True).ipv4))
