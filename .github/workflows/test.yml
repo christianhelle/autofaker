@@ -31,16 +31,6 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
 
-      - name: Sleep for 60 seconds (Bash)
-        if: ${{ inputs.os == 'ubuntu-latest' }}
-        run: sleep 60s
-        shell: bash
-
-      - name: Sleep for 60 seconds (Powershell)
-        if: ${{ inputs.os == 'windows-latest' }}
-        run: Start-Sleep -s 60
-        shell: powershell
-
       - name: Install Requirements
         run: |
           pip install pytest
