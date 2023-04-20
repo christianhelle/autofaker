@@ -32,7 +32,7 @@ jobs:
           python-version: ${{ matrix.python_version }}
 
       - name: Sleep for 60 seconds (Bash)
-        if: ${{ inputs.os != 'windows-latest' }}
+        if: ${{ inputs.os == 'ubuntu-latest' }}
         run: sleep 60s
         shell: bash
 
