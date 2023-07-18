@@ -26,6 +26,7 @@ def test_create_enum_class_returns_instance(sut):
 class BasicEnum(Enum):
     """empty"""
 
+
 class InheritedEnum(BasicEnum):
     VALUE_1 = 1
     VALUE_2 = 2
