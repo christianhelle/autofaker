@@ -21,3 +21,21 @@ def test_create_enum_class_returns_not_none(sut):
 @autodata(Weekday)
 def test_create_enum_class_returns_instance(sut):
     assert isinstance(sut, Weekday)
+
+
+class BasicEnum(Enum):
+    """empty"""
+
+class InheritedEnum(BasicEnum):
+    VALUE_1 = 1
+    VALUE_2 = 2
+
+
+@autodata(InheritedEnum)
+def test_create_enum_class_returns_not_none(sut):
+    assert sut is not None
+
+
+@autodata(InheritedEnum)
+def test_create_enum_class_returns_instance(sut):
+    assert isinstance(sut, BasicEnum)
