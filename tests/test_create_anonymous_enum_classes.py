@@ -25,6 +25,7 @@ class AnonymousWeekdayTestCase(unittest.TestCase):
 class BasicEnum(Enum):
     """empty"""
 
+
 class InheritedEnum(BasicEnum):
     VALUE_1 = 1
     VALUE_2 = 2
