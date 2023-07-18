@@ -11,7 +11,6 @@ class Calculator:
 
 
 class CalculatorTests(unittest.TestCase):
-
     def test_can_add_two_numbers(self):
         numbers = Autodata.create_many(int, 2)
         sut = Autodata.create(Calculator)
@@ -24,24 +23,30 @@ class CalculatorTests(unittest.TestCase):
         self.assertEqual(number1 + number2, result)
 
     @autodata
-    def test_can_add_two_numbers_using_annotated_arguments(self, sut: Calculator, number1: int, number2: int):
+    def test_can_add_two_numbers_using_annotated_arguments(
+        self, sut: Calculator, number1: int, number2: int
+    ):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
     @autodata
-    def test_can_add_two_numbers_using_anonymous_arguments(self, sut: Calculator, number1: int, number2: int):
+    def test_can_add_two_numbers_using_anonymous_arguments(
+        self, sut: Calculator, number1: int, number2: int
+    ):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
     @fakedata
-    def test_can_add_two_numbers_using_fake_arguments(self, sut: Calculator, number1: int, number2: int):
+    def test_can_add_two_numbers_using_fake_arguments(
+        self, sut: Calculator, number1: int, number2: int
+    ):
         result = sut.add(number1, number2)
         self.assertEqual(number1 + number2, result)
 
 
 class Person:
     age = 10
-    name = 'test'
+    name = "test"
 
     def get_introduction(self):
         return f"Hi! My name is {self.name} and I'm {self.age} years old"
@@ -67,7 +72,6 @@ class Staff:
 
 
 class StaffTests(unittest.TestCase):
-
     def test_introduce_everyone(self):
         people = Autodata.create_many(Person)
         sut = Autodata.create(Staff)
@@ -110,7 +114,10 @@ class ConstructorWithClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithClassArguments).inner)
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithClassArguments).inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithClassArguments).inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 class ConstructorWithNestedClassArguments:
@@ -126,10 +133,16 @@ class ConstructorWithNestedClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithNestedClassArguments).inner)
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithNestedClassArguments).inner, ConstructorWithClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithNestedClassArguments).inner,
+            ConstructorWithClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithNestedClassArguments).inner.inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithNestedClassArguments).inner.inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 class ConstructorWithDoubleNestedClassArguments:
@@ -142,16 +155,29 @@ class ConstructorWithDoubleNestedClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithDoubleNestedClassArguments))
 
     def test_constructed_sut_inner_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner
+        )
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner, ConstructorWithNestedClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner,
+            ConstructorWithNestedClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner, ConstructorWithClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner,
+            ConstructorWithClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner.inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(
+                ConstructorWithDoubleNestedClassArguments
+            ).inner.inner.inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 @dataclass
@@ -175,13 +201,19 @@ class ConstructorWithDataClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.id)
 
     def test_constructed_sut_age_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.age)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.age
+        )
 
     def test_constructed_sut_name_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.name)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.name
+        )
 
     def test_constructed_sut_email_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.email)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.email
+        )
 
 
 class ConstructorWithListArguments:

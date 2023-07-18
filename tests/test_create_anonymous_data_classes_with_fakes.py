@@ -33,6 +33,7 @@ class DataClass:
 def is_uuid(s: str):
     try:
         from uuid import UUID
+
         UUID(s)
         return True
     except ValueError:
@@ -40,51 +41,88 @@ def is_uuid(s: str):
 
 
 class AnonymousDataClassWithFakesTestCase(unittest.TestCase):
-
     def test_create_many_dataclass_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].name))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].name)
+        )
 
     def test_create_many_dataclass_first_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].first_name))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].first_name)
+        )
 
     def test_create_many_dataclass_last_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].last_name))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].last_name)
+        )
 
     def test_create_many_dataclass_address_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].address))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].address)
+        )
 
     def test_create_many_dataclass_job_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].job))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].job)
+        )
 
     def test_create_many_dataclass_country_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].country))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].country)
+        )
 
     def test_create_many_dataclass_currency_name_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].currency_name))
+        self.assertFalse(
+            is_uuid(
+                Autodata.create_many(DataClass, use_fake_data=True)[2].currency_name
+            )
+        )
 
     def test_create_many_dataclass_currency_code_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].currency_code))
+        self.assertFalse(
+            is_uuid(
+                Autodata.create_many(DataClass, use_fake_data=True)[2].currency_code
+            )
+        )
 
     def test_create_many_dataclass_email_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].email))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].email)
+        )
 
     def test_create_many_dataclass_safe_email_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].safe_email))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].safe_email)
+        )
 
     def test_create_many_dataclass_company_email_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].company_email))
+        self.assertFalse(
+            is_uuid(
+                Autodata.create_many(DataClass, use_fake_data=True)[2].company_email
+            )
+        )
 
     def test_create_many_dataclass_hostname_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].hostname))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].hostname)
+        )
 
     def test_create_many_dataclass_ipv4_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].ipv4))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].ipv4)
+        )
 
     def test_create_many_dataclass_ipv6_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].ipv6))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].ipv6)
+        )
 
     def test_create_many_dataclass_text_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].text))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].text)
+        )
 
     def test_create_many_dataclass_word_returns_not_uuid(self):
-        self.assertFalse(is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].word))
+        self.assertFalse(
+            is_uuid(Autodata.create_many(DataClass, use_fake_data=True)[2].word)
+        )

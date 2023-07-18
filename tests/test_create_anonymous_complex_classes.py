@@ -68,7 +68,10 @@ class ConstructorWithClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithClassArguments).inner)
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithClassArguments).inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithClassArguments).inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 class ConstructorWithNestedClassArguments:
@@ -84,10 +87,16 @@ class ConstructorWithNestedClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithNestedClassArguments).inner)
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithNestedClassArguments).inner, ConstructorWithClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithNestedClassArguments).inner,
+            ConstructorWithClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithNestedClassArguments).inner.inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithNestedClassArguments).inner.inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 class ConstructorWithDoubleNestedClassArguments:
@@ -100,16 +109,29 @@ class ConstructorWithDoubleNestedClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithDoubleNestedClassArguments))
 
     def test_constructed_sut_inner_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner
+        )
 
     def test_constructed_sut_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner, ConstructorWithNestedClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner,
+            ConstructorWithNestedClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner, ConstructorWithClassArguments)
+        self.assertIsInstance(
+            Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner,
+            ConstructorWithClassArguments,
+        )
 
     def test_constructed_sut_inner_inner_inner_has_correct_type(self):
-        self.assertIsInstance(Autodata.create(ConstructorWithDoubleNestedClassArguments).inner.inner.inner, ConstructorWithPrimitiveArguments)
+        self.assertIsInstance(
+            Autodata.create(
+                ConstructorWithDoubleNestedClassArguments
+            ).inner.inner.inner,
+            ConstructorWithPrimitiveArguments,
+        )
 
 
 @dataclass
@@ -133,13 +155,19 @@ class ConstructorWithDataClassArgumentsTests(unittest.TestCase):
         self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.id)
 
     def test_constructed_sut_age_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.age)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.age
+        )
 
     def test_constructed_sut_name_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.name)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.name
+        )
 
     def test_constructed_sut_email_not_none(self):
-        self.assertIsNotNone(Autodata.create(ConstructorWithDataClassArguments).data.email)
+        self.assertIsNotNone(
+            Autodata.create(ConstructorWithDataClassArguments).data.email
+        )
 
 
 class ConstructorWithListArguments:

@@ -15,9 +15,25 @@ class Weekday(Enum):
 
 
 class AnonymousWeekdayTestCase(unittest.TestCase):
-
     def test_create_enum_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(Weekday))
 
     def test_create_enum_class_returns_instance(self):
         self.assertIsInstance(Autodata.create(Weekday), Weekday)
+
+
+class BasicEnum(Enum):
+    """empty"""
+
+
+class InheritedEnum(BasicEnum):
+    VALUE_1 = 1
+    VALUE_2 = 2
+
+
+class AnonymousEnumInheritanceTestCase(unittest.TestCase):
+    def test_create_enum_class_returns_not_none(self):
+        self.assertIsNotNone(Autodata.create(InheritedEnum))
+
+    def test_create_enum_class_returns_instance(self):
+        self.assertIsInstance(Autodata.create(InheritedEnum), BasicEnum)

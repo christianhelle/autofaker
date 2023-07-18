@@ -1,10 +1,11 @@
 import random
+from enum import Enum
 
 from autofaker.base import TypeDataGeneratorBase
 
 
 def is_enum(t) -> bool:
-    return t.__base__.__name__ == 'Enum'
+    return isinstance(t, Enum.__class__)
 
 
 class EnumGenerator(TypeDataGeneratorBase):

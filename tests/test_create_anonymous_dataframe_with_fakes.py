@@ -33,6 +33,7 @@ class DataClass:
 def is_uuid(s: str):
     try:
         from uuid import UUID
+
         UUID(s)
         return True
     except ValueError:
@@ -40,7 +41,6 @@ def is_uuid(s: str):
 
 
 class AnonymousDataClassWithFakesTestCase(unittest.TestCase):
-
     def test_create_pandas_dataframe_returns_not_none(self):
         pdf = Autodata.create_pandas_dataframe(DataClass, use_fake_data=True)
         print()

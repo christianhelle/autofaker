@@ -5,23 +5,22 @@ from autofaker import Autodata
 
 class SimpleClass:
     id = -1
-    text = 'test'
+    text = "test"
 
 
 class NestedClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = SimpleClass()
 
 
 class DoubleNestedClass:
     id = -1
-    text = 'test'
+    text = "test"
     inner = NestedClass()
 
 
 class AnonymousNestedClassTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(NestedClass))
 
@@ -39,7 +38,6 @@ class AnonymousNestedClassTestCase(unittest.TestCase):
 
 
 class AnonymousDoubleNestedClassTestCase(unittest.TestCase):
-
     def test_create_nested_class_returns_not_none(self):
         self.assertIsNotNone(Autodata.create(DoubleNestedClass))
 
