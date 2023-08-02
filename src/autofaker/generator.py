@@ -43,12 +43,23 @@ class TypeDataGenerator:
 
     @staticmethod
     def _get_type_name(t) -> str:
+        PRIMITIVE_TYPES = {
+            "int", "float", "str", "complex", "range", "bytes", "bytearray"
+        }
+
         try:
             return t.__name__
         except Exception:
             attributes = dir(t)
             if "_name" in attributes:
                 return t._name
+            # If __future__.annotations was imported by the user, then the type
+            # will be a str. Thus, asserting the type with type() will fail,
+            # because it will always be a string. This is because, annotations
+            # transforms any type into a string object. Therefore, if the type
+            # is a string, assess if it is the name of a known primitive type.
+            elif type(t) == str and t in PRIMITIVE_TYPES:
+                return t
             return type(t).__name__
 
 
