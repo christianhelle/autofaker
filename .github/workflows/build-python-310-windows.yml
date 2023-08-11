@@ -3,6 +3,8 @@ name: 3.10
 on:
   push:
     paths:
+      - src/**/*.py
+      - tests/**/*.py
       - .github/workflows/build.yml
       - .github/workflows/build-python-310-windows.yml
   workflow_dispatch:

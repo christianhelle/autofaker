@@ -3,6 +3,8 @@ name: 3.9
 on:
   push:
     paths:
+      - src/**/*.py
+      - tests/**/*.py
       - .github/workflows/build.yml
       - .github/workflows/build-python-39-linux.yml
   workflow_dispatch:

@@ -3,6 +3,8 @@ name: 3.7
 on:
   push:
     paths:
+      - src/**/*.py
+      - tests/**/*.py
       - .github/workflows/build.yml
       - .github/workflows/build-python-37-macos.yml
   workflow_dispatch:

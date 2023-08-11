@@ -3,6 +3,8 @@ name: mac
 on:
   push:
     paths:
+      - src/**/*.py
+      - tests/**/*.py
       - .github/workflows/build-for-os.yml
       - .github/workflows/build-macos.yml
   workflow_dispatch:
