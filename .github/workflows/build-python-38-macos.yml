@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/build.yml
-      - .github/workflows/build-python-38-windows.yml
+      - .github/workflows/build-python-38-macos.yml
   workflow_dispatch:
   pull_request:
     types:
