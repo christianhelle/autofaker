@@ -1,4 +1,4 @@
-name: python 3.8
+name: python 3.9
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       python_version: 3.8
-      os: windows-latest
+      os: macos-latest
