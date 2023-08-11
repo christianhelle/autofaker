@@ -17,4 +17,4 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       python_version: 3.8
-      os: linux-latest
+      os: ubuntu-latest
