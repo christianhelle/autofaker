@@ -1,12 +1,12 @@
-name: mac
+name: 3.7
 
 on:
   push:
     paths:
       - src/**/*.py
       - tests/**/*.py
-      - .github/workflows/build-for-os.yml
-      - .github/workflows/build-macos.yml
+      - .github/workflows/build.yml
+      - .github/workflows/build-python-37-macos.yml
   workflow_dispatch:
   pull_request:
     types:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/build-for-os.yml
+    uses: ./.github/workflows/build.yml
     with:
+      python_version: 3.7
       os: macos-latest
