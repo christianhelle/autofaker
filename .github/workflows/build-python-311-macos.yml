@@ -1,4 +1,4 @@
-name: mac v3.11
+name: python v3.11
 
 on:
   push:

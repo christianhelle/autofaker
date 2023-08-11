@@ -1,4 +1,4 @@
-name: mac v3.8
+name: python v3.8
 
 on:
   push:

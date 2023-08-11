@@ -1,4 +1,4 @@
-name: linux v3.9
+name: python v3.9
 
 on:
   push:
