@@ -1,0 +1,20 @@
+name: Python 3.7
+
+on:
+  push:
+    paths:
+      - .github/workflows/build.yml
+      - .github/workflows/build-python-37-windows.yml
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      python_version: 3.7
+      os: macos-latest
