@@ -1,4 +1,4 @@
-name: v3.7
+name: windows v3.7
 
 on:
   push:

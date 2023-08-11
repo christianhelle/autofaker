@@ -1,4 +1,4 @@
-name: v3.8
+name: linux v3.8
 
 on:
   push:

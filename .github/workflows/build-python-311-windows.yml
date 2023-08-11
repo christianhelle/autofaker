@@ -1,4 +1,4 @@
-name: v3.11
+name: windows v3.11
 
 on:
   push:
