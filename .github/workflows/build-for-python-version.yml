@@ -1,0 +1,31 @@
+name: build-template
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python_version }}
+      - name: Install test requirements
+        run: pip install -r requirements.txt
+      - name: Install the package
+        run: python setup.py develop
+      - name: Run Tests
+        run: python -m pytest tests/ -v --cov --cov-report=xml --cov-report=term-missing
