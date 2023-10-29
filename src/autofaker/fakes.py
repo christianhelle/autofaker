@@ -18,6 +18,7 @@ def generate(field_name: str):
 
 class FakeStringGenerator(TypeDataGeneratorBase):
     def __init__(self, field_name: str):
+        super().__init__()
         self.field_name = field_name
 
     def generate(self):
@@ -27,7 +28,7 @@ class FakeStringGenerator(TypeDataGeneratorBase):
 
 class FakeIntegerGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass

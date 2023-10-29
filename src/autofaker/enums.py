@@ -10,6 +10,7 @@ def is_enum(t) -> bool:
 
 class EnumGenerator(TypeDataGeneratorBase):
     def __init__(self, enum):
+        super().__init__()
         self.enum = enum
 
     def generate(self):

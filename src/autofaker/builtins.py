@@ -6,7 +6,7 @@ from autofaker.base import TypeDataGeneratorBase
 
 class IntegerGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -17,7 +17,7 @@ class IntegerGenerator(TypeDataGeneratorBase):
 
 class StringGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -28,7 +28,7 @@ class StringGenerator(TypeDataGeneratorBase):
 
 class FloatGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -39,7 +39,7 @@ class FloatGenerator(TypeDataGeneratorBase):
 
 class BooleanGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -50,7 +50,7 @@ class BooleanGenerator(TypeDataGeneratorBase):
 
 class ComplexGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -61,7 +61,7 @@ class ComplexGenerator(TypeDataGeneratorBase):
 
 class RangeGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -72,7 +72,7 @@ class RangeGenerator(TypeDataGeneratorBase):
 
 class BytesGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -83,7 +83,7 @@ class BytesGenerator(TypeDataGeneratorBase):
 
 class ByteArrayGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -94,7 +94,7 @@ class ByteArrayGenerator(TypeDataGeneratorBase):
 
 class MemoryViewGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass

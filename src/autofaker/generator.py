@@ -71,6 +71,7 @@ class TypeDataGenerator:
 
 class DataClassGenerator(TypeDataGeneratorBase):
     def __init__(self, cls, use_fake_data: bool = False):
+        super().__init__()
         self.use_fake_data = use_fake_data
         self.cls = cls
 
@@ -89,6 +90,7 @@ class DataClassGenerator(TypeDataGeneratorBase):
 
 class ClassGenerator(TypeDataGeneratorBase):
     def __init__(self, cls, use_fake_data: bool = False):
+        super().__init__()
         self.use_fake_data = use_fake_data
         self._try_create_instance(cls)
 
@@ -156,6 +158,7 @@ class ClassGenerator(TypeDataGeneratorBase):
 
 class ListGenerator(TypeDataGeneratorBase):
     def __init__(self, t, use_fake_data: bool = False):
+        super().__init__()
         self.use_fake_data = use_fake_data
         self.list_arg = typing_inspect.get_args(t)
 
