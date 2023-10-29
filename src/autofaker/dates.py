@@ -10,7 +10,7 @@ def is_date_type(type_name) -> bool:
 
 class DatetimeGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
@@ -30,7 +30,7 @@ class DatetimeGenerator(TypeDataGeneratorBase):
 
 class DateGenerator(TypeDataGeneratorBase):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __init__(self):
         pass
