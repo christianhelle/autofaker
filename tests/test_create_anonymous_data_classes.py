@@ -9,6 +9,8 @@ from autofaker import Autodata
 class DataClass:
     id: int
     text: str
+    list_of_str: list[str]
+    list_of_int: list[int]
 
 
 class AnonymousDataClassTestCase(unittest.TestCase):
@@ -28,6 +30,8 @@ class AnonymousDataClassTestCase(unittest.TestCase):
         data = Autodata.create(DataClass)
         self.assertNotEqual(0, data.id)
         self.assertNotEqual("", data.text)
+        self.assertNotEqual("", data.list_of_str[0])
+        self.assertNotEqual(0, data.list_of_int[0])
 
 
 @dataclass
