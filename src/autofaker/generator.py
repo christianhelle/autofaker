@@ -22,7 +22,7 @@ class TypeDataGenerator:
             )
         if is_date_type(type_name):
             return TypeDataGenerator.create_datetime(
-                type_name, field_name, use_fake_data
+                type_name
             )
         if type_name == "list":
             return ListGenerator(t)
@@ -35,7 +35,7 @@ class TypeDataGenerator:
         )
 
     @staticmethod
-    def create_datetime(type_name, field_name: str = None, use_fake_data: bool = False):
+    def create_datetime(type_name):
         if type_name == "datetime":
             return DatetimeGenerator()
         if type_name == "date":
