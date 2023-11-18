@@ -105,6 +105,16 @@ name:   Justin Wise
 job:    Chief Operating Officer
 ```
 
+## Supported OS and Python versions
+
+|Windows|MacOS|Linux|
+|---|---|---|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-37-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-37-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-37-linux.yml/badge.svg)|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-linux.yml/badge.svg)|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-linux.yml/badge.svg)|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-linux.yml/badge.svg)|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-linux.yml/badge.svg)|
+
 ## Supported data types
 
 Currently autofaker supports creating anonymous variables for the following data types:

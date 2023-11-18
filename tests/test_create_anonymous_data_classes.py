@@ -1,6 +1,7 @@
 import dataclasses
 import unittest
 from dataclasses import dataclass
+from typing import List
 
 from autofaker import Autodata
 
@@ -9,6 +10,8 @@ from autofaker import Autodata
 class DataClass:
     id: int
     text: str
+    list_of_str: List[str]
+    list_of_int: List[int]
 
 
 class AnonymousDataClassTestCase(unittest.TestCase):
@@ -28,6 +31,8 @@ class AnonymousDataClassTestCase(unittest.TestCase):
         data = Autodata.create(DataClass)
         self.assertNotEqual(0, data.id)
         self.assertNotEqual("", data.text)
+        self.assertNotEqual("", data.list_of_str[0])
+        self.assertNotEqual(0, data.list_of_int[0])
 
 
 @dataclass

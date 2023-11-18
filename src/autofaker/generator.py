@@ -22,7 +22,7 @@ class TypeDataGenerator:
             )
         if is_date_type(type_name):
             return TypeDataGenerator.create_datetime(
-                type_name, field_name, use_fake_data
+                type_name
             )
         if type_name == "list":
             return ListGenerator(t)
@@ -35,7 +35,7 @@ class TypeDataGenerator:
         )
 
     @staticmethod
-    def create_datetime(type_name, field_name: str = None, use_fake_data: bool = False):
+    def create_datetime(type_name):
         if type_name == "datetime":
             return DatetimeGenerator()
         if type_name == "date":
@@ -69,15 +69,14 @@ class DataClassGenerator(TypeDataGeneratorBase):
         self.cls = cls
 
     def generate(self):
-        args = []
         fields = dataclasses.fields(self.cls)
-        for field in fields:
+        params = {}
+        for dataclass_field in fields:
             generator = TypeDataGenerator.create(
-                field.type, field.name, use_fake_data=self.use_fake_data
+                dataclass_field.type, dataclass_field.name, use_fake_data=self.use_fake_data
             )
-            args.append((field.name, field.type, generator.generate()))
-        name = self.cls.__module__ + "." + self.cls.__qualname__
-        instance = dataclasses.make_dataclass(name, args)
+            params[dataclass_field.name] = generator.generate()
+        instance = self.cls(**params)
         return instance
 
 

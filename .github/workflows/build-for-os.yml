@@ -6,20 +6,26 @@ on:
       os:
         required: true
         type: string
-      python_version:
-        required: true
-        type: string
 
 jobs:
   build:
     runs-on: ${{ inputs.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version:
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "3.10"
+          - "3.11"
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
+          python-version: ${{ matrix.python_version }}
       - name: Install test requirements
         run: pip install -r requirements.txt
       - name: Install the package
