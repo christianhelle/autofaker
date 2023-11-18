@@ -1,6 +1,7 @@
 import dataclasses
 import unittest
 from dataclasses import dataclass
+from typing import List
 
 from autofaker import Autodata
 
@@ -9,8 +10,8 @@ from autofaker import Autodata
 class DataClass:
     id: int
     text: str
-    list_of_str: list[str]
-    list_of_int: list[int]
+    list_of_str: List[str]
+    list_of_int: List[int]
 
 
 class AnonymousDataClassTestCase(unittest.TestCase):
