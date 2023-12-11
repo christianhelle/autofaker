@@ -12,6 +12,12 @@ from autofaker.fakes import FakeIntegerGenerator, FakeStringGenerator, StringGen
 
 
 class BuiltinTypeDataGeneratorFactory:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     @staticmethod
     def is_supported(type_name) -> bool:
         return type_name in [

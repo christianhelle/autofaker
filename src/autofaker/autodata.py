@@ -14,6 +14,12 @@ class Autodata:
     Provides anonymous object creation functions to help minimize the setup/arrange phase when writing unit tests
     """
 
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     @staticmethod
     def create(t, use_fake_data: bool = False):
         """
