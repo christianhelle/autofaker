@@ -11,6 +11,12 @@ from autofaker.fakes import TypeDataGeneratorBase
 
 
 class TypeDataGenerator:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     @staticmethod
     def create(
         t, field_name: str = None, use_fake_data: bool = False

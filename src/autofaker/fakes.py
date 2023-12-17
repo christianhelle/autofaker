@@ -26,5 +26,11 @@ class FakeStringGenerator(TypeDataGeneratorBase):
 
 
 class FakeIntegerGenerator(TypeDataGeneratorBase):
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def generate(self):
         return faker.random_int()
