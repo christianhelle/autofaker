@@ -3,3 +3,4 @@ pytest-cov
 pandas
 faker
 typing_inspect
+setuptools

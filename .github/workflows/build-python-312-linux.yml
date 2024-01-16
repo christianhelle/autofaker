@@ -1,0 +1,22 @@
+name: 3.12
+
+on:
+  push:
+    paths:
+      - src/**/*.py
+      - tests/**/*.py
+      - .github/workflows/build.yml
+      - .github/workflows/build-python-311-linux.yml
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      python_version: 3.12
+      os: ubuntu-latest
