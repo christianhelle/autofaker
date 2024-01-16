@@ -1,4 +1,4 @@
-name: 3.11
+name: 3.12
 
 on:
   push:
