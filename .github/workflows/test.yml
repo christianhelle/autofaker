@@ -48,7 +48,7 @@ jobs:
         run: pip install autofaker
 
       - name: Run Tests
-        run: python -m pytest tests/ -v --cov --cov-report=xml --cov-report=term-missing
+        run: python -m pytest tests/ -v
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
