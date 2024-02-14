@@ -31,9 +31,3 @@ jobs:
         env:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: christianhelle/autofaker
-        with:
-          directory: tests
-          file: coverage.xml
-          flags: unittests
-          fail_ci_if_error: false
-          verbose: true
