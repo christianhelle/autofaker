@@ -1,4 +1,4 @@
-name: 3.12
+name: 3.13
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - src/**/*.py
       - tests/**/*.py
       - .github/workflows/build.yml
-      - .github/workflows/build-python-312-linux.yml
+      - .github/workflows/build-python-313-windows.yml
   workflow_dispatch:
   pull_request:
     types:
@@ -18,5 +18,5 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
     with:
-      python_version: 3.12
-      os: ubuntu-latest
+      python_version: 3.13
+      os: windows-latest
