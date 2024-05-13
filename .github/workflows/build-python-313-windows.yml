@@ -1,0 +1,22 @@
+name: 3.13
+
+on:
+  push:
+    paths:
+      - src/**/*.py
+      - tests/**/*.py
+      - .github/workflows/build.yml
+      - .github/workflows/build-python-313-windows.yml
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      python_version: 3.13
+      os: windows-latest
