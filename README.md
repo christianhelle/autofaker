@@ -114,6 +114,7 @@ job:    Chief Operating Officer
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-linux.yml/badge.svg)|
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-linux.yml/badge.svg)|
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-linux.yml/badge.svg)|
+![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-313-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-313-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-313-linux.yml/badge.svg)|
 
 ## Supported data types
 
