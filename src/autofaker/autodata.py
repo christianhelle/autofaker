@@ -15,7 +15,7 @@ class Autodata:
     """
 
     @staticmethod
-    def create(t, use_fake_data: bool = False):
+    def create(t, use_fake_data: bool = False) -> typing.Any:
         """
         Creates an anonymous variable of the requested type
 
