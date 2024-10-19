@@ -40,16 +40,16 @@ class CreateAnonymousPandasDataFrameTests(unittest.TestCase):
         self,
     ):
         df = Autodata.create_pandas_dataframe(SimpleClassB)
-        self.assertTrue("id" in df.columns)
-        self.assertTrue("name" in df.columns)
-        self.assertTrue("text" in df.columns)
+        self.assertIn("id", df.columns)
+        self.assertIn("name", df.columns)
+        self.assertIn("text", df.columns)
 
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(
         self,
     ):
         df = Autodata.create_pandas_dataframe(SimpleClassC)
-        self.assertTrue("a" in df.columns)
-        self.assertTrue("b" in df.columns)
+        self.assertIn("a", df.columns)
+        self.assertIn("b", df.columns)
 
 
 class CreateFakePandasDataFrameTests(unittest.TestCase):
@@ -69,16 +69,16 @@ class CreateFakePandasDataFrameTests(unittest.TestCase):
         self,
     ):
         df = Autodata.create_pandas_dataframe(SimpleClassB, use_fake_data=True)
-        self.assertTrue("id" in df.columns)
-        self.assertTrue("name" in df.columns)
-        self.assertTrue("text" in df.columns)
+        self.assertIn("id", df.columns)
+        self.assertIn("name", df.columns)
+        self.assertIn("text", df.columns)
 
     def test_can_create_fake_pandas_dataframes_from_class_with_constructor_class_arguments(
         self,
     ):
         df = Autodata.create_pandas_dataframe(SimpleClassC, use_fake_data=True)
-        self.assertTrue("a" in df.columns)
-        self.assertTrue("b" in df.columns)
+        self.assertIn("a", df.columns)
+        self.assertIn("b", df.columns)
 
 
 @dataclass
@@ -118,16 +118,16 @@ class CreateAnonymousPandasDataFrameFromDataClassTests(unittest.TestCase):
         self,
     ):
         df = Autodata.create_pandas_dataframe(HybridClassA)
-        self.assertTrue("b" in df.columns)
-        self.assertTrue("a" in df.columns)
+        self.assertIn("b", df.columns)
+        self.assertIn("a", df.columns)
 
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(
         self,
     ):
         df = Autodata.create_pandas_dataframe(HybridClassB)
-        self.assertTrue("c" in df.columns)
-        self.assertTrue("b" in df.columns)
-        self.assertTrue("a" in df.columns)
+        self.assertIn("c", df.columns)
+        self.assertIn("b", df.columns)
+        self.assertIn("a", df.columns)
 
 
 class CreateFakePandasDataFrameFromDataClassTests(unittest.TestCase):
@@ -147,13 +147,13 @@ class CreateFakePandasDataFrameFromDataClassTests(unittest.TestCase):
         self,
     ):
         df = Autodata.create_pandas_dataframe(HybridClassA, use_fake_data=True)
-        self.assertTrue("b" in df.columns)
-        self.assertTrue("a" in df.columns)
+        self.assertIn("b", df.columns)
+        self.assertIn("a", df.columns)
 
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_hybrid_class_arguments(
         self,
     ):
         df = Autodata.create_pandas_dataframe(HybridClassB, use_fake_data=True)
-        self.assertTrue("c" in df.columns)
-        self.assertTrue("b" in df.columns)
-        self.assertTrue("a" in df.columns)
+        self.assertIn("c", df.columns)
+        self.assertIn("b", df.columns)
+        self.assertIn("a", df.columns)
