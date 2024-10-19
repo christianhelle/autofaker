@@ -58,7 +58,7 @@ class TypeDataGenerator:
             # because it will always be a string. This is because, annotations
             # transforms any type into a string object. Therefore, if the type
             # is a string, assess if it is the name of a known primitive type.
-            elif type(t) == str and t in PRIMITIVE_TYPES:
+            elif t.isinstance(str) and t in PRIMITIVE_TYPES:
                 return t
             return type(t).__name__
 
