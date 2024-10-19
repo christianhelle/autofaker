@@ -1,5 +1,6 @@
 """
-Provides anonymous object creation functions to help minimize the setup/arrange phase when writing unit tests
+Provides anonymous object creation functions to help minimize
+the setup/arrange phase when writing unit tests
 """
 
 import inspect
@@ -11,7 +12,8 @@ from autofaker import Autodata, PandasDataFrameGenerator
 
 def autodata(*types: object, use_fake_data: bool = False):
     """
-    Creates anonymous variable of the requested types and pass them as arguments to a unit test function
+    Creates anonymous variable of the requested types
+    and pass them as arguments to a unit test function
 
     Example:
 
@@ -26,8 +28,14 @@ def autodata(*types: object, use_fake_data: bool = False):
             self.assertIsNotNone(text)
 
 
-    :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
-    :param type types: tuple - The types to generate data. This is optional and will use the arguments from the function being decorated if not specified
+    :param use_fake_data: bool
+        Set this to True to use Faker to generate data,
+        otherwise False to generate anonymous data
+
+    :param type types: tuple
+        The types to generate data.
+        This is optional and will use the arguments
+        from the function being decorated if not specified
     """
 
     def decorator(function):
@@ -56,7 +64,8 @@ def autodata(*types: object, use_fake_data: bool = False):
 
 def fakedata(*types: object):
     """
-    Creates fake values for the variables of the requested types and pass them as arguments to a unit test function
+    Creates fake values for the variables of the requested types
+    and pass them as arguments to a unit test function
 
     Example:
 
@@ -71,7 +80,10 @@ def fakedata(*types: object):
             self.assertIsNotNone(text)
 
 
-    :param types: object - The types to generate data. This is optional and will use the arguments from the function being decorated if not specified
+    :param types: object
+        The types to generate data.
+        This is optional and will use the arguments from the function
+        being decorated if not specified
     """
 
     def decorator(function):
@@ -98,11 +110,19 @@ def fakedata(*types: object):
 
 def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
     """
-    Create a Pandas DataFrame containing anonymous data with the specified number of rows (default 3)
+    Create a Pandas DataFrame containing anonymous data
+    with the specified number of rows (default 3)
 
-    :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
-    :param type rows: int - The number of rows to generate for the DataFrame (default 3)
-    :param use_fake_data: bool - Set this to True to use Faker to generate data, otherwise False to generate anonymous data
+    :param type t: object
+        The class that represents the DataFrame.
+        This can be a plain old class or a @dataclass
+
+    :param type rows: int
+        The number of rows to generate for the DataFrame (default 3)
+
+    :param use_fake_data: bool
+        Set this to True to use Faker to generate data,
+        otherwise False to generate anonymous data
     """
 
     def decorator(function):
@@ -121,10 +141,15 @@ def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
 
 def fakepandas(t, rows: int = 3):
     """
-    Create a Pandas DataFrame containing fake data with the specified number of rows (default 3)
+    Create a Pandas DataFrame containing fake data with
+    the specified number of rows (default 3)
 
-    :param type t: object - The class that represents the DataFrame. This can be a plain old class or a @dataclass
-    :param type rows: int - The number of rows to generate for the DataFrame (default 3)
+    :param type t: object
+        The class that represents the DataFrame.
+        This can be a plain old class or a @dataclass
+
+    :param type rows: int
+        The number of rows to generate for the DataFrame (default 3)
     """
     return autopandas(t, rows, use_fake_data=True)
 
