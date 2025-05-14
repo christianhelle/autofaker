@@ -8,6 +8,7 @@ from autofaker.dates import DateGenerator, DatetimeGenerator, is_date_type
 from autofaker.enums import EnumGenerator, is_enum
 from autofaker.factory import BuiltinTypeDataGeneratorFactory
 from autofaker.fakes import TypeDataGeneratorBase
+from autofaker.literals import LiteralGenerator, is_literal_type
 
 
 class TypeDataGenerator:
@@ -28,6 +29,8 @@ class TypeDataGenerator:
             return ListGenerator(t)
         if is_enum(t):
             return EnumGenerator(t)
+        if is_literal_type(t):
+            return LiteralGenerator(t)
         return (
             DataClassGenerator(t, use_fake_data=use_fake_data)
             if dataclasses.is_dataclass(t)
@@ -72,8 +75,9 @@ class DataClassGenerator(TypeDataGeneratorBase):
         fields = dataclasses.fields(self.cls)
         params = {}
         for dataclass_field in fields:
+            field_type = dataclass_field.type
             generator = TypeDataGenerator.create(
-                dataclass_field.type, dataclass_field.name, use_fake_data=self.use_fake_data
+                field_type, dataclass_field.name, use_fake_data=self.use_fake_data
             )
             params[dataclass_field.name] = generator.generate()
         instance = self.cls(**params)
