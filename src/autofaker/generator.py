@@ -105,7 +105,7 @@ class ClassGenerator(TypeDataGeneratorBase):
             else:
                 attributes.set_value(member, self._try_generate(attr))
 
-        if dir(self.instance).__contains__('__annotations__'):
+        if hasattr(self.instance, '__annotations__'):
             for key, value in self.instance.__annotations__.items():
                 if key not in members:
                     if is_literal_type(value):
