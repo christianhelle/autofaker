@@ -9,10 +9,10 @@ def is_literal_type(t):
         origin = get_origin(t)
         if origin is None:
             return False
-        return origin.__name__ == "Literal" or str(origin) == "typing.Literal"
+        return str(origin) == "typing.Literal"
     except (AttributeError, TypeError):
         try:
-            return t.__origin__.__name__ == "Literal"
+            return t.__origin__._name == "Literal"
         except (AttributeError, TypeError):
             return False
 

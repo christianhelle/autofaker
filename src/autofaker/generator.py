@@ -55,7 +55,8 @@ class TypeDataGenerator:
         except Exception:
             attributes = dir(t)
             if "_name" in attributes:
-                return t._name
+                if t._name is not None:
+                    return t._name
             # If __future__.annotations was imported by the user, then the type
             # will be a str. Thus, asserting the type with type() will fail,
             # because it will always be a string. This is because, annotations
