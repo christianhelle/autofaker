@@ -2,7 +2,6 @@ import dataclasses
 import inspect
 
 import typing_inspect
-from typing import get_args, get_origin
 
 from autofaker.attributes import Attributes
 from autofaker.dates import DateGenerator, DatetimeGenerator, is_date_type
@@ -126,7 +125,9 @@ class ClassGenerator(TypeDataGeneratorBase):
 
     def _try_generate(self, attr):
         try:
-            generator = TypeDataGenerator.create(type(attr), use_fake_data=self.use_fake_data)
+            generator = TypeDataGenerator.create(
+                type(attr), use_fake_data=self.use_fake_data
+            )
             return generator.generate()
         except TypeError as e:
             print(e)
