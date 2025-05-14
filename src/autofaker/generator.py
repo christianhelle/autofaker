@@ -2,6 +2,7 @@ import dataclasses
 import inspect
 
 import typing_inspect
+from typing import get_args, get_origin
 
 from autofaker.attributes import Attributes
 from autofaker.dates import DateGenerator, DatetimeGenerator, is_date_type
@@ -96,6 +97,7 @@ class ClassGenerator(TypeDataGeneratorBase):
 
         attributes = Attributes(self.instance)
         members = attributes.get_members()
+
         for member in members:
             attr = attributes.get_attribute(member)
             if type(attr).__name__ == "list":
@@ -103,6 +105,14 @@ class ClassGenerator(TypeDataGeneratorBase):
                     attr[i] = self._try_generate(attr[i])
             else:
                 attributes.set_value(member, self._try_generate(attr))
+
+        if dir(self.instance).__contains__('__annotations__'):
+            for key, value in self.instance.__annotations__.items():
+                if key not in members:
+                    if is_literal_type(value):
+                        v = LiteralGenerator(value).generate()
+                        self.instance.__dict__[key] = v
+
         return self.instance
 
     def _is_supported(self):
@@ -116,9 +126,7 @@ class ClassGenerator(TypeDataGeneratorBase):
 
     def _try_generate(self, attr):
         try:
-            generator = TypeDataGenerator.create(
-                type(attr), use_fake_data=self.use_fake_data
-            )
+            generator = TypeDataGenerator.create(type(attr), use_fake_data=self.use_fake_data)
             return generator.generate()
         except TypeError as e:
             print(e)
