@@ -139,6 +139,7 @@ Classes:
 - Nested classes (and recursion)
 - Classes containing lists of other types
 - Enum classes
+- typing.Literal types
 
 Dataframes:
 - Pandas dataframe
@@ -417,6 +418,67 @@ The code above might output the following
 0   Lawrence  7670   Jimenez  001-172-307-0561x471
 1      Bryan  9084    Walker         (697)893-6767
 2       Paul  9824    Thomas    960.555.3577x65487
+```
+
+Create anonymous variables from typing.Literal types
+
+```python
+from typing import Literal
+from autofaker import Autodata
+
+# Define Literal types
+status_literal = Literal["pending", "approved", "rejected"]
+number_literal = Literal[1, 2, 3]
+
+# Create anonymous variables from Literals
+status = Autodata.create(status_literal)
+number = Autodata.create(number_literal)
+
+print(f'Random status: {status}')
+print(f'Random number: {number}')
+```
+
+The code above might output the following
+
+```
+Random status: approved
+Random number: 2
+```
+
+Use typing.Literal in classes and dataclasses
+
+```python
+from typing import Literal
+from dataclasses import dataclass
+from autofaker import Autodata
+
+# Define Literal types
+status_literal = Literal["pending", "approved", "rejected"]
+priority_literal = Literal[1, 2, 3]
+
+@dataclass
+class Task:
+    id: int
+    title: str
+    status: status_literal
+    priority: priority_literal
+
+# Create an anonymous Task with random values
+task = Autodata.create(Task)
+
+print(f'Task ID: {task.id}')
+print(f'Title: {task.title}')
+print(f'Status: {task.status}')
+print(f'Priority: {task.priority}')
+```
+
+The code above might output the following
+
+```
+Task ID: 1565737216
+Title: e66ecd5c-c17a-4426-b755-36dfd2082672
+Status: rejected
+Priority: 1
 ```
 
 #
