@@ -1,7 +1,18 @@
+import os
 import setuptools
 
-with open("docs/pypi.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+# Get the absolute path to the directory containing this file (setup.py)
+here = os.path.abspath(os.path.dirname(__file__))
+
+# Path to the documentation file
+readme_path = os.path.join(here, "docs", "pypi.md")
+
+# Try to read the long description from docs/pypi.md, but fall back to a basic description if not available
+try:
+    with open(readme_path, "r", encoding="utf-8") as fh:
+        long_description = fh.read()
+except FileNotFoundError:
+    long_description = "Python library designed to minimize the setup/arrange phase of your unit tests"
 
 setuptools.setup(
     name="autofaker",
