@@ -6,7 +6,7 @@ prepare:
 	pip install -r requirements.txt
 
 debug: prepare
-	python setup.py develop
+	pip install --no-build-isolation -e .
 
 release: prepare
 	python -m pip install --upgrade pip
