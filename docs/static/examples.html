@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - AutoFaker</title>
+    <meta name="description" content="Comprehensive examples and code samples for using AutoFaker in Python unit tests.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                    <span class="nav-icon">🎭</span>
+                    <span class="nav-title">AutoFaker</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="guide.html" class="nav-link">Guide</a>
+                <a href="examples.html" class="nav-link">Examples</a>
+                <a href="https://github.com/christianhelle/autofaker" class="nav-link" target="_blank">GitHub↗</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="examples-hero">
+            <div class="container">
+                <h1 class="hero-title">Examples</h1>
+                <p class="hero-subtitle">Comprehensive code examples to get you started with AutoFaker</p>
+            </div>
+        </section>
+
+        <section class="examples-content">
+            <div class="container">
+                <div class="examples-categories">
+                    <div class="category-nav">
+                        <button class="category-btn active" data-category="basic">Basic Usage</button>
+                        <button class="category-btn" data-category="decorators">Decorators</button>
+                        <button class="category-btn" data-category="fake-data">Fake Data</button>
+                        <button class="category-btn" data-category="dataframes">DataFrames</button>
+                        <button class="category-btn" data-category="advanced">Advanced</button>
+                        <button class="category-btn" data-category="testing">Testing Patterns</button>
+                    </div>
+
+                    <!-- Basic Usage -->
+                    <div class="category-content active" id="basic">
+                        <div class="example-group">
+                            <h2>Basic Usage Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>Built-in Types</h3>
+                                <p>Generate anonymous data for Python's built-in types:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">basic_types.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from autofaker import Autodata
+import datetime
+
+# Built-in types
+text = Autodata.create(str)
+number = Autodata.create(int)
+decimal = Autodata.create(float)
+complex_num = Autodata.create(complex)
+byte_data = Autodata.create(bytes)
+range_obj = Autodata.create(range)
+
+# DateTime types
+now = Autodata.create(datetime.datetime)
+today = Autodata.create(datetime.date)
+
+print(f"String: {text}")
+print(f"Integer: {number}")
+print(f"Float: {decimal}")
+print(f"DateTime: {now}")
+print(f"Date: {today}")
+
+# Output might be:
+# String: f91954f1-96df-463f-a427-665c99213395
+# Integer: 2066712686
+# Float: 725758222.8712853
+# DateTime: 2017-06-19 02:40:41.000084
+# Date: 2019-11-10</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>Simple Classes</h3>
+                                <p>Create instances of custom classes with anonymous data:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">simple_classes.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from autofaker import Autodata
+
+class Product:
+    def __init__(self):
+        self.id = 0
+        self.name = ""
+        self.price = 0.0
+        self.in_stock = True
+
+class Order:
+    def __init__(self):
+        self.order_id = 0
+        self.customer_name = ""
+        self.items = []
+        self.total = 0.0
+
+# Create single instances
+product = Autodata.create(Product)
+order = Autodata.create(Order)
+
+print(f"Product: {product.id}, {product.name}, ${product.price}")
+print(f"Order: {order.order_id}, {order.customer_name}, ${order.total}")
+
+# Create multiple instances
+products = Autodata.create_many(Product, 5)
+print(f"Created {len(products)} products")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>DataClasses</h3>
+                                <p>Work with Python dataclasses for cleaner code:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">dataclasses_example.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from datetime import datetime
+
+@dataclass
+class User:
+    id: int
+    username: str
+    email: str
+    created_at: datetime
+    is_active: bool
+
+@dataclass
+class BlogPost:
+    id: int
+    title: str
+    content: str
+    author: User  # Nested dataclass
+    published: bool
+
+# Create a user
+user = Autodata.create(User)
+print(f"User: {user.username} ({user.email})")
+
+# Create a blog post with nested user
+post = Autodata.create(BlogPost)
+print(f"Post: {post.title}")
+print(f"Author: {post.author.username}")</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decorators -->
+                    <div class="category-content" id="decorators">
+                        <div class="example-group">
+                            <h2>Decorator Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>@autodata with Type Arguments</h3>
+                                <p>Use the decorator with explicit type arguments:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">decorator_args.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata
+
+class Calculator:
+    def add(self, a: int, b: int) -> int:
+        return a + b
+    
+    def multiply(self, a: float, b: float) -> float:
+        return a * b
+
+class TestCalculator(unittest.TestCase):
+    
+    @autodata(Calculator, int, int)
+    def test_add_integers(self, calc, num1, num2):
+        result = calc.add(num1, num2)
+        self.assertEqual(result, num1 + num2)
+        self.assertIsInstance(result, int)
+    
+    @autodata(Calculator, float, float)
+    def test_multiply_floats(self, calc, num1, num2):
+        result = calc.multiply(num1, num2)
+        self.assertAlmostEqual(result, num1 * num2, places=5)
+        self.assertIsInstance(result, float)
+
+# Run the tests
+if __name__ == '__main__':
+    unittest.main()</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>@autodata with Type Annotations</h3>
+                                <p>Cleaner syntax using Python type annotations:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">decorator_annotations.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class Customer:
+    id: int
+    name: str
+    email: str
+
+@dataclass
+class Order:
+    id: int
+    customer: Customer
+    items: List[str]
+    total: float
+
+class OrderService:
+    def calculate_discount(self, order: Order) -> float:
+        if order.total > 100:
+            return order.total * 0.1
+        return 0.0
+
+class TestOrderService(unittest.TestCase):
+    
+    @autodata()
+    def test_calculate_discount_high_value(self, 
+                                         service: OrderService,
+                                         order: Order):
+        # Manually set total to test discount logic
+        order.total = 150.0
+        discount = service.calculate_discount(order)
+        self.assertEqual(discount, 15.0)
+    
+    @autodata()
+    def test_calculate_discount_low_value(self,
+                                        service: OrderService,
+                                        order: Order):
+        order.total = 50.0
+        discount = service.calculate_discount(order)
+        self.assertEqual(discount, 0.0)</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>@fakedata Decorator</h3>
+                                <p>Generate realistic fake data for testing:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">fakedata_decorator.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">import unittest
+from autofaker import fakedata
+from dataclasses import dataclass
+
+@dataclass
+class Employee:
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    job: str
+    company: str
+
+class EmployeeValidator:
+    def validate_email(self, employee: Employee) -> bool:
+        return "@" in employee.email and "." in employee.email
+    
+    def validate_name(self, employee: Employee) -> bool:
+        return len(employee.first_name) > 0 and len(employee.last_name) > 0
+
+class TestEmployeeValidator(unittest.TestCase):
+    
+    @fakedata()
+    def test_email_validation(self, 
+                            validator: EmployeeValidator,
+                            employee: Employee):
+        # employee will have realistic data like:
+        # first_name: "John", last_name: "Smith", 
+        # email: "john.smith@example.com", job: "Software Engineer"
+        
+        is_valid = validator.validate_email(employee)
+        self.assertTrue(is_valid)
+        print(f"Testing email: {employee.email}")
+    
+    @fakedata()
+    def test_name_validation(self,
+                           validator: EmployeeValidator, 
+                           employee: Employee):
+        is_valid = validator.validate_name(employee)
+        self.assertTrue(is_valid)
+        print(f"Testing name: {employee.first_name} {employee.last_name}")</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fake Data -->
+                    <div class="category-content" id="fake-data">
+                        <div class="example-group">
+                            <h2>Fake Data Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>Comprehensive Fake Data</h3>
+                                <p>Generate realistic data for various field types:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">comprehensive_fake.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from datetime import datetime
+
+@dataclass
+class UserProfile:
+    # Identity
+    id: int
+    username: str
+    first_name: str
+    last_name: str
+    
+    # Contact
+    email: str
+    phone_number: str
+    
+    # Location
+    address: str
+    city: str
+    country: str
+    zipcode: str
+    
+    # Work
+    job: str
+    company: str
+    
+    # Financial
+    currency_name: str
+    currency_code: str
+    
+    # Network
+    ipv4: str
+    ipv6: str
+    hostname: str
+    
+    # Content
+    text: str
+    
+    # Dates
+    created_at: datetime
+
+# Generate realistic profile
+profile = Autodata.create(UserProfile, use_fake_data=True)
+
+print("=== User Profile ===")
+print(f"Name: {profile.first_name} {profile.last_name}")
+print(f"Username: {profile.username}")
+print(f"Email: {profile.email}")
+print(f"Phone: {profile.phone_number}")
+print(f"Job: {profile.job} at {profile.company}")
+print(f"Location: {profile.city}, {profile.country} {profile.zipcode}")
+print(f"Address: {profile.address}")
+print(f"Currency: {profile.currency_name} ({profile.currency_code})")
+print(f"Network: {profile.ipv4} / {profile.hostname}")
+print(f"Bio: {profile.text[:100]}...")
+
+# Sample output:
+# === User Profile ===
+# Name: John Smith
+# Username: jsmith42
+# Email: john.smith@example.com
+# Phone: +1-555-123-4567
+# Job: Software Engineer at TechCorp Inc.
+# Location: New York, United States 10001
+# Address: 123 Main Street, Apt 4B
+# Currency: US Dollar (USD)
+# Network: 192.168.1.100 / workstation-01.local
+# Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>E-commerce Example</h3>
+                                <p>Realistic data for e-commerce testing:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">ecommerce_fake.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from typing import List
+
+@dataclass
+class Product:
+    id: int
+    name: str
+    description: str
+    price: float
+    category: str
+
+@dataclass
+class Customer:
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    phone_number: str
+    address: str
+
+@dataclass
+class Order:
+    id: int
+    customer: Customer
+    products: List[Product]
+    total: float
+    status: str
+
+# Generate fake e-commerce data
+customer = Autodata.create(Customer, use_fake_data=True)
+products = Autodata.create_many(Product, 3, use_fake_data=True)
+
+print("=== Customer ===")
+print(f"{customer.first_name} {customer.last_name}")
+print(f"Email: {customer.email}")
+print(f"Address: {customer.address}")
+
+print("\n=== Products ===")
+for i, product in enumerate(products, 1):
+    print(f"{i}. {product.name} - ${product.price:.2f}")
+    print(f"   {product.description[:60]}...")
+
+# Calculate total
+total = sum(p.price for p in products)
+print(f"\nOrder Total: ${total:.2f}")</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DataFrames -->
+                    <div class="category-content" id="dataframes">
+                        <div class="example-group">
+                            <h2>DataFrame Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>Sales Data Analysis</h3>
+                                <p>Generate DataFrames for data analysis testing:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">sales_dataframe.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from datetime import datetime
+import pandas as pd
+
+@dataclass
+class SalesRecord:
+    id: int
+    product_name: str
+    category: str
+    quantity: int
+    price: float
+    customer_name: str
+    sale_date: datetime
+    region: str
+
+# Generate sales data
+sales_df = Autodata.create_pandas_dataframe(
+    SalesRecord, 
+    rows=100, 
+    use_fake_data=True
+)
+
+print("=== Sales DataFrame Info ===")
+print(f"Shape: {sales_df.shape}")
+print(f"Columns: {list(sales_df.columns)}")
+print("\n=== Sample Data ===")
+print(sales_df.head())
+
+print("\n=== Data Analysis ===")
+# Calculate total revenue
+sales_df['revenue'] = sales_df['quantity'] * sales_df['price']
+total_revenue = sales_df['revenue'].sum()
+print(f"Total Revenue: ${total_revenue:,.2f}")
+
+# Top categories by revenue
+category_revenue = sales_df.groupby('category')['revenue'].sum().sort_values(ascending=False)
+print(f"\nTop Categories:")
+print(category_revenue.head())
+
+# Sales by region
+region_sales = sales_df.groupby('region')['revenue'].sum()
+print(f"\nSales by Region:")
+print(region_sales)</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>Customer Analytics</h3>
+                                <p>Customer data for analytics and ML testing:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">customer_analytics.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from datetime import datetime
+
+@dataclass
+class CustomerData:
+    customer_id: int
+    first_name: str
+    last_name: str
+    email: str
+    age: int
+    city: str
+    country: str
+    signup_date: datetime
+    last_purchase_date: datetime
+    total_spent: float
+    orders_count: int
+    is_premium: bool
+
+# Create customer dataset
+customers_df = Autodata.create_pandas_dataframe(
+    CustomerData, 
+    rows=1000, 
+    use_fake_data=True
+)
+
+print("=== Customer Analytics Dataset ===")
+print(f"Total Customers: {len(customers_df)}")
+print(f"\nDataset Info:")
+print(customers_df.info())
+
+print(f"\n=== Customer Insights ===")
+# Age distribution
+print(f"Average Age: {customers_df['age'].mean():.1f}")
+print(f"Age Range: {customers_df['age'].min()} - {customers_df['age'].max()}")
+
+# Spending analysis
+print(f"\nSpending Analysis:")
+print(f"Average Spent: ${customers_df['total_spent'].mean():.2f}")
+print(f"Total Revenue: ${customers_df['total_spent'].sum():,.2f}")
+
+# Premium customers
+premium_customers = customers_df[customers_df['is_premium']].shape[0]
+premium_percentage = (premium_customers / len(customers_df)) * 100
+print(f"\nPremium Customers: {premium_customers} ({premium_percentage:.1f}%)")
+
+# Top spending countries
+country_spending = customers_df.groupby('country')['total_spent'].mean().sort_values(ascending=False)
+print(f"\nTop Spending Countries:")
+print(country_spending.head())</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced -->
+                    <div class="category-content" id="advanced">
+                        <div class="example-group">
+                            <h2>Advanced Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>Enums and Literals</h3>
+                                <p>Work with complex type annotations:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">enums_literals.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from enum import Enum
+from typing import Literal
+
+class Priority(Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+class Status(Enum):
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    CANCELLED = "cancelled"
+
+@dataclass
+class Task:
+    id: int
+    title: str
+    description: str
+    priority: Priority
+    status: Status
+    category: Literal["bug", "feature", "improvement", "docs"]
+    difficulty: Literal[1, 2, 3, 4, 5]
+
+@dataclass
+class Project:
+    id: int
+    name: str
+    tasks: list[Task]
+    lead: str
+
+# Create tasks with enum and literal values
+tasks = Autodata.create_many(Task, 5)
+
+print("=== Generated Tasks ===")
+for i, task in enumerate(tasks, 1):
+    print(f"{i}. {task.title}")
+    print(f"   Priority: {task.priority.value}")
+    print(f"   Status: {task.status.value}")
+    print(f"   Category: {task.category}")
+    print(f"   Difficulty: {task.difficulty}/5")
+    print()
+
+# Create project with nested tasks
+project = Autodata.create(Project)
+print(f"=== Project: {project.name} ===")
+print(f"Lead: {project.lead}")
+print(f"Tasks: {len(project.tasks)}")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>Complex Nested Structures</h3>
+                                <p>Handle deeply nested object hierarchies:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">nested_structures.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+from typing import List, Optional
+from datetime import datetime
+
+@dataclass
+class Address:
+    street: str
+    city: str
+    state: str
+    zipcode: str
+    country: str
+
+@dataclass
+class Contact:
+    phone: str
+    email: str
+    address: Address
+
+@dataclass
+class Department:
+    id: int
+    name: str
+    budget: float
+
+@dataclass
+class Employee:
+    id: int
+    first_name: str
+    last_name: str
+    contact: Contact
+    department: Department
+    hire_date: datetime
+    salary: float
+    manager_id: Optional[int] = None
+
+@dataclass
+class Company:
+    id: int
+    name: str
+    headquarters: Address
+    employees: List[Employee]
+    founded_year: int
+
+# Create a complete company structure
+company = Autodata.create(Company, use_fake_data=True)
+
+print(f"=== {company.name} ===")
+print(f"Founded: {company.founded_year}")
+print(f"Headquarters: {company.headquarters.city}, {company.headquarters.state}")
+print(f"Employees: {len(company.employees)}")
+
+print(f"\n=== Employee Details ===")
+for emp in company.employees[:3]:  # Show first 3 employees
+    print(f"{emp.first_name} {emp.last_name}")
+    print(f"  Department: {emp.department.name}")
+    print(f"  Email: {emp.contact.email}")
+    print(f"  Location: {emp.contact.address.city}")
+    print(f"  Salary: ${emp.salary:,.2f}")
+    print()
+
+# Calculate company statistics
+total_salary = sum(emp.salary for emp in company.employees)
+avg_salary = total_salary / len(company.employees)
+print(f"=== Company Statistics ===")
+print(f"Total Payroll: ${total_salary:,.2f}")
+print(f"Average Salary: ${avg_salary:,.2f}")
+
+# Group by department
+dept_counts = {}
+for emp in company.employees:
+    dept_name = emp.department.name
+    dept_counts[dept_name] = dept_counts.get(dept_name, 0) + 1
+
+print(f"\nEmployees by Department:")
+for dept, count in dept_counts.items():
+    print(f"  {dept}: {count}")</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testing Patterns -->
+                    <div class="category-content" id="testing">
+                        <div class="example-group">
+                            <h2>Testing Pattern Examples</h2>
+                            
+                            <div class="example-card">
+                                <h3>Repository Testing</h3>
+                                <p>Test data access layers with realistic data:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">repository_testing.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata, fakedata
+from dataclasses import dataclass
+from typing import List, Optional
+
+@dataclass
+class User:
+    id: int
+    username: str
+    email: str
+    is_active: bool
+
+class UserRepository:
+    def __init__(self):
+        self.users = []
+    
+    def save(self, user: User) -> User:
+        if user.id == 0:
+            user.id = len(self.users) + 1
+        self.users.append(user)
+        return user
+    
+    def find_by_id(self, user_id: int) -> Optional[User]:
+        return next((u for u in self.users if u.id == user_id), None)
+    
+    def find_by_email(self, email: str) -> Optional[User]:
+        return next((u for u in self.users if u.email == email), None)
+    
+    def find_active_users(self) -> List[User]:
+        return [u for u in self.users if u.is_active]
+
+class TestUserRepository(unittest.TestCase):
+    
+    def setUp(self):
+        self.repo = UserRepository()
+    
+    @autodata()
+    def test_save_user(self, user: User):
+        # Test with anonymous data
+        user.id = 0  # New user
+        saved_user = self.repo.save(user)
+        
+        self.assertNotEqual(saved_user.id, 0)
+        self.assertEqual(len(self.repo.users), 1)
+    
+    @fakedata()
+    def test_find_by_email(self, user: User):
+        # Test with realistic email
+        self.repo.save(user)
+        
+        found_user = self.repo.find_by_email(user.email)
+        self.assertIsNotNone(found_user)
+        self.assertEqual(found_user.email, user.email)
+    
+    @autodata()
+    def test_find_active_users(self, users: List[User]):
+        # Set up test data
+        users[0].is_active = True
+        users[1].is_active = False
+        users[2].is_active = True
+        
+        for user in users:
+            self.repo.save(user)
+        
+        active_users = self.repo.find_active_users()
+        self.assertEqual(len(active_users), 2)
+        self.assertTrue(all(u.is_active for u in active_users))
+
+if __name__ == '__main__':
+    unittest.main()</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="example-card">
+                                <h3>Service Layer Testing</h3>
+                                <p>Test business logic with complex scenarios:</p>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <div class="code-buttons">
+                                            <span class="code-button red"></span>
+                                            <span class="code-button yellow"></span>
+                                            <span class="code-button green"></span>
+                                        </div>
+                                        <span class="code-title">service_testing.py</span>
+                                    </div>
+                                    <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata, fakedata
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+
+@dataclass
+class Customer:
+    id: int
+    name: str
+    email: str
+    registration_date: datetime
+    total_spent: float
+    is_premium: bool
+
+@dataclass
+class Order:
+    id: int
+    customer_id: int
+    amount: float
+    order_date: datetime
+
+class CustomerService:
+    def __init__(self):
+        self.customers = {}
+        self.orders = {}
+    
+    def calculate_loyalty_points(self, customer: Customer) -> int:
+        base_points = int(customer.total_spent / 10)
+        premium_bonus = 1.5 if customer.is_premium else 1.0
+        return int(base_points * premium_bonus)
+    
+    def is_eligible_for_upgrade(self, customer: Customer) -> bool:
+        # Customer is eligible if they've spent >$500 and registered >30 days ago
+        spent_threshold = customer.total_spent > 500
+        time_threshold = (datetime.now() - customer.registration_date).days > 30
+        return spent_threshold and time_threshold and not customer.is_premium
+    
+    def calculate_discount(self, customer: Customer, order_amount: float) -> float:
+        if customer.is_premium:
+            return order_amount * 0.15  # 15% discount
+        elif customer.total_spent > 1000:
+            return order_amount * 0.10  # 10% discount
+        return 0.0
+
+class TestCustomerService(unittest.TestCase):
+    
+    def setUp(self):
+        self.service = CustomerService()
+    
+    @autodata()
+    def test_loyalty_points_regular_customer(self, customer: Customer):
+        customer.is_premium = False
+        customer.total_spent = 100.0
+        
+        points = self.service.calculate_loyalty_points(customer)
+        self.assertEqual(points, 10)  # 100/10 * 1.0
+    
+    @autodata()
+    def test_loyalty_points_premium_customer(self, customer: Customer):
+        customer.is_premium = True
+        customer.total_spent = 100.0
+        
+        points = self.service.calculate_loyalty_points(customer)
+        self.assertEqual(points, 15)  # 100/10 * 1.5
+    
+    @fakedata()
+    def test_upgrade_eligibility(self, customer: Customer):
+        # Set up conditions for upgrade eligibility
+        customer.is_premium = False
+        customer.total_spent = 600.0
+        customer.registration_date = datetime.now() - timedelta(days=45)
+        
+        is_eligible = self.service.is_eligible_for_upgrade(customer)
+        self.assertTrue(is_eligible)
+        
+        # Test edge cases
+        customer.total_spent = 400.0  # Below threshold
+        is_eligible = self.service.is_eligible_for_upgrade(customer)
+        self.assertFalse(is_eligible)
+    
+    @autodata()
+    def test_discount_calculation(self, customer: Customer):
+        order_amount = 100.0
+        
+        # Test premium customer discount
+        customer.is_premium = True
+        discount = self.service.calculate_discount(customer, order_amount)
+        self.assertEqual(discount, 15.0)
+        
+        # Test high-value customer discount
+        customer.is_premium = False
+        customer.total_spent = 1500.0
+        discount = self.service.calculate_discount(customer, order_amount)
+        self.assertEqual(discount, 10.0)
+        
+        # Test no discount
+        customer.total_spent = 500.0
+        discount = self.service.calculate_discount(customer, order_amount)
+        self.assertEqual(discount, 0.0)
+
+if __name__ == '__main__':
+    unittest.main()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AutoFaker</h4>
+                    <p>A Python library for simplified test data generation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="guide.html">User Guide</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="https://pypi.org/project/autofaker/" target="_blank">PyPI Package</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/christianhelle/autofaker" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>License</h4>
+                    <p>MIT License</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AutoFaker. Built with ❤️ for Python developers.</p>
+                <p>Created by <a href="https://christianhelle.com" target="_blank">Christian Helle</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Additional examples page functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const categoryContents = document.querySelectorAll('.category-content');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetCategory = btn.dataset.category;
+                    
+                    // Remove active class from all buttons and contents
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    categoryContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(targetCategory).classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .examples-hero {
+            padding: 6rem 0 3rem;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+            text-align: center;
+        }
+
+        .examples-content {
+            padding: 3rem 0;
+        }
+
+        .examples-categories {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .category-btn {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .category-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .category-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .category-content {
+            display: none;
+        }
+
+        .category-content.active {
+            display: block;
+        }
+
+        .example-group h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .example-card {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .example-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .example-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .category-nav {
+                flex-wrap: wrap;
+            }
+            
+            .example-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</body>
+</html>

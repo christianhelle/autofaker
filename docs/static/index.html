@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 AutoFaker - Python Test Data Generation</title>
+    <meta name="description"
+        content="A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually write code to create anonymous variables.">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-icon">🎭</span>
+                <span class="nav-title">AutoFaker</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#installation" class="nav-link">Installation</a>
+                <a href="#usage" class="nav-link">Usage</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="https://github.com/christianhelle/autofaker" class="nav-link" target="_blank">GitHub↗</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+            <div class="nav-hamburger" id="nav-hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">🎭 AutoFaker</h1>
+                    <p class="hero-subtitle">A Python library designed to minimize the setup/arrange phase of your unit
+                        tests by removing the need to manually write code to create anonymous variables.</p>
+                    <div class="hero-badges">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml/badge.svg"
+                            alt="Build Linux">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml/badge.svg"
+                            alt="Build macOS">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg"
+                            alt="Build Windows">
+                        <img src="https://img.shields.io/pypi/dm/autofaker" alt="PyPI Downloads">
+                    </div>
+                    <div class="hero-actions">
+                        <a href="#installation" class="btn btn-primary">Get Started</a>
+                        <a href="https://github.com/christianhelle/autofaker" class="btn btn-secondary"
+                            target="_blank">View on GitHub</a>
+                    </div>
+                </div>
+                <div class="hero-demo">
+                    <div class="code-window">
+                        <div class="code-header">
+                            <div class="code-buttons">
+                                <span class="code-button red"></span>
+                                <span class="code-button yellow"></span>
+                                <span class="code-button green"></span>
+                            </div>
+                            <span class="code-title">test_calculator.py</span>
+                        </div>
+                        <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata
+
+class Calculator:
+    def add(self, number1: int, number2: int):
+        return number1 + number2
+
+class CalculatorTests(unittest.TestCase):
+    @autodata()
+    def test_can_add_two_numbers(self, 
+                                sut: Calculator, 
+                                number1: int, 
+                                number2: int):
+        result = sut.add(number1, number2)
+        self.assertEqual(number1 + number2, result)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>Built-in Types</h3>
+                        <p>Generate anonymous data for int, float, str, datetime, and more built-in Python types.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Class Support</h3>
+                        <p>Create instances of simple classes, dataclasses, nested classes, and enum classes
+                            automatically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎭</div>
+                        <h3>Fake Data</h3>
+                        <p>Generate realistic fake data using Faker library for names, addresses, emails, and more.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>DataFrame Support</h3>
+                        <p>Create Pandas DataFrames with anonymous or fake data for data science testing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Nested Objects</h3>
+                        <p>Handle complex nested structures and circular references automatically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Decorators</h3>
+                        <p>Use @autodata and @fakedata decorators for clean, annotation-based test setup.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="installation">
+            <div class="container">
+                <h2 class="section-title">Installation</h2>
+                <div class="install-methods">
+                    <div class="install-card featured">
+                        <div class="install-header">
+                            <h3>🐍 PyPI</h3>
+                            <span class="install-badge">RECOMMENDED</span>
+                        </div>
+                        <div class="install-command">
+                            <code>pip install autofaker</code>
+                            <button class="copy-btn" data-copy="pip install autofaker">📋</button>
+                        </div>
+                        <p>The easiest way to install AutoFaker from the Python Package Index.</p>
+                    </div>
+                    <div class="install-card">
+                        <div class="install-header">
+                            <h3>🔧 Development</h3>
+                        </div>
+                        <div class="install-command">
+                            <code>pip install -i https://test.pypi.org/simple/ autofaker</code>
+                            <button class="copy-btn"
+                                data-copy="pip install -i https://test.pypi.org/simple/ autofaker">📋</button>
+                        </div>
+                        <p>Install the latest development version directly from GitHub.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="usage">
+            <div class="container">
+                <h2 class="section-title">Quick Start</h2>
+                <div class="usage-content">
+                    <div class="usage-text">
+                        <h3>Basic Usage</h3>
+                        <p>AutoFaker provides two main ways to generate test data:</p>
+                        <ul>
+                            <li><strong>Anonymous data:</strong> Random values that satisfy type requirements</li>
+                            <li><strong>Fake data:</strong> Realistic data using the Faker library</li>
+                        </ul>
+                        <p>You can use the <code>Autodata</code> class directly or leverage the <code>@autodata</code>
+                            decorator for cleaner test code.</p>
+                    </div>
+                    <div class="usage-demo">
+                        <div class="code-window">
+                            <div class="code-header">
+                                <div class="code-buttons">
+                                    <span class="code-button red"></span>
+                                    <span class="code-button yellow"></span>
+                                    <span class="code-button green"></span>
+                                </div>
+                                <span class="code-title">quick_start.py</span>
+                            </div>
+                            <pre class="code-content"><code class="language-python">from autofaker import Autodata
+
+# Create anonymous built-in types
+name = Autodata.create(str)
+age = Autodata.create(int)
+height = Autodata.create(float)
+
+print(f"Name: {name}")
+print(f"Age: {age}")
+print(f"Height: {height}")
+
+# Create multiple instances
+numbers = Autodata.create_many(int, 5)
+print(f"Numbers: {numbers}")</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="examples">
+            <div class="container">
+                <h2 class="section-title">Examples</h2>
+                <div class="examples-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="builtins">Built-in Types</button>
+                        <button class="tab-button" data-tab="classes">Classes</button>
+                        <button class="tab-button" data-tab="fake">Fake Data</button>
+                        <button class="tab-button" data-tab="dataframes">DataFrames</button>
+                    </div>
+
+                    <div class="tab-content active" id="builtins">
+                        <div class="example-card">
+                            <h3>Built-in Types</h3>
+                            <div class="code-window">
+                                <pre class="code-content"><code class="language-python">from autofaker import Autodata
+from datetime import datetime
+
+# Create anonymous built-in types
+text = Autodata.create(str)
+number = Autodata.create(int)
+decimal = Autodata.create(float)
+date = Autodata.create(datetime)
+
+print(f'String: {text}')
+print(f'Integer: {number}')
+print(f'Float: {decimal}')
+print(f'DateTime: {date}')</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="classes">
+                        <div class="example-card">
+                            <h3>DataClasses</h3>
+                            <div class="code-window">
+                                <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+
+@dataclass
+class Person:
+    id: int
+    name: str
+    age: int
+    email: str
+
+# Create an anonymous Person
+person = Autodata.create(Person)
+print(f'ID: {person.id}')
+print(f'Name: {person.name}')
+print(f'Age: {person.age}')
+print(f'Email: {person.email}')</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="fake">
+                        <div class="example-card">
+                            <h3>Fake Data</h3>
+                            <div class="code-window">
+                                <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+from autofaker import Autodata
+
+@dataclass
+class Employee:
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    job: str
+    company: str
+
+# Create with realistic fake data
+employee = Autodata.create(Employee, use_fake_data=True)
+print(f'Name: {employee.first_name} {employee.last_name}')
+print(f'Job: {employee.job}')
+print(f'Email: {employee.email}')</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="dataframes">
+                        <div class="example-card">
+                            <h3>Pandas DataFrames</h3>
+                            <div class="code-window">
+                                <pre class="code-content"><code class="language-python">from autofaker import Autodata
+
+class SalesData:
+    id = -1
+    product = ''
+    quantity = 0
+    price = 0.0
+
+# Create DataFrame with anonymous data
+df = Autodata.create_pandas_dataframe(SalesData, rows=5)
+print(df)
+
+# Create DataFrame with fake data
+df_fake = Autodata.create_pandas_dataframe(SalesData, rows=5, use_fake_data=True)
+print(df_fake)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="supported-types">
+            <div class="container">
+                <h2 class="section-title">Supported Data Types</h2>
+                <div class="types-grid">
+                    <div class="type-category">
+                        <h3>Built-in Types</h3>
+                        <ul>
+                            <li>int</li>
+                            <li>float</li>
+                            <li>str</li>
+                            <li>complex</li>
+                            <li>range</li>
+                            <li>bytes</li>
+                            <li>bytearray</li>
+                        </ul>
+                    </div>
+                    <div class="type-category">
+                        <h3>Datetime Types</h3>
+                        <ul>
+                            <li>datetime</li>
+                            <li>date</li>
+                        </ul>
+                    </div>
+                    <div class="type-category">
+                        <h3>Classes</h3>
+                        <ul>
+                            <li>Simple classes</li>
+                            <li>@dataclass</li>
+                            <li>Nested classes</li>
+                            <li>Classes with lists</li>
+                            <li>Enum classes</li>
+                            <li>typing.Literal</li>
+                        </ul>
+                    </div>
+                    <div class="type-category">
+                        <h3>DataFrames</h3>
+                        <ul>
+                            <li>Pandas DataFrame</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AutoFaker</h4>
+                    <p>A Python library for simplified test data generation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="#usage">Quick Start</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="https://pypi.org/project/autofaker/" target="_blank">PyPI Package</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/christianhelle/autofaker" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/discussions"
+                                target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>License</h4>
+                    <p>MIT License</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AutoFaker. Built with ❤️ for Python developers.</p>
+                <p>Created by <a href="https://christianhelle.com" target="_blank">Christian Helle</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+
+</html>
