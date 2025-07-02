@@ -180,76 +180,6 @@ class NavigationManager {
     }
 }
 
-// Syntax highlighting for code blocks
-class SyntaxHighlighter {
-    constructor() {
-        this.codeBlocks = document.querySelectorAll('code');
-        this.init();
-    }
-    
-    init() {
-        this.codeBlocks.forEach(block => {
-            if (block.classList.contains('language-python')) {
-                this.highlightPython(block);
-            }
-        });
-    }
-    
-    highlightPython(block) {
-        const content = block.textContent || block.innerText;
-        const lines = content.split('\n');
-        
-        const highlightedLines = lines.map(line => {
-            // Skip empty lines
-            if (!line.trim()) return line;
-            
-            let result = line;
-            
-            // Handle comments first (everything after # is a comment)
-            const commentMatch = result.match(/^(.*?)(#.*)$/);
-            let commentPart = '';
-            if (commentMatch) {
-                result = commentMatch[1];
-                commentPart = `<span class="highlight-comment">${this.escapeHtml(commentMatch[2])}</span>`;
-            }
-            
-            // Escape HTML in the non-comment part
-            result = this.escapeHtml(result);
-            
-            // Handle strings (simple approach - match quoted strings)
-            result = result.replace(/(&quot;[^&]*&quot;|&#39;[^&]*&#39;)/g, '<span class="highlight-string">$1</span>');
-            
-            // Handle decorators
-            result = result.replace(/(@\w+)/g, '<span class="highlight-decorator">$1</span>');
-            
-            // Handle keywords
-            const keywords = ['import', 'from', 'class', 'def', 'if', 'else', 'elif', 'for', 'while', 'try', 'except', 'finally', 'with', 'as', 'return', 'yield', 'lambda', 'and', 'or', 'not', 'in', 'is', 'True', 'False', 'None', 'self'];
-            keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b(${keyword})\\b`, 'g');
-                result = result.replace(regex, '<span class="highlight-keyword">$1</span>');
-            });
-            
-            // Handle function calls (word followed by opening parenthesis)
-            result = result.replace(/\b(\w+)(\s*\()/g, '<span class="highlight-function">$1</span>$2');
-            
-            // Handle type annotations (: followed by type name)
-            result = result.replace(/:\s*(\w+)(?=\s*[,\)])/g, ': <span class="highlight-type">$1</span>');
-            
-            return result + commentPart;
-        });
-        
-        block.innerHTML = highlightedLines.join('\n');
-    }
-    
-    escapeHtml(text) {
-        return text.replace(/&/g, '&amp;')
-                  .replace(/</g, '&lt;')
-                  .replace(/>/g, '&gt;')
-                  .replace(/"/g, '&quot;')
-                  .replace(/'/g, '&#39;');
-    }
-}
-
 // Scroll animations
 class ScrollAnimations {
     constructor() {
@@ -345,7 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new TabManager();
     new ClipboardManager();
     new NavigationManager();
-    new SyntaxHighlighter();
     new ScrollAnimations();
     new Analytics();
     new PerformanceMonitor();
@@ -382,7 +311,6 @@ if (typeof module !== 'undefined' && module.exports) {
         TabManager,
         ClipboardManager,
         NavigationManager,
-        SyntaxHighlighter,
         ScrollAnimations,
         Analytics,
         PerformanceMonitor

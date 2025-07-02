@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎭 AutoFaker - Python Test Data Generation</title>
-    <meta name="description" content="A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually write code to create anonymous variables.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+    <meta name="description"
+        content="A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually write code to create anonymous variables.">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="nav-container">
@@ -43,16 +50,21 @@
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title">🎭 AutoFaker</h1>
-                    <p class="hero-subtitle">A Python library designed to minimize the setup/arrange phase of your unit tests by removing the need to manually write code to create anonymous variables.</p>
+                    <p class="hero-subtitle">A Python library designed to minimize the setup/arrange phase of your unit
+                        tests by removing the need to manually write code to create anonymous variables.</p>
                     <div class="hero-badges">
-                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml/badge.svg" alt="Build Linux">
-                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml/badge.svg" alt="Build macOS">
-                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg" alt="Build Windows">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml/badge.svg"
+                            alt="Build Linux">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml/badge.svg"
+                            alt="Build macOS">
+                        <img src="https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg"
+                            alt="Build Windows">
                         <img src="https://img.shields.io/pypi/dm/autofaker" alt="PyPI Downloads">
                     </div>
                     <div class="hero-actions">
                         <a href="#installation" class="btn btn-primary">Get Started</a>
-                        <a href="https://github.com/christianhelle/autofaker" class="btn btn-secondary" target="_blank">View on GitHub</a>
+                        <a href="https://github.com/christianhelle/autofaker" class="btn btn-secondary"
+                            target="_blank">View on GitHub</a>
                     </div>
                 </div>
                 <div class="hero-demo">
@@ -97,7 +109,8 @@ class CalculatorTests(unittest.TestCase):
                     <div class="feature-card">
                         <div class="feature-icon">🎯</div>
                         <h3>Class Support</h3>
-                        <p>Create instances of simple classes, dataclasses, nested classes, and enum classes automatically.</p>
+                        <p>Create instances of simple classes, dataclasses, nested classes, and enum classes
+                            automatically.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🎭</div>
@@ -144,7 +157,8 @@ class CalculatorTests(unittest.TestCase):
                         </div>
                         <div class="install-command">
                             <code>pip install git+https://github.com/christianhelle/autofaker.git</code>
-                            <button class="copy-btn" data-copy="pip install git+https://github.com/christianhelle/autofaker.git">📋</button>
+                            <button class="copy-btn"
+                                data-copy="pip install git+https://github.com/christianhelle/autofaker.git">📋</button>
                         </div>
                         <p>Install the latest development version directly from GitHub.</p>
                     </div>
@@ -163,7 +177,8 @@ class CalculatorTests(unittest.TestCase):
                             <li><strong>Anonymous data:</strong> Random values that satisfy type requirements</li>
                             <li><strong>Fake data:</strong> Realistic data using the Faker library</li>
                         </ul>
-                        <p>You can use the <code>Autodata</code> class directly or leverage the <code>@autodata</code> decorator for cleaner test code.</p>
+                        <p>You can use the <code>Autodata</code> class directly or leverage the <code>@autodata</code>
+                            decorator for cleaner test code.</p>
                     </div>
                     <div class="usage-demo">
                         <div class="code-window">
@@ -205,7 +220,7 @@ print(f"Numbers: {numbers}")</code></pre>
                         <button class="tab-button" data-tab="fake">Fake Data</button>
                         <button class="tab-button" data-tab="dataframes">DataFrames</button>
                     </div>
-                    
+
                     <div class="tab-content active" id="builtins">
                         <div class="example-card">
                             <h3>Built-in Types</h3>
@@ -367,7 +382,8 @@ print(df_fake)</code></pre>
                     <ul>
                         <li><a href="https://github.com/christianhelle/autofaker" target="_blank">GitHub</a></li>
                         <li><a href="https://github.com/christianhelle/autofaker/issues" target="_blank">Issues</a></li>
-                        <li><a href="https://github.com/christianhelle/autofaker/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/discussions"
+                                target="_blank">Discussions</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -383,5 +399,8 @@ print(df_fake)</code></pre>
     </footer>
 
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
+
 </html>
