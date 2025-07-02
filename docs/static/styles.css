@@ -480,19 +480,46 @@ body {
 }
 
 /* Override Prism.js styles to match our design */
+code[class*="language-"],
+pre[class*="language-"] {
+    color: var(--text-primary) !important;
+    background: transparent !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.7 !important;
+    text-shadow: none !important;
+    white-space: pre !important;
+    word-spacing: normal !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    tab-size: 4 !important;
+    hyphens: none !important;
+}
+
 .code-content code[class*="language-"] {
-    color: var(--text-primary);
-    background: transparent;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    line-height: 1.7;
+    color: var(--text-primary) !important;
+    background: transparent !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.7 !important;
 }
 
 .code-content pre[class*="language-"] {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    overflow: visible;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+}
+
+/* Ensure code content respects our theme background */
+.code-content {
+    background-color: var(--code-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .code-content {
+    background-color: var(--code-bg) !important;
+    color: var(--text-primary) !important;
 }
 
 /* Prism.js token colors for light theme */
