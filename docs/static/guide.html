@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - AutoFaker</title>
+    <meta name="description" content="Comprehensive guide for using AutoFaker to generate test data in Python.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                    <span class="nav-icon">🎭</span>
+                    <span class="nav-title">AutoFaker</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="guide.html" class="nav-link">Guide</a>
+                <a href="examples.html" class="nav-link">Examples</a>
+                <a href="https://github.com/christianhelle/autofaker" class="nav-link" target="_blank">GitHub↗</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="guide-hero">
+            <div class="container">
+                <h1 class="hero-title">User Guide</h1>
+                <p class="hero-subtitle">Learn how to use AutoFaker to simplify your Python unit tests</p>
+            </div>
+        </section>
+
+        <section class="guide-content">
+            <div class="container">
+                <div class="guide-sidebar">
+                    <nav class="guide-nav">
+                        <h3>Table of Contents</h3>
+                        <ul>
+                            <li><a href="#getting-started">Getting Started</a></li>
+                            <li><a href="#basic-usage">Basic Usage</a></li>
+                            <li><a href="#decorators">Using Decorators</a></li>
+                            <li><a href="#fake-data">Fake Data</a></li>
+                            <li><a href="#dataframes">DataFrames</a></li>
+                            <li><a href="#advanced">Advanced Features</a></li>
+                            <li><a href="#best-practices">Best Practices</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="guide-main">
+                    <section id="getting-started" class="guide-section">
+                        <h2>Getting Started</h2>
+                        <p>AutoFaker is designed to minimize the setup/arrange phase of your unit tests by automatically generating test data. This is especially useful when you need to create objects with many properties but only care about testing specific behavior.</p>
+                        
+                        <h3>Installation</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-bash">pip install autofaker</code></pre>
+                        </div>
+
+                        <h3>Basic Import</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from autofaker import Autodata, autodata, fakedata</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="basic-usage" class="guide-section">
+                        <h2>Basic Usage</h2>
+                        
+                        <h3>Creating Single Objects</h3>
+                        <p>Use <code>Autodata.create()</code> to generate anonymous instances of any type:</p>
+                        
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from autofaker import Autodata
+
+# Built-in types
+name = Autodata.create(str)
+age = Autodata.create(int)
+price = Autodata.create(float)
+
+# Custom classes
+class Person:
+    def __init__(self):
+        self.id = 0
+        self.name = ""
+        self.age = 0
+
+person = Autodata.create(Person)
+print(f"Person: {person.id}, {person.name}, {person.age}")</code></pre>
+                        </div>
+
+                        <h3>Creating Collections</h3>
+                        <p>Generate multiple instances using <code>create_many()</code>:</p>
+                        
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python"># Create 5 random integers
+numbers = Autodata.create_many(int, 5)
+
+# Create 3 person objects (default is 3)
+people = Autodata.create_many(Person)
+
+print(f"Numbers: {numbers}")
+print(f"People count: {len(people)}")</code></pre>
+                        </div>
+
+                        <h3>DataClasses</h3>
+                        <p>AutoFaker works seamlessly with Python dataclasses:</p>
+                        
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from dataclasses import dataclass
+
+@dataclass
+class Product:
+    id: int
+    name: str
+    price: float
+    in_stock: bool
+
+product = Autodata.create(Product)
+print(f"Product: {product.id}, {product.name}, ${product.price}")</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="decorators" class="guide-section">
+                        <h2>Using Decorators</h2>
+                        
+                        <p>The <code>@autodata</code> decorator allows you to inject test data directly into your test methods:</p>
+
+                        <h3>With Type Arguments</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">import unittest
+from autofaker import autodata
+
+class Calculator:
+    def add(self, a: int, b: int) -> int:
+        return a + b
+
+class TestCalculator(unittest.TestCase):
+    @autodata(Calculator, int, int)
+    def test_add(self, calc, num1, num2):
+        result = calc.add(num1, num2)
+        self.assertEqual(result, num1 + num2)</code></pre>
+                        </div>
+
+                        <h3>With Type Annotations</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">class TestCalculator(unittest.TestCase):
+    @autodata()
+    def test_add_with_annotations(self, 
+                                 calc: Calculator, 
+                                 num1: int, 
+                                 num2: int):
+        result = calc.add(num1, num2)
+        self.assertEqual(result, num1 + num2)</code></pre>
+                        </div>
+
+                        <h3>Using @fakedata</h3>
+                        <p>The <code>@fakedata</code> decorator generates realistic fake data:</p>
+                        
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from autofaker import fakedata
+
+@dataclass
+class User:
+    name: str
+    email: str
+    address: str
+
+class TestUser(unittest.TestCase):
+    @fakedata()
+    def test_user_creation(self, user: User):
+        self.assertIsInstance(user.name, str)
+        self.assertIn("@", user.email)
+        self.assertTrue(len(user.address) > 0)</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="fake-data" class="guide-section">
+                        <h2>Fake Data</h2>
+                        
+                        <p>For tests that need realistic data, AutoFaker integrates with the Faker library:</p>
+
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">@dataclass
+class Employee:
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    job: str
+    company: str
+    phone_number: str
+    address: str
+
+# Generate with fake data
+employee = Autodata.create(Employee, use_fake_data=True)
+
+print(f"Name: {employee.first_name} {employee.last_name}")
+print(f"Job: {employee.job} at {employee.company}")
+print(f"Contact: {employee.email}, {employee.phone_number}")
+print(f"Address: {employee.address}")</code></pre>
+                        </div>
+
+                        <h3>Supported Fake Data Types</h3>
+                        <p>AutoFaker automatically maps field names to appropriate fake data generators:</p>
+                        <ul>
+                            <li><strong>Names:</strong> first_name, last_name, name</li>
+                            <li><strong>Contact:</strong> email, phone, phone_number</li>
+                            <li><strong>Location:</strong> address, city, country, zipcode</li>
+                            <li><strong>Work:</strong> job, company, department</li>
+                            <li><strong>Finance:</strong> currency_name, currency_code</li>
+                            <li><strong>Network:</strong> ipv4, ipv6, hostname, url</li>
+                            <li><strong>Text:</strong> text, description, paragraph</li>
+                        </ul>
+                    </section>
+
+                    <section id="dataframes" class="guide-section">
+                        <h2>Working with DataFrames</h2>
+                        
+                        <p>AutoFaker can generate Pandas DataFrames filled with test data:</p>
+
+                        <h3>Basic DataFrame Creation</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">class SalesRecord:
+    id = 0
+    product = ""
+    quantity = 0
+    price = 0.0
+    date = None
+
+# Create DataFrame with anonymous data
+df = Autodata.create_pandas_dataframe(SalesRecord, rows=10)
+print(df.head())
+
+# Create DataFrame with fake data
+df_fake = Autodata.create_pandas_dataframe(
+    SalesRecord, 
+    rows=10, 
+    use_fake_data=True
+)
+print(df_fake.head())</code></pre>
+                        </div>
+
+                        <h3>DataFrames with DataClasses</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">@dataclass
+class Customer:
+    customer_id: int
+    first_name: str
+    last_name: str
+    email: str
+    signup_date: datetime
+    is_premium: bool
+
+# Generate realistic customer data
+customers_df = Autodata.create_pandas_dataframe(
+    Customer, 
+    rows=100, 
+    use_fake_data=True
+)
+
+print(f"Generated {len(customers_df)} customer records")
+print(customers_df.dtypes)</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="advanced" class="guide-section">
+                        <h2>Advanced Features</h2>
+
+                        <h3>Nested Classes</h3>
+                        <p>AutoFaker handles complex nested object structures:</p>
+                        
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">@dataclass
+class Address:
+    street: str
+    city: str
+    zipcode: str
+
+@dataclass
+class Person:
+    name: str
+    age: int
+    address: Address  # Nested object
+
+person = Autodata.create(Person)
+print(f"Person: {person.name}, lives at {person.address.street}")</code></pre>
+                        </div>
+
+                        <h3>Enum Support</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from enum import Enum
+
+class Status(Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+
+@dataclass
+class Application:
+    id: int
+    status: Status
+    submitted_date: datetime
+
+app = Autodata.create(Application)
+print(f"Application {app.id} is {app.status.value}")</code></pre>
+                        </div>
+
+                        <h3>Literal Types</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python">from typing import Literal
+
+@dataclass
+class Task:
+    id: int
+    priority: Literal[1, 2, 3, 4, 5]
+    category: Literal["bug", "feature", "docs"]
+
+task = Autodata.create(Task)
+print(f"Task {task.id}: {task.category} (priority {task.priority})")</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="best-practices" class="guide-section">
+                        <h2>Best Practices</h2>
+
+                        <h3>1. Use Type Hints</h3>
+                        <p>Always use type hints in your classes for better AutoFaker integration:</p>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python"># Good
+@dataclass
+class User:
+    id: int
+    name: str
+    email: str
+
+# Less ideal
+class User:
+    def __init__(self):
+        self.id = 0
+        self.name = ""
+        self.email = ""</code></pre>
+                        </div>
+
+                        <h3>2. Choose the Right Data Type</h3>
+                        <ul>
+                            <li>Use <strong>anonymous data</strong> for pure logic testing</li>
+                            <li>Use <strong>fake data</strong> for integration tests and data validation</li>
+                        </ul>
+
+                        <h3>3. Decorator vs Direct Usage</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python"># Use decorators for cleaner test code
+@autodata()
+def test_with_decorator(self, user: User, product: Product):
+    # Test logic here
+    pass
+
+# Use direct creation for setup in setUp() methods
+def setUp(self):
+    self.user = Autodata.create(User)
+    self.products = Autodata.create_many(Product, 5)</code></pre>
+                        </div>
+
+                        <h3>4. Performance Considerations</h3>
+                        <ul>
+                            <li>Fake data generation is slower than anonymous data</li>
+                            <li>Consider caching test data for repeated use</li>
+                            <li>Use <code>create_many()</code> efficiently for bulk data</li>
+                        </ul>
+
+                        <h3>5. Testing Data Validation</h3>
+                        <div class="code-window">
+                            <pre class="code-content"><code class="language-python"># Test with both valid and edge case data
+@autodata()
+def test_user_validation(self, user: User):
+    # This tests with random valid data
+    self.assertTrue(validate_user(user))
+
+def test_user_validation_edge_cases(self):
+    # Test specific edge cases manually
+    empty_user = User(id=0, name="", email="")
+    self.assertFalse(validate_user(empty_user))</code></pre>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AutoFaker</h4>
+                    <p>A Python library for simplified test data generation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="guide.html">User Guide</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="https://pypi.org/project/autofaker/" target="_blank">PyPI Package</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/christianhelle/autofaker" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/christianhelle/autofaker/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>License</h4>
+                    <p>MIT License</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AutoFaker. Built with ❤️ for Python developers.</p>
+                <p>Created by <a href="https://christianhelle.com" target="_blank">Christian Helle</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <style>
+        .guide-hero {
+            padding: 6rem 0 3rem;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+            text-align: center;
+        }
+
+        .guide-content {
+            padding: 3rem 0;
+        }
+
+        .guide-content .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+        }
+
+        .guide-sidebar {
+            position: sticky;
+            top: 6rem;
+            height: fit-content;
+        }
+
+        .guide-nav h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .guide-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .guide-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .guide-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            display: block;
+            transition: color 0.3s ease;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .guide-nav a:hover {
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .guide-main {
+            max-width: none;
+        }
+
+        .guide-section {
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .guide-section:last-child {
+            border-bottom: none;
+        }
+
+        .guide-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .guide-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .guide-section p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .guide-section ul {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .guide-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .guide-section code {
+            background-color: var(--code-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .guide-content .container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .guide-sidebar {
+                position: static;
+                order: 2;
+            }
+
+            .guide-nav {
+                background-color: var(--surface-color);
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</body>
+</html>
