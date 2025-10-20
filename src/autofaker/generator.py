@@ -105,12 +105,19 @@ class ClassGenerator(TypeDataGeneratorBase):
             else:
                 attributes.set_value(member, self._try_generate(attr))
 
-        if hasattr(self.instance, '__annotations__'):
-            for key, value in self.instance.__annotations__.items():
-                if key not in members:
-                    if is_literal_type(value):
-                        v = LiteralGenerator(value).generate()
-                        self.instance.__dict__[key] = v
+        # Handle annotated attributes (especially Literal types)
+        # In Python 3.14+, we need to access __annotations__ from the class
+        annotations = {}
+        if hasattr(type(self.instance), '__annotations__'):
+            annotations = type(self.instance).__annotations__
+        elif hasattr(self.instance, '__annotations__'):
+            annotations = self.instance.__annotations__
+        
+        for key, value in annotations.items():
+            if key not in members:
+                if is_literal_type(value):
+                    v = LiteralGenerator(value).generate()
+                    self.instance.__dict__[key] = v
 
         return self.instance
 
