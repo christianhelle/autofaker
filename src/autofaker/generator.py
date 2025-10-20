@@ -114,7 +114,7 @@ class ClassGenerator(TypeDataGeneratorBase):
         elif hasattr(self.instance, '__annotations__'):
             annotations = self.instance.__annotations__
         
-        for key, value in annotations.items():
+        for key, value in (annotations or {}).items():
             if key not in members:
                 if is_literal_type(value):
                     v = LiteralGenerator(value).generate()
