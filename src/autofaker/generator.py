@@ -105,12 +105,20 @@ class ClassGenerator(TypeDataGeneratorBase):
             else:
                 attributes.set_value(member, self._try_generate(attr))
 
-        if hasattr(self.instance, '__annotations__'):
-            for key, value in self.instance.__annotations__.items():
-                if key not in members:
-                    if is_literal_type(value):
-                        v = LiteralGenerator(value).generate()
-                        self.instance.__dict__[key] = v
+        # Handle annotated attributes (especially Literal types)
+        # In Python 3.14+, PEP 649 requires accessing __annotations__ from the class type
+        # Falls back to instance __annotations__ for Python 3.8-3.13 compatibility
+        annotations = {}
+        if hasattr(type(self.instance), '__annotations__'):
+            annotations = type(self.instance).__annotations__
+        elif hasattr(self.instance, '__annotations__'):
+            annotations = self.instance.__annotations__
+        
+        for key, value in (annotations or {}).items():
+            if key not in members:
+                if is_literal_type(value):
+                    v = LiteralGenerator(value).generate()
+                    self.instance.__dict__[key] = v
 
         return self.instance
 
