@@ -114,9 +114,17 @@ class CreateAnonymousPandasDataFrameFromDataClassTests(unittest.TestCase):
         df = Autodata.create_pandas_dataframe(DataClass, 10)
         self.assertEqual(len(df.index), 10)
 
+    def test_create_anonymous_pandas_dataframe_does_not_include_dunder_attrs(self):
+        """Bug fix: DataFrame was incorrectly including __class__ in columns"""
+        df = Autodata.create_pandas_dataframe(DataClass)
+        self.assertNotIn("__class__", df.columns)
+
     def test_can_create_anonymous_pandas_dataframes_from_class_with_constructor_class_arguments(
         self,
     ):
+        df = Autodata.create_pandas_dataframe(HybridClassA)
+        self.assertIn("b", df.columns)
+        self.assertIn("a", df.columns)
         df = Autodata.create_pandas_dataframe(HybridClassA)
         self.assertIn("b", df.columns)
         self.assertIn("a", df.columns)

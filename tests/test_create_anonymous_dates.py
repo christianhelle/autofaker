@@ -24,3 +24,8 @@ class AnonymousDateTestCase(unittest.TestCase):
 
     def test_create_date_returns_date(self):
         self.assertIsInstance(Autodata.create(date), date)
+
+    def test_create_date_returns_date_not_datetime(self):
+        """Bug fix: DateGenerator was returning datetime instead of date"""
+        result = Autodata.create(date)
+        self.assertNotIsInstance(result, datetime)
