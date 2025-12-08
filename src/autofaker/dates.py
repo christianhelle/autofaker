@@ -25,7 +25,7 @@ class DatetimeGenerator(TypeDataGeneratorBase):
 class DateGenerator(TypeDataGeneratorBase):
     def generate(self):
         year = datetime.date.today().year
-        return datetime.datetime(
+        return datetime.date(
             random.randint(year - 10, year + 10),
             random.randint(1, 12),
             random.randint(1, 28),
