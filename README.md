@@ -1,7 +1,9 @@
 [![build](https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-linux.yml)
 [![build](https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-macos.yml)
 [![build](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml/badge.svg)](https://github.com/christianhelle/autofaker/actions/workflows/build-windows.yml)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhelle_autofaker&metric=alert_status)](https://sonarcloud.io/dashboard?id=christianhelle_autofaker)
+[![codecov](https://codecov.io/gh/christianhelle/autofaker/graph/badge.svg?token=09ZFMPJNJX)](https://codecov.io/gh/christianhelle/autofaker)
 [![PyPI](https://img.shields.io/pypi/dm/autofaker)](https://pypi.org/project/autofaker)
 [![buymeacoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/christianhelle)
 
