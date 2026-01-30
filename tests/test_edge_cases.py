@@ -37,12 +37,24 @@ class DatetimeMicrosecondRangeTestCase(unittest.TestCase):
     """Test that datetime microseconds are in the correct range."""
     
     def test_datetime_microsecond_in_valid_range(self):
-        """Microseconds should be in range 0-999999, not 0-999."""
+        """Microseconds should be in range 0-999999, not 0-999.
+        
+        This test verifies the range is correctly configured by checking
+        that the generated microseconds can exceed 999 (the old buggy upper limit).
+        """
         import datetime
-        for _ in range(10):  # Test multiple times due to randomness
+        found_high_value = False
+        for _ in range(100):  # Run enough times to likely get a high value
             dt = Autodata.create(datetime.datetime)
             self.assertGreaterEqual(dt.microsecond, 0)
             self.assertLessEqual(dt.microsecond, 999999)
+            if dt.microsecond > 999:
+                found_high_value = True
+        
+        # With 100 iterations and range 0-999999, the probability of all
+        # values being <= 999 is extremely low (about (0.001)^100)
+        self.assertTrue(found_high_value, 
+            "Expected at least one microsecond value > 999 to verify full range")
 
 
 class DecoratorWithoutParenthesesTestCase(unittest.TestCase):

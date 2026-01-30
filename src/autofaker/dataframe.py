@@ -8,7 +8,6 @@ from autofaker.generator import TypeDataGenerator
 
 class PandasDataFrameGenerator:
     def __init__(self, t, rows: int = 3, use_fake_data: bool = False):
-        self.t = t
         self.data = []
         for _ in range(rows):
             row = TypeDataGenerator.create(t, use_fake_data=use_fake_data).generate()

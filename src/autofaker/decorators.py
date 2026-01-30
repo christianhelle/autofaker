@@ -83,7 +83,9 @@ def autodata(*types: object, use_fake_data: bool = False):
         return wrapper
 
     # Handle @autodata without parentheses - the function is passed as first positional arg
-    if len(types) == 1 and callable(types[0]) and not isinstance(types[0], type):
+    # Check for function attributes to distinguish from callable type arguments
+    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
+            and hasattr(types[0], '__code__')):
         return decorator(types[0])
     
     # Handle @autodata() or @autodata(type1, type2, ...)
@@ -159,7 +161,9 @@ def fakedata(*types: object):
         return wrapper
 
     # Handle @fakedata without parentheses - the function is passed as first positional arg
-    if len(types) == 1 and callable(types[0]) and not isinstance(types[0], type):
+    # Check for function attributes to distinguish from callable type arguments
+    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
+            and hasattr(types[0], '__code__')):
         return decorator(types[0])
     
     # Handle @fakedata() or @fakedata(type1, type2, ...)
