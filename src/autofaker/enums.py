@@ -13,6 +13,7 @@ class EnumGenerator(TypeDataGeneratorBase):
         self.enum = enum
 
     def generate(self):
-        names = [member.name for member in self.enum]
-        value = names[random.randint(0, len(self.enum) - 1)]
-        return self.enum[value]
+        members = list(self.enum)
+        if not members:
+            raise ValueError("Cannot generate value from empty enum")
+        return random.choice(members)

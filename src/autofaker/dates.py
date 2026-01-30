@@ -18,7 +18,7 @@ class DatetimeGenerator(TypeDataGeneratorBase):
             random.randint(0, 23),
             random.randint(0, 59),
             random.randint(0, 59),
-            random.randint(0, 999),
+            random.randint(0, 999999),
         )
 
 
