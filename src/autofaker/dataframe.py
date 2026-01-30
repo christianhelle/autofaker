@@ -14,6 +14,8 @@ class PandasDataFrameGenerator:
             self.data.append(row)
 
     def generate(self):
+        if not self.data:
+            return pd.DataFrame()
         members = [
             attr
             for attr in dir(self.data[0])

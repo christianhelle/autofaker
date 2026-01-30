@@ -52,7 +52,7 @@ class TypeDataGenerator:
 
         try:
             return t.__name__
-        except Exception:
+        except AttributeError:
             attributes = dir(t)
             if "_name" in attributes:
                 if t._name is not None:
@@ -153,6 +153,9 @@ class ClassGenerator(TypeDataGeneratorBase):
             origin = typing_inspect.get_origin(t)
             if origin == list:
                 list_arg = typing_inspect.get_args(t)
+                if not list_arg:
+                    values.append([])
+                    continue
                 items = []
                 for _ in range(3):
                     generator = TypeDataGenerator.create(
@@ -175,6 +178,8 @@ class ListGenerator(TypeDataGeneratorBase):
         self.list_arg = typing_inspect.get_args(t)
 
     def generate(self):
+        if not self.list_arg:
+            return []
         items = []
         for _ in range(3):
             generator = TypeDataGenerator.create(
