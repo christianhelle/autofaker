@@ -27,4 +27,4 @@ class FakeStringGenerator(TypeDataGeneratorBase):
 
 class FakeIntegerGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return faker.random_int(min=1)
+        return faker.random_int(min=1, max=10000)
