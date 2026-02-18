@@ -31,7 +31,7 @@ class BuiltinTypeDataGeneratorFactory:
         if type_name == "int":
             return (
                 FakeIntegerGenerator()
-                if field_name is not None and use_fake_data is True
+                if use_fake_data is True
                 else IntegerGenerator()
             )
         if type_name == "str":

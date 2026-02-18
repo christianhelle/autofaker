@@ -6,7 +6,7 @@ from autofaker.base import TypeDataGeneratorBase
 
 class IntegerGenerator(TypeDataGeneratorBase):
     def generate(self):
-        return random.randint(0, 10000)
+        return random.randint(1, 10000)
 
 
 class StringGenerator(TypeDataGeneratorBase):
