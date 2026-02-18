@@ -59,6 +59,11 @@ def autodata(*types: object, use_fake_data: bool = False):
 
         return wrapper
 
+    if len(types) == 1 and inspect.isfunction(types[0]):
+        func = types[0]
+        types = ()
+        return decorator(func)
+
     return decorator
 
 
@@ -104,6 +109,11 @@ def fakedata(*types: object):
             )
 
         return wrapper
+
+    if len(types) == 1 and inspect.isfunction(types[0]):
+        func = types[0]
+        types = ()
+        return decorator(func)
 
     return decorator
 
