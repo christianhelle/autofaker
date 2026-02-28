@@ -4,7 +4,10 @@ import inspect
 import typing_inspect
 
 from autofaker.attributes import Attributes
-from autofaker.dates import DateGenerator, DatetimeGenerator, is_date_type
+from autofaker.dates import (
+    DateGenerator, DatetimeGenerator, TimeGenerator, TimedeltaGenerator,
+    is_date_type,
+)
 from autofaker.enums import EnumGenerator, is_enum
 from autofaker.factory import BuiltinTypeDataGeneratorFactory
 from autofaker.fakes import TypeDataGeneratorBase
@@ -17,6 +20,21 @@ class TypeDataGenerator:
         t, field_name: str = None, use_fake_data: bool = False
     ) -> TypeDataGeneratorBase:
         type_name = TypeDataGenerator._get_type_name(t).lower()
+        # Check for typed generics before bare builtin types
+        origin = typing_inspect.get_origin(t)
+        args = typing_inspect.get_args(t)
+        if origin is list or (type_name == "list" and args):
+            return ListGenerator(t, use_fake_data=use_fake_data)
+        if origin is tuple and args:
+            return TypedTupleGenerator(t, use_fake_data=use_fake_data)
+        if origin is set and args:
+            return TypedSetGenerator(t, use_fake_data=use_fake_data)
+        if origin is frozenset and args:
+            return TypedFrozenSetGenerator(t, use_fake_data=use_fake_data)
+        if origin is dict and args:
+            return TypedDictGenerator(t, use_fake_data=use_fake_data)
+        if TypeDataGenerator._is_optional(t):
+            return OptionalGenerator(t, use_fake_data=use_fake_data)
         if BuiltinTypeDataGeneratorFactory.is_supported(type_name):
             return BuiltinTypeDataGeneratorFactory.create(
                 type_name, field_name, use_fake_data
@@ -25,8 +43,6 @@ class TypeDataGenerator:
             return TypeDataGenerator.create_datetime(
                 type_name
             )
-        if type_name == "list":
-            return ListGenerator(t)
         if is_enum(t):
             return EnumGenerator(t)
         if is_literal_type(t):
@@ -43,6 +59,14 @@ class TypeDataGenerator:
             return DatetimeGenerator()
         if type_name == "date":
             return DateGenerator()
+        if type_name == "time":
+            return TimeGenerator()
+        if type_name == "timedelta":
+            return TimedeltaGenerator()
+
+    @staticmethod
+    def _is_optional(t):
+        return typing_inspect.is_optional_type(t)
 
     @staticmethod
     def _get_type_name(t) -> str:
@@ -182,3 +206,82 @@ class ListGenerator(TypeDataGeneratorBase):
             )
             items.append(generator.generate())
         return items
+
+
+class TypedTupleGenerator(TypeDataGeneratorBase):
+    def __init__(self, t, use_fake_data: bool = False):
+        self.use_fake_data = use_fake_data
+        self.args = typing_inspect.get_args(t)
+
+    def generate(self):
+        items = []
+        for arg in self.args:
+            generator = TypeDataGenerator.create(
+                arg, use_fake_data=self.use_fake_data
+            )
+            items.append(generator.generate())
+        return tuple(items)
+
+
+class TypedSetGenerator(TypeDataGeneratorBase):
+    def __init__(self, t, use_fake_data: bool = False):
+        self.use_fake_data = use_fake_data
+        self.set_arg = typing_inspect.get_args(t)
+
+    def generate(self):
+        items = set()
+        for _ in range(3):
+            generator = TypeDataGenerator.create(
+                self.set_arg[0], use_fake_data=self.use_fake_data
+            )
+            items.add(generator.generate())
+        return items
+
+
+class TypedFrozenSetGenerator(TypeDataGeneratorBase):
+    def __init__(self, t, use_fake_data: bool = False):
+        self.use_fake_data = use_fake_data
+        self.set_arg = typing_inspect.get_args(t)
+
+    def generate(self):
+        items = set()
+        for _ in range(3):
+            generator = TypeDataGenerator.create(
+                self.set_arg[0], use_fake_data=self.use_fake_data
+            )
+            items.add(generator.generate())
+        return frozenset(items)
+
+
+class TypedDictGenerator(TypeDataGeneratorBase):
+    def __init__(self, t, use_fake_data: bool = False):
+        self.use_fake_data = use_fake_data
+        args = typing_inspect.get_args(t)
+        self.key_type = args[0]
+        self.value_type = args[1]
+
+    def generate(self):
+        result = {}
+        for _ in range(3):
+            key_gen = TypeDataGenerator.create(
+                self.key_type, use_fake_data=self.use_fake_data
+            )
+            val_gen = TypeDataGenerator.create(
+                self.value_type, use_fake_data=self.use_fake_data
+            )
+            result[key_gen.generate()] = val_gen.generate()
+        return result
+
+
+class OptionalGenerator(TypeDataGeneratorBase):
+    def __init__(self, t, use_fake_data: bool = False):
+        self.use_fake_data = use_fake_data
+        args = typing_inspect.get_args(t)
+        # Optional[X] is Union[X, None], get the non-None type
+        self.inner_type = next(a for a in args if a is not type(None))
+
+    def generate(self):
+        generator = TypeDataGenerator.create(
+            self.inner_type, use_fake_data=self.use_fake_data
+        )
+        return generator.generate()
