@@ -215,11 +215,21 @@ class TypedTupleGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         items = []
-        for arg in self.args:
-            generator = TypeDataGenerator.create(
-                arg, use_fake_data=self.use_fake_data
-            )
-            items.append(generator.generate())
+        # Handle variable-length tuples of the form Tuple[T, ...]
+        if len(self.args) == 2 and self.args[1] is Ellipsis:
+            elem_type = self.args[0]
+            for _ in range(3):
+                generator = TypeDataGenerator.create(
+                    elem_type, use_fake_data=self.use_fake_data
+                )
+                items.append(generator.generate())
+        else:
+            # Handle fixed-length typed tuples, e.g., Tuple[int, str]
+            for arg in self.args:
+                generator = TypeDataGenerator.create(
+                    arg, use_fake_data=self.use_fake_data
+                )
+                items.append(generator.generate())
         return tuple(items)
 
 
@@ -230,11 +240,15 @@ class TypedSetGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         items = set()
-        while len(items) < 3:
+        target_size = 3
+        max_attempts = 10 * target_size
+        attempts = 0
+        while len(items) < target_size and attempts < max_attempts:
             generator = TypeDataGenerator.create(
                 self.set_arg[0], use_fake_data=self.use_fake_data
             )
             items.add(generator.generate())
+            attempts += 1
         return items
 
 
@@ -245,11 +259,15 @@ class TypedFrozenSetGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         items = set()
-        while len(items) < 3:
+        target_size = 3
+        max_attempts = 10 * target_size
+        attempts = 0
+        while len(items) < target_size and attempts < max_attempts:
             generator = TypeDataGenerator.create(
                 self.set_arg[0], use_fake_data=self.use_fake_data
             )
             items.add(generator.generate())
+            attempts += 1
         return frozenset(items)
 
 
@@ -262,7 +280,10 @@ class TypedDictGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         result = {}
-        while len(result) < 3:
+        target_size = 3
+        max_attempts = 10 * target_size
+        attempts = 0
+        while len(result) < target_size and attempts < max_attempts:
             key_gen = TypeDataGenerator.create(
                 self.key_type, use_fake_data=self.use_fake_data
             )
@@ -270,6 +291,7 @@ class TypedDictGenerator(TypeDataGeneratorBase):
                 self.value_type, use_fake_data=self.use_fake_data
             )
             result[key_gen.generate()] = val_gen.generate()
+            attempts += 1
         return result
 
 

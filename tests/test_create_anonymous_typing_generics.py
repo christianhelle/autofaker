@@ -32,6 +32,20 @@ class AnonymousTypedTupleTestCase(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertIsInstance(result[0], int)
 
+    def test_create_typed_tuple_variable_length(self):
+        result = Autodata.create(Tuple[int, ...])
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(len(result), 3)
+        for item in result:
+            self.assertIsInstance(item, int)
+
+    def test_create_typed_tuple_variable_length_str(self):
+        result = Autodata.create(Tuple[str, ...])
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(len(result), 3)
+        for item in result:
+            self.assertIsInstance(item, str)
+
 
 class AnonymousTypedSetTestCase(unittest.TestCase):
     def test_create_typed_set_returns_not_none(self):
@@ -55,6 +69,14 @@ class AnonymousTypedSetTestCase(unittest.TestCase):
         for item in result:
             self.assertIsInstance(item, str)
 
+    def test_create_typed_set_of_bool_does_not_hang(self):
+        result = Autodata.create(Set[bool])
+        self.assertIsInstance(result, set)
+        self.assertGreater(len(result), 0)
+        self.assertLessEqual(len(result), 2)
+        for item in result:
+            self.assertIsInstance(item, bool)
+
 
 class AnonymousTypedFrozenSetTestCase(unittest.TestCase):
     def test_create_typed_frozenset_returns_not_none(self):
@@ -71,6 +93,14 @@ class AnonymousTypedFrozenSetTestCase(unittest.TestCase):
     def test_create_typed_frozenset_returns_non_empty(self):
         result = Autodata.create(FrozenSet[int])
         self.assertGreater(len(result), 0)
+
+    def test_create_typed_frozenset_of_bool_does_not_hang(self):
+        result = Autodata.create(FrozenSet[bool])
+        self.assertIsInstance(result, frozenset)
+        self.assertGreater(len(result), 0)
+        self.assertLessEqual(len(result), 2)
+        for item in result:
+            self.assertIsInstance(item, bool)
 
 
 class AnonymousTypedDictTestCase(unittest.TestCase):
@@ -100,6 +130,14 @@ class AnonymousTypedDictTestCase(unittest.TestCase):
             self.assertIsInstance(key, int)
         for value in result.values():
             self.assertIsInstance(value, str)
+
+    def test_create_typed_dict_with_bool_keys_does_not_hang(self):
+        result = Autodata.create(Dict[bool, int])
+        self.assertIsInstance(result, dict)
+        self.assertGreater(len(result), 0)
+        self.assertLessEqual(len(result), 2)
+        for key in result.keys():
+            self.assertIsInstance(key, bool)
 
 
 class AnonymousOptionalTestCase(unittest.TestCase):
