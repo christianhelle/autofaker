@@ -1,3 +1,5 @@
+import decimal
+import pathlib
 import random
 import uuid
 
@@ -47,3 +49,57 @@ class ByteArrayGenerator(TypeDataGeneratorBase):
 class MemoryViewGenerator(TypeDataGeneratorBase):
     def generate(self):
         return memoryview(BytesGenerator().generate())
+
+
+class TupleGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return (
+            IntegerGenerator().generate(),
+            StringGenerator().generate(),
+            FloatGenerator().generate(),
+        )
+
+
+class SetGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return {
+            StringGenerator().generate(),
+            StringGenerator().generate(),
+            StringGenerator().generate(),
+        }
+
+
+class FrozenSetGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return frozenset({
+            StringGenerator().generate(),
+            StringGenerator().generate(),
+            StringGenerator().generate(),
+        })
+
+
+class DictGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return {
+            StringGenerator().generate(): IntegerGenerator().generate(),
+            StringGenerator().generate(): IntegerGenerator().generate(),
+            StringGenerator().generate(): IntegerGenerator().generate(),
+        }
+
+
+class DecimalGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return decimal.Decimal(str(random.uniform(0, 10000)))
+
+
+class UUIDGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return uuid.uuid4()
+
+
+class PathGenerator(TypeDataGeneratorBase):
+    def generate(self):
+        return pathlib.Path(
+            StringGenerator().generate(),
+            StringGenerator().generate(),
+        )
