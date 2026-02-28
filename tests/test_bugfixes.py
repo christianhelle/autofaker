@@ -121,6 +121,8 @@ class TestDataFrameWithZeroRows(unittest.TestCase):
         self.assertIsInstance(df, pd.DataFrame)
         self.assertTrue(df.empty)
         self.assertEqual(len(df), 0)
+        self.assertIn("id", df.columns)
+        self.assertIn("name", df.columns)
 
     def test_create_dataframe_with_one_row(self):
         df = Autodata.create_pandas_dataframe(SimpleDataClass, rows=1)
