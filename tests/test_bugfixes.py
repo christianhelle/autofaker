@@ -1,6 +1,5 @@
 """Tests for bug fixes."""
 
-import re
 import unittest
 from dataclasses import dataclass
 from typing import List
