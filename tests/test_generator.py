@@ -25,7 +25,7 @@ class TypeDataGeneratorGetTypeNameTestCase(unittest.TestCase):
 
     def test_get_type_name_for_primitive_type_strings(self):
         """Test that primitive type names are correctly recognized as strings"""
-        primitive_types = ["int", "float", "str", "complex", "range", "bytes", "bytearray"]
+        primitive_types = ["int", "float", "str", "complex", "range", "bytes", "bytearray", "bool", "memoryview"]
         for type_name in primitive_types:
             result = TypeDataGenerator._get_type_name(type_name)
             self.assertEqual(result, type_name)
