@@ -230,7 +230,7 @@ class TypedSetGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         items = set()
-        for _ in range(3):
+        while len(items) < 3:
             generator = TypeDataGenerator.create(
                 self.set_arg[0], use_fake_data=self.use_fake_data
             )
@@ -245,7 +245,7 @@ class TypedFrozenSetGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         items = set()
-        for _ in range(3):
+        while len(items) < 3:
             generator = TypeDataGenerator.create(
                 self.set_arg[0], use_fake_data=self.use_fake_data
             )
@@ -262,7 +262,7 @@ class TypedDictGenerator(TypeDataGeneratorBase):
 
     def generate(self):
         result = {}
-        for _ in range(3):
+        while len(result) < 3:
             key_gen = TypeDataGenerator.create(
                 self.key_type, use_fake_data=self.use_fake_data
             )
