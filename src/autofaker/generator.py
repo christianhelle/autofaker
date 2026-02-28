@@ -26,7 +26,7 @@ class TypeDataGenerator:
                 type_name
             )
         if type_name == "list":
-            return ListGenerator(t)
+            return ListGenerator(t, use_fake_data=use_fake_data)
         if is_enum(t):
             return EnumGenerator(t)
         if is_literal_type(t):
@@ -47,7 +47,8 @@ class TypeDataGenerator:
     @staticmethod
     def _get_type_name(t) -> str:
         PRIMITIVE_TYPES = {
-            "int", "float", "str", "complex", "range", "bytes", "bytearray"
+            "int", "float", "str", "complex", "range", "bytes", "bytearray",
+            "bool", "memoryview"
         }
 
         try:
@@ -149,7 +150,9 @@ class ClassGenerator(TypeDataGeneratorBase):
     def _create_with_init_args(self, cls):
         init_args = inspect.getfullargspec(cls.__init__)
         values = []
-        for t in init_args.annotations.values():
+        for key, t in init_args.annotations.items():
+            if key == 'return':
+                continue
             origin = typing_inspect.get_origin(t)
             if origin == list:
                 list_arg = typing_inspect.get_args(t)
