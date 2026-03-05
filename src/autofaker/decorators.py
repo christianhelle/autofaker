@@ -41,14 +41,36 @@ def autodata(*types: object, use_fake_data: bool = False):
     def decorator(function):
         def wrapper(*args):
             if __get_class_that_defined_method(function) is None:
-                return function(
+                function(
+                    *tuple(
+                        __create_function_args(
+                            function, use_fake_data=use_fake_data
+                        )
+                    )
+                )
+                return None
+            function(
+                __get_test_class(*args),
+                *tuple(
+                    __create_function_args(function, use_fake_data=use_fake_data)
+                )
+            )
+            return None
+
+        return wrapper
+
+    def decorator_with_types(function):
+        def wrapper(*args):
+            if __get_class_that_defined_method(function) is None:
+                function(
                     *tuple(
                         __create_function_args(
                             function, *tuple(types), use_fake_data=use_fake_data
                         )
                     )
                 )
-            return function(
+                return None
+            function(
                 __get_test_class(*args),
                 *tuple(
                     __create_function_args(
@@ -56,14 +78,19 @@ def autodata(*types: object, use_fake_data: bool = False):
                     )
                 )
             )
+            return None
 
         return wrapper
 
-    if len(types) == 1 and inspect.isfunction(types[0]):
-        func = types[0]
-        types = ()
-        return decorator(func)
-
+    # Handle @autodata without parentheses - the function is passed as first positional arg
+    # Check for function attributes to distinguish from callable type arguments
+    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
+            and hasattr(types[0], '__code__')):
+        return decorator(types[0])
+    
+    # Handle @autodata() or @autodata(type1, type2, ...)
+    if types:
+        return decorator_with_types
     return decorator
 
 
@@ -94,27 +121,54 @@ def fakedata(*types: object):
     def decorator(function):
         def wrapper(*args):
             if __get_class_that_defined_method(function) is None:
-                return function(
+                function(
+                    *tuple(
+                        __create_function_args(
+                            function, use_fake_data=True
+                        )
+                    )
+                )
+                return None
+            function(
+                __get_test_class(*args),
+                *tuple(
+                    __create_function_args(function, use_fake_data=True)
+                )
+            )
+            return None
+
+        return wrapper
+
+    def decorator_with_types(function):
+        def wrapper(*args):
+            if __get_class_that_defined_method(function) is None:
+                function(
                     *tuple(
                         __create_function_args(
                             function, *tuple(types), use_fake_data=True
                         )
                     )
                 )
-            return function(
+                return None
+            function(
                 __get_test_class(*args),
                 *tuple(
                     __create_function_args(function, *tuple(types), use_fake_data=True)
                 )
             )
+            return None
 
         return wrapper
 
-    if len(types) == 1 and inspect.isfunction(types[0]):
-        func = types[0]
-        types = ()
-        return decorator(func)
-
+    # Handle @fakedata without parentheses - the function is passed as first positional arg
+    # Check for function attributes to distinguish from callable type arguments
+    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
+            and hasattr(types[0], '__code__')):
+        return decorator(types[0])
+    
+    # Handle @fakedata() or @fakedata(type1, type2, ...)
+    if types:
+        return decorator_with_types
     return decorator
 
 
@@ -141,8 +195,10 @@ def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
                 t, rows, use_fake_data=use_fake_data
             ).generate()
             if __get_class_that_defined_method(function) is None:
-                return function(pdf)
-            return function(__get_test_class(*args), pdf)
+                function(pdf)
+                return None
+            function(__get_test_class(*args), pdf)
+            return None
 
         return wrapper
 
@@ -166,7 +222,7 @@ def fakepandas(t, rows: int = 3):
 
 def __get_test_class(*args):
     test_class = args[0]
-    if issubclass(test_class.__class__, unittest.TestCase) is False:
+    if not issubclass(test_class.__class__, unittest.TestCase):
         raise NotImplementedError(
             "This way of creating anonymous objects are only supported from unit tests"
         )
