@@ -1,3 +1,26 @@
 [build-system]
-requires = ["setuptools>=46.4.0", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "autofaker"
+version = "0.1.0"
+authors = [
+  { name="Christian Helle", email="christian.helle@outlook.com" },
+]
+description = "Python library designed to minimize the setup/arrange phase of your unit tests"
+readme = "docs/pypi.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas",
+    "faker",
+    "typing_inspect",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/christianhelle/autofaker"
