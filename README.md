@@ -131,10 +131,27 @@ Built-in types:
 - range
 - bytes
 - bytearray
+- tuple
+- set
+- frozenset
+- dict
+- decimal.Decimal
+- uuid.UUID
+- pathlib.Path
 
 Datetime types:
 - datetime
 - date
+- time
+- timedelta
+
+Typing generics:
+- typing.Tuple[T, ...]
+- typing.Set[T]
+- typing.FrozenSet[T]
+- typing.Dict[K, V]
+- typing.Optional[T]
+- typing.List[T]
 
 Classes:
 - Simple classes
@@ -172,6 +189,61 @@ anonymous int:       2066712686
 anonymous float:     725758222.8712853
 anonymous datetime:  2017-06-19 02:40:41.000084
 anonymous date:      2019-11-10 00:00:00
+```
+
+Create anonymous instances of additional built-in and standard library types
+
+```python
+import decimal
+import uuid
+import pathlib
+from datetime import time, timedelta
+
+print(f'anonymous tuple:     {Autodata.create(tuple)}')
+print(f'anonymous set:       {Autodata.create(set)}')
+print(f'anonymous frozenset: {Autodata.create(frozenset)}')
+print(f'anonymous dict:      {Autodata.create(dict)}')
+print(f'anonymous Decimal:   {Autodata.create(decimal.Decimal)}')
+print(f'anonymous UUID:      {Autodata.create(uuid.UUID)}')
+print(f'anonymous Path:      {Autodata.create(pathlib.Path)}')
+print(f'anonymous time:      {Autodata.create(time)}')
+print(f'anonymous timedelta: {Autodata.create(timedelta)}')
+```
+
+The code above might output the following
+
+```
+anonymous tuple:     (9655, '1608f20f-c563-41ff-b3df-2be21be71437', 2309.52)
+anonymous set:       {'eff62089-1834-4b5c-854e-68ac8f28979f', ...}
+anonymous frozenset: frozenset({'0ef46f14-70ce-4d0b-a099-625d0f881602', ...})
+anonymous dict:      {'fd1a7430-5b5f-4dc0-974d-65184a406d25': 3431, ...}
+anonymous Decimal:   2508.6919872240996
+anonymous UUID:      751de33e-401e-42f2-acdb-3df9d1f9eb62
+anonymous Path:      ee388b30-eb11-46af-b2f0/e1ab4d2d-7a6f-4ee9
+anonymous time:      23:09:39.638523
+anonymous timedelta: 165 days, 1:19:58.470884
+```
+
+Create anonymous instances of typed generics
+
+```python
+from typing import Tuple, Set, FrozenSet, Dict, Optional
+
+print(f'Tuple[int, str]:  {Autodata.create(Tuple[int, str])}')
+print(f'Set[int]:         {Autodata.create(Set[int])}')
+print(f'FrozenSet[str]:   {Autodata.create(FrozenSet[str])}')
+print(f'Dict[str, int]:   {Autodata.create(Dict[str, int])}')
+print(f'Optional[int]:    {Autodata.create(Optional[int])}')
+```
+
+The code above might output the following
+
+```
+Tuple[int, str]:  (7032, '351236d0-378e-45f6-bf58-77e2ac2bfc48')
+Set[int]:         {1408, 8224, 5107}
+FrozenSet[str]:   frozenset({'5f5eaf3c-1926-4d34-ae32-ef5a3a549c5f', ...})
+Dict[str, int]:   {'65174a9b-76f3-4d1c-a1a4': 3817, ...}
+Optional[int]:    8051
 ```
 
 Creates an anonymous class
@@ -378,6 +450,62 @@ id = 187364960
 text = b31ca191-5031-43a2-870a-7bc7c99e4110
 inner.id = 1705149100
 inner.text = e703a117-ba4f-4201-a31b-10ab8e54a673
+```
+
+Create a dataclass using additional built-in types and typing generics
+
+```python
+import decimal
+import uuid
+import pathlib
+from datetime import time, timedelta
+from typing import Set, Dict, Tuple, Optional
+from dataclasses import dataclass
+from autofaker import Autodata
+
+@dataclass
+class AdvancedDataClass:
+    id: int
+    name: str
+    amount: decimal.Decimal
+    uid: uuid.UUID
+    file_path: pathlib.Path
+    created_time: time
+    duration: timedelta
+    tags: Set[str]
+    scores: Tuple[int, str]
+    metadata: Dict[str, int]
+    optional_name: Optional[str]
+
+data = Autodata.create(AdvancedDataClass)
+
+print(f'id:           {data.id}')
+print(f'name:         {data.name}')
+print(f'amount:       {data.amount}')
+print(f'uid:          {data.uid}')
+print(f'file_path:    {data.file_path}')
+print(f'created_time: {data.created_time}')
+print(f'duration:     {data.duration}')
+print(f'tags:         {data.tags}')
+print(f'scores:       {data.scores}')
+print(f'metadata:     {data.metadata}')
+print(f'optional:     {data.optional_name}')
+```
+
+The code above might output the following
+
+```
+id:           2225
+name:         28a78977-8218-471a-aa3b-5172bd267e9a
+amount:       8071.9111587519055
+uid:          4bfc05f9-ad4e-4906-96a0-74f4ef60974f
+file_path:    0da7ee48-1008-4e72/ffc6c087-b690-44d3
+created_time: 15:25:29.820442
+duration:     177 days, 23:33:16.414807
+tags:         {'191751c3-11a6-471b', '63508ce7-b14a-433f', ...}
+scores:       (4467, 'a1255ae9-b23c-4cfa-8861-213e12b41030')
+metadata:     {'193b3ddc-3172-49ef': 1744, ...}
+optional:     983e4c69-0426-4488-ba98-559e77075c03
 ```
 
 Create a Pandas DataFrame using anonymous data generated from a specified type

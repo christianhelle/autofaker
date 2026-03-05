@@ -243,15 +243,18 @@ def __get_class_that_defined_method(meth):
 
 def __create_function_args(function, *types, use_fake_data: bool = False) -> List:
     values = []
-    argspec = inspect.getfullargspec(function)
-    args = argspec.annotations.values() if types is None or len(types) == 0 else types
+    argtypes = inspect.getfullargspec(function)
+    annotations = {
+        k: v for k, v in argtypes.annotations.items() if k != 'return'
+    }
+    args = annotations.values() if types is None or len(types) == 0 else types
     for t in args:
         value = Autodata.create(t, use_fake_data)
         values.append(value)
     pos = 1
     if __get_class_that_defined_method(function) is None:
         pos = 0
-    if len(argspec.args) - pos != len(values):
+    if len(argtypes.args) - pos != len(values):
         raise ValueError(
             "Missing argument annotations. Please declare the type of every argument"
         )

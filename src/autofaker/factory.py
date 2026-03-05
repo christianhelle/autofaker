@@ -3,10 +3,17 @@ from autofaker.builtins import (
     ByteArrayGenerator,
     BytesGenerator,
     ComplexGenerator,
+    DecimalGenerator,
+    DictGenerator,
     FloatGenerator,
+    FrozenSetGenerator,
     IntegerGenerator,
     MemoryViewGenerator,
+    PathGenerator,
     RangeGenerator,
+    SetGenerator,
+    TupleGenerator,
+    UUIDGenerator,
 )
 from autofaker.fakes import FakeIntegerGenerator, FakeStringGenerator, StringGenerator
 
@@ -24,6 +31,15 @@ class BuiltinTypeDataGeneratorFactory:
             "bytes",
             "bytearray",
             "memoryview",
+            "tuple",
+            "set",
+            "frozenset",
+            "dict",
+            "decimal",
+            "uuid",
+            "posixpath",
+            "windowspath",
+            "path",
         ]
 
     @staticmethod
@@ -31,7 +47,7 @@ class BuiltinTypeDataGeneratorFactory:
         if type_name == "int":
             return (
                 FakeIntegerGenerator()
-                if field_name is not None and use_fake_data is True
+                if use_fake_data is True
                 else IntegerGenerator()
             )
         if type_name == "str":
@@ -54,3 +70,17 @@ class BuiltinTypeDataGeneratorFactory:
             return ByteArrayGenerator()
         if type_name == "memoryview":
             return MemoryViewGenerator()
+        if type_name == "tuple":
+            return TupleGenerator()
+        if type_name == "set":
+            return SetGenerator()
+        if type_name == "frozenset":
+            return FrozenSetGenerator()
+        if type_name == "dict":
+            return DictGenerator()
+        if type_name == "decimal":
+            return DecimalGenerator()
+        if type_name == "uuid":
+            return UUIDGenerator()
+        if type_name in ("posixpath", "windowspath", "path"):
+            return PathGenerator()
