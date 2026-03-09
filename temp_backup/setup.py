@@ -16,6 +16,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     install_requires=["pandas", "faker", "typing_inspect"],
 )
