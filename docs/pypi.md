@@ -16,6 +16,8 @@ so you frequently end up creating objects with no influence on the test itself j
 pip install autofaker
 ```
 
+AutoFaker supports Python 3.10 and newer.
+
 AutoFaker can help by creating such anonymous variables for you. Here's a simple example:
 
 ```python
