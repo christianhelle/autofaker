@@ -7,7 +7,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Bootstrap and Setup
-- Check Python version: `python --version` (requires Python 3.8+)
+- Check Python version: `python --version` (requires Python 3.10+)
 - Install dependencies: `pip install -r requirements.txt` -- takes ~30 seconds
 - Install package in development mode: `pip install -e . --user` -- takes ~7 seconds  
 - **CRITICAL**: The Makefile `debug` target fails due to permission issues. Always use `pip install -e . --user` instead
@@ -216,7 +216,7 @@ After any changes, always manually test:
 ## CI/CD Integration
 
 The repository has extensive GitHub Actions workflows for:
-- Python 3.8-3.13 on Linux, macOS, Windows
+- Python 3.10-3.13 on Linux, macOS, Windows
 - Test execution with coverage reporting
 - SonarCloud quality analysis
 - PyPI publishing
