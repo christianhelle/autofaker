@@ -34,7 +34,7 @@ PR #92 attempted to update release and quality gate workflows to use Python 3.14
   - Release workflows (`release.yml`)
   - Pre-release workflows (`pre-release.yml`)
   - Quality gates (`sonar-cloud.yml`, `codecov.yml`)
-- These critical paths must run on stable, supported Python versions (currently 3.8 - 3.13).
+- These critical paths must run on stable, supported Python versions (currently 3.10 - 3.13).
 - Experimental versions may be added to the test matrix in `build-for-os.yml` but must not be the primary runner.
 
 **Consequences**

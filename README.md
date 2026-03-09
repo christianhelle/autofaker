@@ -27,6 +27,8 @@ so you frequently end up creating objects with no influence on the test itself j
 pip install autofaker
 ```
 
+AutoFaker supports Python 3.10 and newer.
+
 AutoFaker can help by creating such anonymous variables for you. Here's a simple example:
 
 ```python
@@ -111,8 +113,6 @@ job:    Chief Operating Officer
 
 |Windows|MacOS|Linux|
 |---|---|---|
-![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-38-linux.yml/badge.svg)|
-![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-39-linux.yml/badge.svg)|
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-310-linux.yml/badge.svg)|
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-311-linux.yml/badge.svg)|
 ![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-windows.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-macos.yml/badge.svg)|![](https://github.com/christianhelle/autofaker/actions/workflows/build-python-312-linux.yml/badge.svg)|

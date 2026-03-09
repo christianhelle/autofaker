@@ -134,7 +134,7 @@ class ClassGenerator(TypeDataGeneratorBase):
 
         # Handle annotated attributes (especially Literal types)
         # In Python 3.14+, PEP 649 requires accessing __annotations__ from the class type
-        # Falls back to instance __annotations__ for Python 3.8-3.13 compatibility
+        # Falls back to instance __annotations__ for Python 3.10-3.13 compatibility
         annotations = {}
         if hasattr(type(self.instance), '__annotations__'):
             annotations = type(self.instance).__annotations__
