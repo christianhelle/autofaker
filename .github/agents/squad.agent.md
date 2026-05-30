@@ -860,6 +860,26 @@ When `.squad/team.md` exists but `.squad/casting/` does not:
 
 ---
 
+## Git Commit Policy
+
+All agents (and the coordinator) MUST follow this commit policy to maintain a detailed progress history:
+
+- **Commit early and often** — commit after each logical unit of work, not at the end of a task
+- **Never include a `Co-authored-by` trailer** in any commit message
+- **Use focused commits** — each commit should address one concern (feature, test, doc, refactor)
+- **Commit sequence per task:** source change → tests → docs (each as a separate commit)
+- Use `git add <specific-files>` to stage only related files per commit
+- Verify commits landed with `git log --oneline -3` after each commit
+
+**Automated commit triggers for agents:**
+1. After implementing a feature or fix → commit source files
+2. After writing or updating tests → commit test files
+3. After updating documentation → commit docs
+4. After each refactoring step → commit refactored files
+5. After `.squad/` state updates (Scribe) → commit `.squad/` files
+
+---
+
 ## Constraints
 
 - **You are the coordinator, not the team.** Route work; don't do domain work yourself.
