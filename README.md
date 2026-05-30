@@ -612,6 +612,87 @@ Status: rejected
 Priority: 1
 ```
 
+## Registering custom type generators
+
+When you need anonymous data for a type that AutoFaker doesn't generate the way
+you want — a third-party type, a custom value object, or a type that needs
+special construction — you can register your own generator at runtime.
+
+A generator factory is a callable `factory(t, field_name, use_fake_data)` that
+returns an object with a `generate()` method.
+
+```python
+from autofaker import Autodata, register_type, reset_registry
+
+
+class Money:
+    def __init__(self, amount, currency):
+        self.amount = amount
+        self.currency = currency
+
+
+class MoneyGenerator:
+    def __init__(self, t, field_name, use_fake_data):
+        pass
+
+    def generate(self):
+        return Money(100, "USD")
+
+
+# Register a generator for an exact type
+register_type(Money, MoneyGenerator)
+
+money = Autodata.create(Money)
+print(money.amount, money.currency)  # 100 USD
+
+# Remove all custom registrations and restore the built-in defaults
+reset_registry()
+```
+
+By default a registered type is consulted *after* the built-in rules, so it
+only applies to types AutoFaker doesn't already handle. Pass `override=True` to
+take precedence over a built-in type:
+
+```python
+class FortyTwo:
+    def __init__(self, t, field_name, use_fake_data):
+        pass
+
+    def generate(self):
+        return 42
+
+
+register_type(int, FortyTwo, override=True)
+print(Autodata.create(int))  # 42
+```
+
+For more flexible matching, register a predicate instead of an exact type:
+
+```python
+from autofaker import register_predicate
+
+register_predicate(
+    lambda t, type_name: type_name.endswith("Id"),
+    MoneyGenerator,
+)
+```
+
+`register_predicate` accepts a `priority` of `"before_fallback"` (default, only
+applies when no built-in matches) or `"before_builtins"` (overrides built-in
+rules).
+
+To scope registrations to a block — handy in tests — use `registry_context`,
+which restores the previous registrations on exit:
+
+```python
+from autofaker import registry_context
+
+with registry_context():
+    register_type(Money, MoneyGenerator)
+    money = Autodata.create(Money)
+# registration is automatically removed here
+```
+
 #
 
 For tips and tricks on software development, check out [my blog](https://christianhelle.com)
