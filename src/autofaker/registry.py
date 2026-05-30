@@ -86,7 +86,10 @@ def _set_fallback(factory: Factory) -> None:
 def register_type(type_, factory: Factory, override: bool = False) -> None:
     """Register a generator factory for an exact type.
 
-    :param type_: the type to match (matched by identity or by name).
+    :param type_: the type to match. Matched by identity for type objects, and
+        by name only for string annotations (the
+        ``from __future__ import annotations`` case where a type arrives as its
+        name). Two distinct classes that share a ``__name__`` will not collide.
     :param factory: ``factory(t, field_name, use_fake_data) -> generator``.
     :param override: when ``True`` the rule is consulted *before* the built-in
         rules, allowing it to override built-in behaviour. When ``False``
@@ -96,7 +99,7 @@ def register_type(type_, factory: Factory, override: bool = False) -> None:
     type_name = get_type_name(type_).lower()
 
     def predicate(t, name):
-        return t is type_ or name == type_name
+        return t is type_ or (isinstance(t, str) and name == type_name)
 
     _register_predicate_rule(Rule(predicate, factory), override)
 

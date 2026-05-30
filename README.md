@@ -666,13 +666,15 @@ register_type(int, FortyTwo, override=True)
 print(Autodata.create(int))  # 42
 ```
 
-For more flexible matching, register a predicate instead of an exact type:
+For more flexible matching, register a predicate instead of an exact type. The
+predicate receives the type and its **normalized (lowercased) name**, so match
+against lowercase suffixes:
 
 ```python
 from autofaker import register_predicate
 
 register_predicate(
-    lambda t, type_name: type_name.endswith("Id"),
+    lambda t, type_name: type_name.endswith("id"),  # name is lowercased
     MoneyGenerator,
 )
 ```

@@ -48,13 +48,32 @@ class RegisterTypeTestCase(unittest.TestCase):
         register_type(Marker, lambda t, f, u: _Const("custom-value"))
         self.assertEqual(Autodata.create(Marker), "custom-value")
 
+    def test_register_type_does_not_collide_on_shared_name(self):
+        # two distinct classes that share a __name__ must not hijack each other
+        def make_money():
+            class Money:
+                pass
+            return Money
+
+        money_a = make_money()
+        money_b = make_money()
+        self.assertEqual(money_a.__name__, money_b.__name__)
+
+        register_type(money_a, lambda t, f, u: _Const("a-value"))
+        self.assertEqual(Autodata.create(money_a), "a-value")
+        # money_b is a different type object -> falls back to class generation
+        self.assertIsInstance(Autodata.create(money_b), money_b)
+
     def test_override_true_beats_builtin(self):
-        register_type(int, lambda t, f, u: _Const(42), override=True)
-        self.assertEqual(Autodata.create(int), 42)
+        # sentinel of a non-int type: the built-in int generator can never
+        # produce this, so the assertion proves the override won
+        register_type(int, lambda t, f, u: _Const("OVERRIDDEN"), override=True)
+        self.assertEqual(Autodata.create(int), "OVERRIDDEN")
 
     def test_override_false_does_not_beat_builtin(self):
-        register_type(int, lambda t, f, u: _Const(42), override=False)
-        # built-in int generator still wins; value is a random int, not 42-forced
+        # custom rule returns a non-int sentinel; with override=False the
+        # built-in int generator must win, so the result is a real int
+        register_type(int, lambda t, f, u: _Const("SHOULD_NOT_WIN"), override=False)
         value = Autodata.create(int)
         self.assertIsInstance(value, int)
 
@@ -71,12 +90,14 @@ class RegisterPredicateTestCase(unittest.TestCase):
         self.assertEqual(Autodata.create(CustomType), "by-predicate")
 
     def test_before_builtins_predicate_overrides(self):
+        # non-int sentinel makes the test deterministic: a real int generator
+        # could otherwise produce the same int by chance
         register_predicate(
             lambda t, n: n == "int",
-            lambda t, f, u: _Const(7),
+            lambda t, f, u: _Const("PREDICATE_WON"),
             priority="before_builtins",
         )
-        self.assertEqual(Autodata.create(int), 7)
+        self.assertEqual(Autodata.create(int), "PREDICATE_WON")
 
     def test_invalid_priority_raises(self):
         with self.assertRaises(ValueError):
