@@ -23,6 +23,13 @@ class GetTypeNameTestCase(unittest.TestCase):
         self.assertEqual(get_type_name("int"), "int")
         self.assertEqual(get_type_name("memoryview"), "memoryview")
 
+    def test_returns_name_for_typing_optional(self):
+        from typing import Optional
+        self.assertEqual(get_type_name(Optional[str]), "Optional")
+
+    def test_returns_type_name_for_non_primitive_string(self):
+        self.assertEqual(get_type_name("datetime"), "str")
+
 
 class ResolveBuiltinsTestCase(unittest.TestCase):
     def test_resolves_int_through_public_interface(self):
@@ -116,6 +123,27 @@ class IsolationTestCase(unittest.TestCase):
             register_type(CustomType, lambda t, f, u: _Const("scoped"))
             self.assertEqual(Autodata.create(CustomType), "scoped")
         self.assertIsInstance(Autodata.create(CustomType), CustomType)
+
+
+class ResolveErrorTestCase(unittest.TestCase):
+    def test_no_generator_raises_typeerror(self):
+        import autofaker.registry as registry
+        saved_rules = list(registry._builtin_rules)
+        saved_fallback = registry._fallback
+        saved_front = list(registry._user_front)
+        saved_back = list(registry._user_back)
+        try:
+            reset_registry()
+            registry._builtin_rules.clear()
+            registry._fallback = None
+            with self.assertRaises(TypeError) as ctx:
+                registry.resolve(int)
+            self.assertIn("int", str(ctx.exception))
+        finally:
+            registry._user_front[:] = saved_front
+            registry._user_back[:] = saved_back
+            registry._builtin_rules[:] = saved_rules
+            registry._fallback = saved_fallback
 
 
 class _Const:
