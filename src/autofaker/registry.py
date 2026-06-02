@@ -19,7 +19,8 @@ free of any dependency on the generator classes (avoiding an import cycle).
 """
 
 import threading
-from typing import Callable, List, NamedTuple, Optional
+import types as _types
+from typing import Callable, List, NamedTuple, Optional, Union, get_args, get_origin
 
 from autofaker.base import TypeDataGeneratorBase
 
@@ -58,6 +59,15 @@ def get_type_name(t) -> str:
     arrive as plain strings, so resolution still works without the actual type
     object.
     """
+    # Python 3.14 unified typing.Union and types.UnionType, so Optional[X] no
+    # longer carries __name__ == "Optional". Detect the X | None shape and
+    # return the legacy name so downstream dispatch keeps working.
+    if get_origin(t) in (Union, getattr(_types, "UnionType", None)):
+        args = get_args(t)
+        non_none = [a for a in args if a is not type(None)]
+        if len(non_none) == 1 and len(args) == 2:
+            return "Optional"
+
     try:
         return t.__name__
     except AttributeError:
