@@ -1,4 +1,5 @@
 import unittest
+import types
 
 from autofaker import (
     Autodata,
@@ -26,6 +27,27 @@ class GetTypeNameTestCase(unittest.TestCase):
     def test_returns_name_for_typing_optional(self):
         from typing import Optional
         self.assertEqual(get_type_name(Optional[str]), "Optional")
+
+    def test_returns_name_for_typing_optional_reversed_args(self):
+        # Union[None, X] is the same shape; ordering must not matter
+        from typing import Union
+        self.assertEqual(get_type_name(Union[None, str]), "Optional")
+
+    def test_returns_name_for_three_arg_union_with_none(self):
+        # A union with more than two args is not Optional, even if it contains None
+        from typing import Union
+        self.assertEqual(get_type_name(Union[str, int, None]), "Union")
+
+    def test_falls_back_to_underscore_name(self):
+        # Objects that lack __name__ but expose a ``_name`` attribute should
+        # route through the legacy fallback (covers AttributeError branch).
+        obj = types.SimpleNamespace(_name="LegacyName")
+        self.assertEqual(get_type_name(obj), "LegacyName")
+
+    def test_falls_back_to_type_name_when_underscore_name_missing(self):
+        # Object with no __name__ and no _name -> type(t).__name__
+        obj = types.SimpleNamespace()
+        self.assertEqual(get_type_name(obj), "SimpleNamespace")
 
     def test_returns_type_name_for_non_primitive_string(self):
         self.assertEqual(get_type_name("datetime"), "str")
