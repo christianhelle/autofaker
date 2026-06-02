@@ -3,14 +3,35 @@ import inspect
 
 import typing_inspect
 
+from autofaker import registry
+from autofaker.registry import get_type_name
 from autofaker.attributes import Attributes
+from autofaker.builtins import (
+    BooleanGenerator,
+    ByteArrayGenerator,
+    BytesGenerator,
+    ComplexGenerator,
+    DecimalGenerator,
+    DictGenerator,
+    FloatGenerator,
+    FrozenSetGenerator,
+    IntegerGenerator,
+    MemoryViewGenerator,
+    PathGenerator,
+    RangeGenerator,
+    SetGenerator,
+    TupleGenerator,
+    UUIDGenerator,
+)
 from autofaker.dates import (
     DateGenerator, DatetimeGenerator, TimeGenerator, TimedeltaGenerator,
     is_date_type,
 )
 from autofaker.enums import EnumGenerator, is_enum
-from autofaker.factory import BuiltinTypeDataGeneratorFactory
-from autofaker.fakes import TypeDataGeneratorBase
+from autofaker.fakes import (
+    FakeIntegerGenerator, FakeStringGenerator, StringGenerator,
+    TypeDataGeneratorBase,
+)
 from autofaker.literals import LiteralGenerator, is_literal_type
 
 
@@ -19,41 +40,7 @@ class TypeDataGenerator:
     def create(
         t, field_name: str = None, use_fake_data: bool = False
     ) -> TypeDataGeneratorBase:
-        type_name = TypeDataGenerator._get_type_name(t).lower()
-        # Check for typed generics before bare builtin types
-        origin = typing_inspect.get_origin(t)
-        args = typing_inspect.get_args(t)
-        if origin is list or (type_name == "list" and args):
-            return ListGenerator(t, use_fake_data=use_fake_data)
-        if origin is tuple and args:
-            return TypedTupleGenerator(t, use_fake_data=use_fake_data)
-        if origin is set and args:
-            return TypedSetGenerator(t, use_fake_data=use_fake_data)
-        if origin is frozenset and args:
-            return TypedFrozenSetGenerator(t, use_fake_data=use_fake_data)
-        if origin is dict and args:
-            return TypedDictGenerator(t, use_fake_data=use_fake_data)
-        if TypeDataGenerator._is_optional(t):
-            return OptionalGenerator(t, use_fake_data=use_fake_data)
-        if BuiltinTypeDataGeneratorFactory.is_supported(type_name):
-            return BuiltinTypeDataGeneratorFactory.create(
-                type_name, field_name, use_fake_data
-            )
-        if is_date_type(type_name):
-            return TypeDataGenerator.create_datetime(
-                type_name
-            )
-        if type_name == "list":
-            return ListGenerator(t, use_fake_data=use_fake_data)
-        if is_enum(t):
-            return EnumGenerator(t)
-        if is_literal_type(t):
-            return LiteralGenerator(t)
-        return (
-            DataClassGenerator(t, use_fake_data=use_fake_data)
-            if dataclasses.is_dataclass(t)
-            else ClassGenerator(t, use_fake_data=use_fake_data)
-        )
+        return registry.resolve(t, field_name, use_fake_data)
 
     @staticmethod
     def create_datetime(type_name):
@@ -72,26 +59,7 @@ class TypeDataGenerator:
 
     @staticmethod
     def _get_type_name(t) -> str:
-        PRIMITIVE_TYPES = {
-            "int", "float", "str", "complex", "range", "bytes", "bytearray",
-            "bool", "memoryview"
-        }
-
-        try:
-            return t.__name__
-        except AttributeError:
-            attributes = dir(t)
-            if "_name" in attributes:
-                if t._name is not None:
-                    return t._name
-            # If __future__.annotations was imported by the user, then the type
-            # will be a str. Thus, asserting the type with type() will fail,
-            # because it will always be a string. This is because, annotations
-            # transforms any type into a string object. Therefore, if the type
-            # is a string, assess if it is the name of a known primitive type.
-            elif isinstance(t, str) and t in PRIMITIVE_TYPES:
-                return t
-            return type(t).__name__
+        return registry.get_type_name(t)
 
 
 class DataClassGenerator(TypeDataGeneratorBase):
@@ -201,108 +169,75 @@ class ClassGenerator(TypeDataGeneratorBase):
         self.instance = cls(*tuple(values))
 
 
-class ListGenerator(TypeDataGeneratorBase):
-    def __init__(self, t, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
-        self.list_arg = typing_inspect.get_args(t)
-
-    def generate(self):
-        if not self.list_arg:
-            return []
-        items = []
-        for _ in range(3):
-            generator = TypeDataGenerator.create(
-                self.list_arg[0], use_fake_data=self.use_fake_data
-            )
-            items.append(generator.generate())
-        return items
+DEFAULT_COLLECTION_SIZE = 3
+_MAX_ATTEMPTS_FACTOR = 10
 
 
-class TypedTupleGenerator(TypeDataGeneratorBase):
-    def __init__(self, t, use_fake_data: bool = False):
+class CollectionGenerator(TypeDataGeneratorBase):
+    """Generates anonymous typed collections (list, tuple, set, frozenset, dict).
+
+    A single generator parametrized by container ``kind``. Size and the
+    dedup-retry policy used by the unique containers (set/frozenset/dict) live
+    here in one place. Tuple semantics stay distinct: fixed-length tuples
+    produce one element per declared type, variable-length ``Tuple[T, ...]``
+    tuples produce ``size`` elements of ``T``.
+    """
+
+    def __init__(self, kind: str, t, size: int = DEFAULT_COLLECTION_SIZE,
+                 use_fake_data: bool = False):
+        self.kind = kind
+        self.size = size
         self.use_fake_data = use_fake_data
         self.args = typing_inspect.get_args(t)
 
-    def generate(self):
-        items = []
-        # Handle variable-length tuples of the form Tuple[T, ...]
-        if len(self.args) == 2 and self.args[1] is Ellipsis:
-            elem_type = self.args[0]
-            for _ in range(3):
-                generator = TypeDataGenerator.create(
-                    elem_type, use_fake_data=self.use_fake_data
-                )
-                items.append(generator.generate())
-        else:
-            # Handle fixed-length typed tuples, e.g., Tuple[int, str]
-            for arg in self.args:
-                generator = TypeDataGenerator.create(
-                    arg, use_fake_data=self.use_fake_data
-                )
-                items.append(generator.generate())
-        return tuple(items)
+    def _generate_one(self, elem_type):
+        return TypeDataGenerator.create(
+            elem_type, use_fake_data=self.use_fake_data
+        ).generate()
 
+    def _generate_sequence(self, elem_type):
+        return [self._generate_one(elem_type) for _ in range(self.size)]
 
-class TypedSetGenerator(TypeDataGeneratorBase):
-    def __init__(self, t, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
-        self.set_arg = typing_inspect.get_args(t)
-
-    def generate(self):
+    def _generate_unique(self, elem_type):
         items = set()
-        target_size = 3
-        max_attempts = 10 * target_size
+        max_attempts = _MAX_ATTEMPTS_FACTOR * self.size
         attempts = 0
-        while len(items) < target_size and attempts < max_attempts:
-            generator = TypeDataGenerator.create(
-                self.set_arg[0], use_fake_data=self.use_fake_data
-            )
-            items.add(generator.generate())
+        while len(items) < self.size and attempts < max_attempts:
+            items.add(self._generate_one(elem_type))
             attempts += 1
         return items
 
-
-class TypedFrozenSetGenerator(TypeDataGeneratorBase):
-    def __init__(self, t, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
-        self.set_arg = typing_inspect.get_args(t)
-
     def generate(self):
-        items = set()
-        target_size = 3
-        max_attempts = 10 * target_size
-        attempts = 0
-        while len(items) < target_size and attempts < max_attempts:
-            generator = TypeDataGenerator.create(
-                self.set_arg[0], use_fake_data=self.use_fake_data
-            )
-            items.add(generator.generate())
-            attempts += 1
-        return frozenset(items)
+        if self.kind == "list":
+            if not self.args:
+                return []
+            return self._generate_sequence(self.args[0])
 
+        if self.kind == "tuple":
+            # variable-length tuple: Tuple[T, ...]
+            if len(self.args) == 2 and self.args[1] is Ellipsis:
+                return tuple(self._generate_sequence(self.args[0]))
+            # fixed-length tuple: one element per declared type
+            return tuple(self._generate_one(arg) for arg in self.args)
 
-class TypedDictGenerator(TypeDataGeneratorBase):
-    def __init__(self, t, use_fake_data: bool = False):
-        self.use_fake_data = use_fake_data
-        args = typing_inspect.get_args(t)
-        self.key_type = args[0]
-        self.value_type = args[1]
+        if self.kind == "set":
+            return self._generate_unique(self.args[0])
 
-    def generate(self):
-        result = {}
-        target_size = 3
-        max_attempts = 10 * target_size
-        attempts = 0
-        while len(result) < target_size and attempts < max_attempts:
-            key_gen = TypeDataGenerator.create(
-                self.key_type, use_fake_data=self.use_fake_data
-            )
-            val_gen = TypeDataGenerator.create(
-                self.value_type, use_fake_data=self.use_fake_data
-            )
-            result[key_gen.generate()] = val_gen.generate()
-            attempts += 1
-        return result
+        if self.kind == "frozenset":
+            return frozenset(self._generate_unique(self.args[0]))
+
+        if self.kind == "dict":
+            key_type, value_type = self.args[0], self.args[1]
+            result = {}
+            max_attempts = _MAX_ATTEMPTS_FACTOR * self.size
+            attempts = 0
+            while len(result) < self.size and attempts < max_attempts:
+                key = self._generate_one(key_type)
+                result[key] = self._generate_one(value_type)
+                attempts += 1
+            return result
+
+        raise ValueError(f"Unsupported collection kind: {self.kind!r}")
 
 
 class OptionalGenerator(TypeDataGeneratorBase):
@@ -317,3 +252,101 @@ class OptionalGenerator(TypeDataGeneratorBase):
             self.inner_type, use_fake_data=self.use_fake_data
         )
         return generator.generate()
+
+
+# --- built-in scalar dispatch (absorbs the former factory.py) --------------
+
+_BUILTIN_GENERATORS = {
+    "int": lambda f, u: FakeIntegerGenerator() if u else IntegerGenerator(),
+    "str": lambda f, u: (
+        FakeStringGenerator(f) if (f is not None and u) else StringGenerator()
+    ),
+    "float": lambda f, u: FloatGenerator(),
+    "complex": lambda f, u: ComplexGenerator(),
+    "bool": lambda f, u: BooleanGenerator(),
+    "range": lambda f, u: RangeGenerator(),
+    "bytes": lambda f, u: BytesGenerator(),
+    "bytearray": lambda f, u: ByteArrayGenerator(),
+    "memoryview": lambda f, u: MemoryViewGenerator(),
+    "tuple": lambda f, u: TupleGenerator(),
+    "set": lambda f, u: SetGenerator(),
+    "frozenset": lambda f, u: FrozenSetGenerator(),
+    "dict": lambda f, u: DictGenerator(),
+    "decimal": lambda f, u: DecimalGenerator(),
+    "uuid": lambda f, u: UUIDGenerator(),
+    "posixpath": lambda f, u: PathGenerator(),
+    "windowspath": lambda f, u: PathGenerator(),
+    "path": lambda f, u: PathGenerator(),
+}
+
+
+def _register_builtin_rules():
+    """Register the built-in resolution rules in precedence order.
+
+    Order is significant and mirrors the original dispatch: typed generics
+    first, then Optional, then scalars/builtins, dates, the bare ``list``,
+    enum, and finally Literal. The dataclass/class fallback is set separately
+    and always runs last.
+    """
+    _b = registry._register_builtin
+
+    _b(
+        lambda t, n: typing_inspect.get_origin(t) is list
+        or (n == "list" and typing_inspect.get_args(t)),
+        lambda t, f, u: CollectionGenerator("list", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: typing_inspect.get_origin(t) is tuple
+        and typing_inspect.get_args(t),
+        lambda t, f, u: CollectionGenerator("tuple", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: typing_inspect.get_origin(t) is set
+        and typing_inspect.get_args(t),
+        lambda t, f, u: CollectionGenerator("set", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: typing_inspect.get_origin(t) is frozenset
+        and typing_inspect.get_args(t),
+        lambda t, f, u: CollectionGenerator("frozenset", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: typing_inspect.get_origin(t) is dict
+        and typing_inspect.get_args(t),
+        lambda t, f, u: CollectionGenerator("dict", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: typing_inspect.is_optional_type(t),
+        lambda t, f, u: OptionalGenerator(t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: n in _BUILTIN_GENERATORS,
+        lambda t, f, u: _BUILTIN_GENERATORS[get_type_name(t).lower()](f, u),
+    )
+    _b(
+        lambda t, n: is_date_type(n),
+        lambda t, f, u: TypeDataGenerator.create_datetime(get_type_name(t).lower()),
+    )
+    _b(
+        lambda t, n: n == "list",
+        lambda t, f, u: CollectionGenerator("list", t, use_fake_data=u),
+    )
+    _b(
+        lambda t, n: is_enum(t),
+        lambda t, f, u: EnumGenerator(t),
+    )
+    _b(
+        lambda t, n: is_literal_type(t),
+        lambda t, f, u: LiteralGenerator(t),
+    )
+
+    registry._set_fallback(
+        lambda t, f, u: (
+            DataClassGenerator(t, use_fake_data=u)
+            if dataclasses.is_dataclass(t)
+            else ClassGenerator(t, use_fake_data=u)
+        )
+    )
+
+
+_register_builtin_rules()

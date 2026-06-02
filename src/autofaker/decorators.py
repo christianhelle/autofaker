@@ -37,61 +37,9 @@ def autodata(*types: object, use_fake_data: bool = False):
         This is optional and will use the arguments
         from the function being decorated if not specified
     """
-
-    def decorator(function):
-        def wrapper(*args):
-            if __get_class_that_defined_method(function) is None:
-                function(
-                    *tuple(
-                        __create_function_args(
-                            function, use_fake_data=use_fake_data
-                        )
-                    )
-                )
-                return None
-            function(
-                __get_test_class(*args),
-                *tuple(
-                    __create_function_args(function, use_fake_data=use_fake_data)
-                )
-            )
-            return None
-
-        return wrapper
-
-    def decorator_with_types(function):
-        def wrapper(*args):
-            if __get_class_that_defined_method(function) is None:
-                function(
-                    *tuple(
-                        __create_function_args(
-                            function, *tuple(types), use_fake_data=use_fake_data
-                        )
-                    )
-                )
-                return None
-            function(
-                __get_test_class(*args),
-                *tuple(
-                    __create_function_args(
-                        function, *tuple(types), use_fake_data=use_fake_data
-                    )
-                )
-            )
-            return None
-
-        return wrapper
-
-    # Handle @autodata without parentheses - the function is passed as first positional arg
-    # Check for function attributes to distinguish from callable type arguments
-    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
-            and hasattr(types[0], '__code__')):
-        return decorator(types[0])
-    
-    # Handle @autodata() or @autodata(type1, type2, ...)
-    if types:
-        return decorator_with_types
-    return decorator
+    if _is_bare_decoration(types):
+        return _make_arg_decorator((), use_fake_data=use_fake_data)(types[0])
+    return _make_arg_decorator(types, use_fake_data=use_fake_data)
 
 
 def fakedata(*types: object):
@@ -117,59 +65,9 @@ def fakedata(*types: object):
         This is optional and will use the arguments from the function
         being decorated if not specified
     """
-
-    def decorator(function):
-        def wrapper(*args):
-            if __get_class_that_defined_method(function) is None:
-                function(
-                    *tuple(
-                        __create_function_args(
-                            function, use_fake_data=True
-                        )
-                    )
-                )
-                return None
-            function(
-                __get_test_class(*args),
-                *tuple(
-                    __create_function_args(function, use_fake_data=True)
-                )
-            )
-            return None
-
-        return wrapper
-
-    def decorator_with_types(function):
-        def wrapper(*args):
-            if __get_class_that_defined_method(function) is None:
-                function(
-                    *tuple(
-                        __create_function_args(
-                            function, *tuple(types), use_fake_data=True
-                        )
-                    )
-                )
-                return None
-            function(
-                __get_test_class(*args),
-                *tuple(
-                    __create_function_args(function, *tuple(types), use_fake_data=True)
-                )
-            )
-            return None
-
-        return wrapper
-
-    # Handle @fakedata without parentheses - the function is passed as first positional arg
-    # Check for function attributes to distinguish from callable type arguments
-    if (len(types) == 1 and callable(types[0]) and not isinstance(types[0], type)
-            and hasattr(types[0], '__code__')):
-        return decorator(types[0])
-    
-    # Handle @fakedata() or @fakedata(type1, type2, ...)
-    if types:
-        return decorator_with_types
-    return decorator
+    if _is_bare_decoration(types):
+        return _make_arg_decorator((), use_fake_data=True)(types[0])
+    return _make_arg_decorator(types, use_fake_data=True)
 
 
 def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
@@ -194,11 +92,7 @@ def autopandas(t: object, rows: int = 3, use_fake_data: bool = False):
             pdf = PandasDataFrameGenerator(
                 t, rows, use_fake_data=use_fake_data
             ).generate()
-            if __get_class_that_defined_method(function) is None:
-                function(pdf)
-                return None
-            function(__get_test_class(*args), pdf)
-            return None
+            return _invoke(function, args, lambda: [pdf])
 
         return wrapper
 
@@ -218,6 +112,60 @@ def fakepandas(t, rows: int = 3):
         The number of rows to generate for the DataFrame (default 3)
     """
     return autopandas(t, rows, use_fake_data=True)
+
+
+def _is_bare_decoration(types) -> bool:
+    """True when a decorator was applied without parentheses (``@autodata``).
+
+    In that case the decorated function itself is passed as the single
+    positional argument. Distinguished from a callable type argument by the
+    presence of ``__code__`` and not being a class.
+    """
+    return (
+        len(types) == 1
+        and callable(types[0])
+        and not isinstance(types[0], type)
+        and hasattr(types[0], "__code__")
+    )
+
+
+def _make_arg_decorator(types, use_fake_data: bool):
+    """Build a decorator that injects generated arguments into a test function.
+
+    When ``types`` is empty the argument types are taken from the decorated
+    function's annotations; otherwise the explicit ``types`` are used.
+    """
+
+    def decorator(function):
+        def wrapper(*args):
+            return _invoke(
+                function,
+                args,
+                lambda: __create_function_args(
+                    function, *tuple(types), use_fake_data=use_fake_data
+                ),
+            )
+
+        return wrapper
+
+    return decorator
+
+
+def _invoke(function, call_args, build_args):
+    """Call ``function`` with generated arguments.
+
+    When the decorated function is a ``unittest.TestCase`` method, its instance
+    (``self``) is recovered from the wrapper's call arguments and prepended.
+    The test-class check runs before ``build_args`` so an invalid target raises
+    ``NotImplementedError`` ahead of any argument-shape error. ``build_args`` is
+    a thunk to defer that work until the target is known.
+    """
+    if __get_class_that_defined_method(function) is None:
+        function(*build_args())
+        return None
+    test_class = __get_test_class(*call_args)
+    function(test_class, *build_args())
+    return None
 
 
 def __get_test_class(*args):

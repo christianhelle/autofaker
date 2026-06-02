@@ -145,6 +145,35 @@ python -m pytest tests/ -v --cov --cov-report=xml --cov-report=term-missing
 python setup.py sdist bdist_wheel
 ```
 
+## Git Commit Policy
+
+### Commit Early and Often
+- **Commit changes in logical groups as frequently as possible** — do not batch unrelated changes into a single commit
+- Commit after each meaningful unit of work: adding a feature, fixing a bug, adding tests, updating docs, refactoring a module
+- Use descriptive commit messages that explain *what* and *why*
+- **Never include a `Co-authored-by` trailer** in commit messages
+- Prefer many small, focused commits over large monolithic ones — this creates a detailed progress history
+
+### Commit Workflow for Agents
+When working autonomously, agents MUST commit after each logical step:
+1. After adding/modifying source code → commit
+2. After adding/modifying tests → commit
+3. After updating documentation → commit
+4. After refactoring → commit
+5. Use `git add <specific-files>` (not `git add .`) to keep commits focused
+
+Example commit sequence:
+```bash
+git add src/autofaker/new_feature.py
+git commit -m "Add support for X type generation"
+
+git add tests/test_new_feature.py
+git commit -m "Add tests for X type generation"
+
+git add README.md
+git commit -m "Document X type generation in README"
+```
+
 ## Common Tasks
 
 ### After Making Code Changes
