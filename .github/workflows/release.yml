@@ -4,13 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'release'
+      - "release"
 
 env:
-  VERSION: 1.0.${{ github.run_number }}
+  VERSION: 2.0.${{ github.run_number }}
 
 jobs:
-
   release:
     runs-on: ubuntu-latest
     steps:
