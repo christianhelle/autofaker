@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set up Python
@@ -35,7 +35,7 @@ jobs:
       - name: Build
         run: python -m build
       - name: Publish distribution 📦 to PyPI
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@v1.14.0
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
       - name: Create tag
